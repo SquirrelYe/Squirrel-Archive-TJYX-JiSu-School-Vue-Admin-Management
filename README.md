@@ -1,7 +1,8 @@
-# TJYX_JiSu_School_SERVER_Vue
+# Gold_Of_Desert_King_Management_Vue
 
 #### 介绍
-极速校园，后台管理系统部分，天津毅襄科技发展有限公司。
+--vue--
+北京企业内训项目，沙漠淘金移动端小游戏。采用cocos creater创建，主要面向微信小游戏。
 
 #### 软件架构
 软件架构说明

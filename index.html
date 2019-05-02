@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title> 沙漠淘金后台管理系统 </title>
+  <link rel="shortcut icon" href="static/images/favicon_1.ico">
+  <!-- Plugins css -->
+  <link href="static/plugins/modal-effect/css/component.css" rel="stylesheet" type="text/css">
+  <link href="static/plugins/jquery.steps/demo/css/jquery.steps.css" rel="stylesheet" type="text/css">
+  <link href="static/plugins/sweetalert/dist/sweetalert.css" rel="stylesheet" type="text/css">
+
+  <link href="static/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+  <link href="static/css/core.css" rel="stylesheet" type="text/css">
+  <link href="static/css/animate.css" rel="stylesheet" type="text/css">
+  <link href="static/css/icons.css" rel="stylesheet" type="text/css">
+  <link href="static/css/components.css" rel="stylesheet" type="text/css">
+  <link href="static/css/pages.css" rel="stylesheet" type="text/css">
+  <link href="static/css/menu.css" rel="stylesheet" type="text/css">
+  <link href="static/css/responsive.css" rel="stylesheet" type="text/css">
+
+  <script src="static/js/modernizr.min.js"></script>
+</head>
+
+<body>
+
+  <div id="app">
+    <!-- built files will be auto injected -->
+  </div>
+
+  <script>
+    var resizefunc = [];
+
+  </script>
+
+  <!-- jQuery  -->
+  <script src="static/js/jquery.min.js"></script>
+  <script src="static/js/bootstrap.min.js"></script>
+  <script src="static/js/detect.js"></script>
+  <script src="static/js/fastclick.js"></script>
+  <script src="static/js/jquery.slimscroll.js"></script>
+  <script src="static/js/jquery.blockUI.js"></script>
+  <script src="static/js/waves.js"></script>
+  <script src="static/js/wow.min.js"></script>
+  <script src="static/js/jquery.nicescroll.js"></script>
+  <script src="static/js/jquery.scrollTo.min.js"></script>
+  <!-- App js -->
+  <script src="static/js/jquery.app.js"></script>
+  <!-- sweet alert  -->
+  <script src="static/plugins/sweetalert/dist/sweetalert.min.js"></script>
+  <!-- Modal-Effect -->
+  <script src="static/plugins/modal-effect/js/classie.js"></script>
+  <script src="static/plugins/modal-effect/js/modalEffects.js"></script>
+  <!-- notifications -->
+  <script src="static/js/bootstrap_notify.js"></script>
+  <!-- jQuery  -->
+  <script src="static/plugins/moment/moment.js"></script>
+  <!-- jQuery  -->
+  <script src="static/plugins/waypoints/lib/jquery.waypoints.js"></script>
+  <script src="static/plugins/counterup/jquery.counterup.min.js"></script>
+  <!-- skycons -->
+  <script src="static/plugins/skyicons/skycons.min.js"></script>
+  <!-- Todojs  -->
+  <script src="static/pages/jquery.todo.js"></script>
+  <!-- chatjs  -->
+  <script src="static/pages/jquery.chat.js"></script>
+
+  <script type="text/javascript">
+    jQuery(document).ready(function ($) {
+      /* Counter Up */
+      $('.counter').counterUp({
+        delay: 100,
+        time: 1200
+      });
+
+    });
+    /* BEGIN SVG WEATHER ICON */
+    if (typeof Skycons !== 'undefined') {
+      var icons = new Skycons({
+          "color": "#fff"
+        }, {
+          "resizeClear": true
+        }),
+        list = [
+          "clear-day", "clear-night", "partly-cloudy-day",
+          "partly-cloudy-night", "cloudy", "rain", "sleet", "snow", "wind",
+          "fog"
+        ],
+        i;
+
+      for (i = list.length; i--;)
+        icons.set(list[i], list[i]);
+      icons.play();
+    };
+
+  </script>
+</body>
+
+<style>
+  .footer {
+    position: fixed;
+    bottom: 0
+  }
+
+  th {
+    text-align: center;
+    /** 设置水平方向居中 */
+    vertical-align: middle;
+    /** 设置垂直方向居中 */
+  }
+
+  td {
+    text-align: center;
+    /** 设置水平方向居中 */
+    vertical-align: middle;
+    /** 设置垂直方向居中 */
+  }
+
+</style>
+
+</html>
