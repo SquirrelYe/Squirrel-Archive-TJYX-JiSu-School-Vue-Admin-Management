@@ -148,7 +148,7 @@ const s_alert = require("../../utils/alert");
 const ses = require("../../utils/ses");
 const req = require("../../utils/axios");
 const print = require("../../utils/print");
-const apis = require("../../utils/api/apis");
+const apis = require("../../interface/apis");
 
 const async=require('async')
 

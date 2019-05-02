@@ -22,9 +22,9 @@ module.exports={
     },
 
     //POST请求，参数可以放到params里（推荐）
-    post_Param(url,param){
-        let uri=url+'?'+qs.stringify(param)
-        return axios.post(uri)
+    postParam(url,param){
+        let data=qs.stringify(param)
+        return axios.post(url,data)
         .catch(err => {
             print.error(err)
         });
@@ -36,14 +36,4 @@ module.exports={
             print.error(err)
         });
     }
-
-    //url.replace('^/apis','https://www.yexuan.site/api')
-    // 回调实例
-    // .then(res=> {
-    // console.log(res);
-    //    alert(JSON.stringify(res.data))
-    // })
-    // .catch(err=> {
-    //    console.log(err);
-    // });
 }

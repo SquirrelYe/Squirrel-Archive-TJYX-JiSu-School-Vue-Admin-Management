@@ -3,14 +3,11 @@ import Router from 'vue-router'
 
 import login from '@/adminComponents/init/login'
 import menu from '@/adminComponents/init/menu'
-import game from '@/adminComponents/init/game'
 import index from '@/adminComponents/init/index'
 // users
 import user from '@/adminComponents/users/user'
 import admin from '@/adminComponents/users/admin'
 import team from '@/adminComponents/users/team'
-// game
-import listgame from '@/adminComponents/game/listgame'
 // run
 import stransation from '@/adminComponents/run/stransation'
 import sstastics from '@/adminComponents/run/sstastics'
@@ -18,7 +15,7 @@ import syear from '@/adminComponents/run/syear'
 
 Vue.use(Router)
 
-export default new Router({
+const router= new Router({
   routes: [
     {
       path: '/',
@@ -26,13 +23,9 @@ export default new Router({
       component: login
     },
     {
-      path: '/game',
-      name: 'game',
-      component: game
-    },
-    {
       path: '/menu',
       name: 'menu',
+      meta: { auth: true },
       component: menu,
       children:[
         {
@@ -56,11 +49,6 @@ export default new Router({
           component:team
         },
         {
-          path:'listgame',   //赛事列表
-          name:'listgame',
-          component:listgame
-        },
-        {
           path:'stransation',   //交易管理
           name:'stransation',
           component:stransation
@@ -79,3 +67,12 @@ export default new Router({
     }
   ]
 })
+router.beforeEach((to, from, next) => {
+  if (to.meta.auth) { //权限判断
+    // next({path:'/'})
+    // alert('会话过期，请重新登录')
+    next()
+  } else next();
+});
+
+export default router;

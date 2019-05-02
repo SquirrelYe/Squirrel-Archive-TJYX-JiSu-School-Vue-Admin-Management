@@ -4,9 +4,9 @@
             <div class="panel panel-color panel-primary panel-pages">
                 <div class="panel-heading bg-img">
                     <div class="bg-overlay"></div>
-                    <h3 class="text-center m-t-10 text-white">AESEN 青年领袖联盟</h3>
+                    <h3 class="text-center m-t-10 text-white">天津毅襄科技发展有限公司</h3>
                     <br>
-                    <h3 class="text-center text-white" style="font-size:30px;">沙漠掘金后台管理系统</h3>
+                    <h3 class="text-center text-white" style="font-size:30px;">极速校园后台管理系统</h3>
                 </div>
 
                 <div class="panel-body">
@@ -77,7 +77,7 @@ const s_alert = require("../../utils/alert");
 const ses = require("../../utils/ses");
 const req = require("../../utils/axios");
 const print = require("../../utils/print");
-const apis = require("../../utils/api/apis");
+const apis = require("../../interface/apis");
 
 import app from "../../App.vue";
 var App = app;

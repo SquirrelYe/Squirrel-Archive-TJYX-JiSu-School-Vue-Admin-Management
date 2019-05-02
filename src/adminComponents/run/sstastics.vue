@@ -109,7 +109,7 @@ const s_alert = require("../../utils/alert");
 const ses = require("../../utils/ses");
 const req = require("../../utils/axios");
 const print = require("../../utils/print");
-const apis = require("../../utils/api/apis");
+const apis = require("../../interface/apis");
 const notify = require("bootstrap-notify");
 
 const moment = require("moment");

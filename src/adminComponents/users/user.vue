@@ -10,15 +10,10 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">沙漠淘金后台管理系统-参赛者管理</h3>
+            <h3 class="panel-title">沙漠淘金后台管理系统-用户管理</h3>
           </div>
           <div class="panel-body">
             <div class="row">
-              <div class="col-sm-6">
-                <div class="m-b-30" data-toggle="modal" data-target="#myindus">
-                    <button id="addToTable" class="btn btn-primary waves-effect waves-light">添加参赛者<i class="fa fa-plus"></i></button>
-                </div>
-              </div>
               <div class="col-md-12 col-sm-12 col-xs-12">
                 <div class="table-responsive">
                   <table class="table table-bordered table-striped" style id="datatable-editable">
@@ -60,6 +55,7 @@
                 <div class="row">
                   <div class="col-sm-6">
                     <div class="dataTables_info float-left" id="datatable-editable_info" role="status" aria-live="polite" >展示 {{PageShowSum}} 总共 {{items.length}} 项</div>
+                    <button @click="test()">测试接口</button>
                   </div>
                   <div class="col-sm-6">
                     <div class="dataTables_paginate paging_simple_numbers" id="datatable-editable_paginate" >
@@ -92,7 +88,7 @@ const s_alert = require("../../utils/alert");
 const ses = require("../../utils/ses");
 const req = require("../../utils/axios");
 const print = require("../../utils/print");
-const apis = require("../../utils/api/apis");
+const apis = require("../../interface/apis");
 
 const moment = require('moment');
 
@@ -127,9 +123,12 @@ export default {
     init(){
         this.getAllUser();
     },
+    test(){
+      apis.getAllUser().then(res => { print.log(res.data); })
+    },
     // 获取所有参赛者
     getAllUser() {
-      apis.getAllUserByType(0)  //JSON.parse(ses.getSessionStorage('gameinfo')).id
+      apis.getAllUser()
         .then(res => {
           print.log(res.data);
           // 分页
