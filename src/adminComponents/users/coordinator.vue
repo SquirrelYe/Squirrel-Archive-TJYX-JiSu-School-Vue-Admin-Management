@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-        <h4 class="pull-left page-title">管理员管理</h4>
+        <h4 class="pull-left page-title">校园大使管理</h4>
       </div>
     </div>
 
@@ -15,7 +15,7 @@
           <div class="panel-body">
             <div class="row">              
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <input type="text" class="form-control search-bar" placeholder="输入搜索管理员名称" v-model="searchkey" v-on:keyup.enter="search()">
+                <input type="text" class="form-control search-bar" placeholder="输入搜索校园大使名称" v-model="searchkey" v-on:keyup.enter="search()">
                 <div class="table-responsive">
                   <table class="table table-bordered table-striped table-hover" style id="datatable-editable">
                     <thead>

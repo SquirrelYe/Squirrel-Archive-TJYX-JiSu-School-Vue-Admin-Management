@@ -22,26 +22,6 @@ export default {
     },
     methods: {
 
-    },
-    // 引入JavaScript外链
-    components: {
-        remote: {
-            render: function(createElement) {
-                var self = this;
-                return createElement("script", {
-                    attrs: {
-                        type: "text/javascript",
-                        src: this.src
-                    }
-                });
-            },
-            props: {
-                src: {
-                    type: String,
-                    required: true
-                }
-            }
-        }
     }
 };
 </script>

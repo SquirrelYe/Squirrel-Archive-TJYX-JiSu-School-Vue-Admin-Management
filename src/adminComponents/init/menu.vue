@@ -103,14 +103,14 @@
                     <a href="javascript:void(0)" @click="admin()">管理员管理</a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)" @click="take()">校园大使管理</a>
+                    <a href="javascript:void(0)" @click="coordinator()">校园大使管理</a>
                   </li>
                 </ul>
               </li>
 
               <li class="has_sub">
                 <a href="javascript:void(0)" class="waves-effect waves-light">
-                  <i class="md md-palette"></i>
+                  <i class="md md-assessment"></i>
                   <span>开卡管理</span>
                   <span class="pull-right">
                     <i class="md md-add"></i>
@@ -128,7 +128,7 @@
 
               <li class="has_sub">
                 <a href="javascript:void(0)" class="waves-effect waves-light">
-                  <i class="md md-invert-colors-on"></i>
+                  <i class="md  md-exit-to-app"></i>
                   <span>快递送取</span>
                   <span class="pull-right">
                     <i class="md md-add"></i>
@@ -146,7 +146,7 @@
 
               <li class="has_sub">
                 <a href="javascript:void(0)" class="waves-effect waves-light">
-                  <i class="md md-invert-colors-on"></i>
+                  <i class="md md-edit"></i>
                   <span>考试管理</span>
                   <span class="pull-right">
                     <i class="md md-add"></i>
@@ -167,7 +167,7 @@
 
               <li class="has_sub">
                 <a href="javascript:void(0)" class="waves-effect waves-light">
-                  <i class="md md-invert-colors-on"></i>
+                  <i class="md md-explore"></i>
                   <span>旅游管理</span>
                   <span class="pull-right">
                     <i class="md md-add"></i>
@@ -242,24 +242,6 @@
           </div>
         </footer>
       </div>
-      
-      <div class="side-bar right-bar nicescroll">
-        <h4 class="text-center">联系</h4>
-        <div class="contact-list nicescroll">
-          <ul class="list-group contacts-list">
-            <!-- <li class="list-group-item">
-              <a href="#">
-                <div class="avatar">
-                  <img src="assets/images/users/avatar-1.jpg" alt>
-                </div>
-                <span class="name">Chadengle</span>
-                <i class="fa fa-circle online"></i>
-              </a>
-              <span class="clearfix"></span>
-            </li> -->
-          </ul>
-        </div>
-      </div>
     </div>
     <!-- App js -->
     <remote src="static/js/jquery.app.js"></remote>
@@ -299,7 +281,7 @@ export default {
     // 页面跳转 管理员端
     user(){this.$router.push({name:'user'})},   //用户管理
     admin(){this.$router.push({name:'admin'})},
-    take(){this.$router.push({name:'take'})},
+    coordinator(){this.$router.push({name:'coordinator'})},
     cardlist(){this.$router.push({name:'cardlist'})},   //赛事管理
     syear(){this.$router.push({name:'syear'})},   //赛事运营
     stransation(){this.$router.push({name:'stransation'})},

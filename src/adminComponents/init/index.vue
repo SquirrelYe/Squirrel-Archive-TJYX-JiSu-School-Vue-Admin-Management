@@ -4,10 +4,7 @@
 
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="btn-group pull-right">
-                        <button type="button" class="btn btn-primary dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false"> 设置 <span class="m-l-5"><i class="fa fa-cog"></i></span></button>
-                    </div>
-                    <h4 class="page-title" style="color:red">管理员端</h4>
+                    <h4 class="page-title">管理员端</h4>
                 </div>
             </div>
 
