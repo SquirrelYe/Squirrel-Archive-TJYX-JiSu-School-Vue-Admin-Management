@@ -1,17 +1,34 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 
+import index from '@/adminComponents/init/index'
 import login from '@/adminComponents/init/login'
 import menu from '@/adminComponents/init/menu'
-import index from '@/adminComponents/init/index'
-// users
+import school from '@/adminComponents/init/school'
+// 用户
 import user from '@/adminComponents/users/user'
 import admin from '@/adminComponents/users/admin'
 import coordinator from '@/adminComponents/users/coordinator'
-// run
-import stransation from '@/adminComponents/run/stransation'
-import sstastics from '@/adminComponents/run/sstastics'
-import syear from '@/adminComponents/run/syear'
+// 开卡
+import cardlist from '@/adminComponents/card/cardlist'
+import cardcode from '@/adminComponents/card/cardcode'
+// 快递
+import ltran from '@/adminComponents/logistic/ltran'
+import lanalysis from '@/adminComponents/logistic/lanalysis'
+// 考试
+import exam from '@/adminComponents/exam/exam'
+import eitem from '@/adminComponents/exam/eitem'
+import eanalysis from '@/adminComponents/exam/eanalysis'
+// 旅游
+import journey from '@/adminComponents/journey/journey'
+import jitem from '@/adminComponents/journey/jitem'
+import janalysis from '@/adminComponents/journey/janalysis'
+// 水果
+import fruit from '@/adminComponents/fruit/fruit'
+import fitem from '@/adminComponents/fruit/fitem'
+import fanalysis from '@/adminComponents/fruit/fanalysis'
+// 字典
+import schooldic from '@/adminComponents/dic/schooldic'
 
 Vue.use(Router)
 
@@ -24,9 +41,27 @@ const router = new Router({
         { path: 'user', name: 'user', component: user },   //参赛者管理
         { path: 'admin', name: 'admin', component: admin },   //管理员管理
         { path: 'coordinator', name: 'coordinator', component: coordinator },   //校园大使管理
-        { path: 'stransation', name: 'stransation', component: stransation },   //交易管理
-        { path: 'sstastics', name: 'sstastics', component: sstastics },   //赛事数据
-        { path: 'syear', name: 'syear', component: syear },   //赛事数据
+
+        { path: 'cardlist', name: 'cardlist', component: cardlist },   //开卡信息
+        { path: 'cardcode', name: 'cardcode', component: cardcode },   //开卡二维码
+        
+        { path: 'ltran', name: 'ltran', component: ltran },   //快递订单
+        { path: 'lanalysis', name: 'lanalysis', component: lanalysis },   //快递流水
+
+        { path: 'exam', name: 'exam', component: exam },   //考试一级菜单
+        { path: 'eitem', name: 'eitem', component: eitem },   //考试项目
+        { path: 'eanalysis', name: 'eanalysis', component: eanalysis },   //考试流水
+
+        { path: 'journey', name: 'journey', component: journey },   //旅游一级菜单
+        { path: 'jitem', name: 'jitem', component: jitem },   //旅游项目
+        { path: 'janalysis', name: 'janalysis', component: janalysis },   //旅游流水
+
+        { path: 'fruit', name: 'fruit', component: fruit },   //水果一级菜单
+        { path: 'fitem', name: 'fitem', component: fitem },   //水果项目
+        { path: 'fanalysis', name: 'fanalysis', component: fanalysis },   //水果流水
+
+        { path: 'schooldic', name: 'schooldic', component: schooldic },   //学校字典
+        
       ]
     }
   ]

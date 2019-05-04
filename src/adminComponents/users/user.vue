@@ -21,7 +21,7 @@
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>用户编号</th>
+                        <th>用户ID</th>
                         <th>openid</th>
                         <th>用户名</th>
                         <th>密码</th>
@@ -33,8 +33,8 @@
                         <th>执行操作</th>
                       </tr>
                     </thead>
-                    <tbody v-if="userItem">
-                      <tr class="gradeX" v-for="(item,index) in userItem.rows" :key="index"  :class=" item.condition==-1? 'text-danger':'' ">
+                    <tbody v-if="showItem">
+                      <tr class="gradeX" v-for="(item,index) in showItem.rows" :key="index"  :class=" item.condition==-1? 'text-danger':'' ">
                         <td>{{(currentPage-1)*limit+index+1}}</td>
                         <td>{{item.id}}</td>
                         <td>{{item.openid}}</td>
@@ -69,9 +69,9 @@
                     </tbody>
                   </table>
                 </div>
-                <div class="row" v-if="userItem">
+                <div class="row" v-if="showItem">
                   <div class="col-sm-6" >
-                    <div class="dataTables_info float-left" id="datatable-editable_info" role="status" aria-live="polite" >单页展示 {{limit}}项 总共 {{userItem.count}} 项</div>
+                    <div class="dataTables_info float-left" id="datatable-editable_info" role="status" aria-live="polite" >单页展示 {{limit}}项 总共 {{showItem.count}} 项</div>
                   </div>
                   <div class="col-sm-6">
                     <div class="dataTables_paginate paging_simple_numbers" id="datatable-editable_paginate" >
@@ -82,7 +82,7 @@
                         <li class="paginate_button active">
                           <a href="javascript:void(0)">{{currentPage}}</a>
                         </li>
-                        <li class="paginate_button next" :class="{ disabled: currentPage*limit>=userItem.count }">
+                        <li class="paginate_button next" :class="{ disabled: currentPage*limit>=showItem.count }">
                           <a href="javascript:void(0)" @click="nextPage()">下一页</a>
                         </li>
                         <li class="paginate_button next">
@@ -174,7 +174,7 @@ export default {
   name: "user",
   data() {
     return {
-      userItem:null,
+      showItem:null,
       searchkey:null,
 
       offsize:0,
@@ -195,7 +195,7 @@ export default {
     init(){ this.getAllUser(this.offsize,this.limit); },
     test(){ apis.user.findAndCountAll(0,10).then(res => { print.log(res.data); }) },
     // 获取所有参赛者
-    getAllUser(offsize,limit) { apis.user.findAndCountAllByType(0,offsize,limit).then(res => { this.userItem=res.data }) },
+    getAllUser(offsize,limit) { apis.user.findAndCountAllByType(0,offsize,limit).then(res => { this.showItem=res.data }) },
 
     getWX(item){ this.wxinfo = item.info ; this.judge = 0},
     getAuthen(item){ this.authen = item.authen ; this.judge = 1},
@@ -218,7 +218,7 @@ export default {
     },
     // 搜索
     search(){
-      if(this.searchkey.length != 0) apis.user.findAndCountAllLikeByName(this.searchkey).then(res => { this.userItem=res.data });
+      if(this.searchkey != null) apis.user.findAndCountAllByTypeLikeByName(0,this.searchkey).then(res => { this.showItem=res.data });
       else this.init()
     }
 

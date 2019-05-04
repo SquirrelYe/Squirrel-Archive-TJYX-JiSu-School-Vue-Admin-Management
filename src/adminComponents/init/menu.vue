@@ -81,7 +81,7 @@
           <div id="sidebar-menu">
             <ul>
               <li>
-                <a href="./#/menu/index" class="waves-effect waves-light active">
+                <a href="javascript:void(0)" @click="index()" class="waves-effect waves-light active">
                   <i class="md md-home"></i>
                   <span>系统首页</span>
                 </a>
@@ -136,10 +136,10 @@
                 </a>
                 <ul class="list-unstyled">
                   <li>
-                    <a href="javascript:void(0)" @click="syear()">订单列表</a>
+                    <a href="javascript:void(0)" @click="ltran()">订单列表</a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)" @click="stransation()">流水统计</a>
+                    <a href="javascript:void(0)" @click="lanalysis()">流水统计</a>
                   </li>
                 </ul>
               </li>
@@ -154,13 +154,13 @@
                 </a>
                 <ul class="list-unstyled">
                   <li>
-                    <a href="javascript:void(0)" @click="syear()">一级菜单</a>
+                    <a href="javascript:void(0)" @click="exam()">一级菜单</a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)" @click="stransation()">考试项目</a>
+                    <a href="javascript:void(0)" @click="eitem()">考试项目</a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)" @click="stransation()">流水统计</a>
+                    <a href="javascript:void(0)" @click="eanalysis()">流水统计</a>
                   </li>
                 </ul>
               </li>
@@ -175,13 +175,13 @@
                 </a>
                 <ul class="list-unstyled">
                   <li>
-                    <a href="javascript:void(0)" @click="syear()">一级菜单</a>
+                    <a href="javascript:void(0)" @click="journey()">一级菜单</a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)" @click="stransation()">旅游项目</a>
+                    <a href="javascript:void(0)" @click="jitem()">旅游项目</a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)" @click="stransation()">流水统计</a>
+                    <a href="javascript:void(0)" @click="janalysis()">流水统计</a>
                   </li>
                 </ul>
               </li>
@@ -196,16 +196,32 @@
                 </a>
                 <ul class="list-unstyled">
                   <li>
-                    <a href="javascript:void(0)" @click="syear()">一级菜单</a>
+                    <a href="javascript:void(0)" @click="fruit()">一级菜单</a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)" @click="stransation()">水果项目</a>
+                    <a href="javascript:void(0)" @click="fitem()">水果项目</a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)" @click="stransation()">流水统计</a>
+                    <a href="javascript:void(0)" @click="fanalysis()">流水统计</a>
                   </li>
                 </ul>
               </li>
+
+              <li class="has_sub">
+                <a href="javascript:void(0)" class="waves-effect waves-light">
+                  <i class="md  md-book"></i>
+                  <span>数据字典</span>
+                  <span class="pull-right">
+                    <i class="md md-add"></i>
+                  </span>
+                </a>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="javascript:void(0)" @click="schooldic()">学校信息</a>
+                  </li>
+                </ul>
+              </li>
+
             </ul>
             <div class="clearfix"></div>
           </div>
@@ -224,17 +240,17 @@
         <footer class="footer text-right footer">
           <div class="container">
             <div class="row">
-              <div class="col-xs-6">2019 © 天津智识教育科技有限公司.</div>
+              <div class="col-xs-6">2019 © 天津毅襄科技发展有限公司</div>
               <div class="col-xs-6">
                 <ul class="pull-right list-inline m-b-0">
                   <li>
-                    <a href="javascript:void(0)">关于</a>
+                    <a href="javascript:void(0)" @click="about()">关于</a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)">帮助</a>
+                    <a href="javascript:void(0)" @click="help()">帮助</a>
                   </li>
                   <li>
-                    <a href="javascript:void(0)">联系</a>
+                    <a href="javascript:void(0)" @click="contact()">联系</a>
                   </li>
                 </ul>
               </div>
@@ -274,20 +290,41 @@ export default {
     if(ses.getSessionStorage('userinfo') && ses.getSessionStorage('gameinfo')){
       this.userinfo = JSON.parse(ses.getSessionStorage('userinfo'));
       this.gameinfo = JSON.parse(ses.getSessionStorage('gameinfo'));
-      // print.log(this.userinfo,this.gameinfo)
     }
   },
   methods: {
-    // 页面跳转 管理员端
-    user(){this.$router.push({name:'user'})},   //用户管理
+    
+    index(){this.$router.push({name:'index'})},
+    user(){this.$router.push({name:'user'})},
     admin(){this.$router.push({name:'admin'})},
     coordinator(){this.$router.push({name:'coordinator'})},
-    cardlist(){this.$router.push({name:'cardlist'})},   //赛事管理
-    syear(){this.$router.push({name:'syear'})},   //赛事运营
-    stransation(){this.$router.push({name:'stransation'})},
-    sstastics(){this.$router.push({name:'sstastics'})},
 
-    logout(){ this.$router.push({name:'login'}) }
+    cardlist(){this.$router.push({name:'cardlist'})},
+    cardcode(){this.$router.push({name:'cardcode'})},
+
+    ltran(){this.$router.push({name:'ltran'})},
+    lanalysis(){this.$router.push({name:'lanalysis'})},
+
+    exam(){this.$router.push({name:'exam'})},
+    eitem(){this.$router.push({name:'eitem'})},
+    eanalysis(){this.$router.push({name:'eanalysis'})},
+
+    journey(){this.$router.push({name:'journey'})},
+    jitem(){this.$router.push({name:'jitem'})},
+    janalysis(){this.$router.push({name:'janalysis'})},
+
+    fruit(){this.$router.push({name:'fruit'})},
+    fitem(){this.$router.push({name:'fitem'})},
+    fanalysis(){this.$router.push({name:'fanalysis'})},
+    
+    schooldic(){this.$router.push({name:'schooldic'})},
+
+    logout(){ this.$router.push({name:'login'}) },
+
+
+    about(){ } ,
+    help(){ } ,
+    contact(){ } ,
   },
 
   components: {   //注入外部 js文件

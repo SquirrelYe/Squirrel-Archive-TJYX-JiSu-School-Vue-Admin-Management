@@ -6,13 +6,14 @@ module.exports = {
         delete(id) { return req.postParam('api/ent/user', { 'judge': 2, 'id': id }) },
         update(id, c) { return req.postParam('api/ent/user', { 'judge': 3, 'id': id, 'condition': c }) },
         login(n, p) { return req.postParam('api/ent/user', { 'judge': 5, 'name': n, 'pass': p }) },
+        creatAdmin(n, p, m, c, s) { return req.postParam('api/ent/user', { 'judge': 1, 'name': n, 'pass': p, 'mail': m, 'phone': c, 'school_id': s, 'type': 1, 'condition': 0 }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/user', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/user', { 'judge': 1, 'id': id }) },
         findOneByOpenid(o) { return req.postParam('api/ass/user', { 'judge': 2, 'openid': o }) },
         findAndCountAllByType(t, o, l) { return req.postParam('api/ass/user', { 'judge': 3, 'type': t, 'offset': o, 'limit': l }) },
         findAndCountAllBySchool(s, o, l) { return req.postParam('api/ass/user', { 'judge': 4, 'school_id': s, 'offset': o, 'limit': l }) },
-        findAndCountAllLikeByName(n) { return req.postParam('api/ass/user', { 'judge': 5, 'name': n }) },
+        findAndCountAllByTypeLikeByName(t, n) { return req.postParam('api/ass/user', { 'judge': 5, 'name': n, 'type': t }) },
     },
     // 学校信息
     school: {
@@ -50,22 +51,27 @@ module.exports = {
     // 开卡信息
     card: {
         delete(id) { return req.postParam('api/ent/card', { 'judge': 2, 'id': id }) },
+        update(id, c) { return req.postParam('api/ent/card', { 'judge': 3, 'id': id, 'condition': c }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/card', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/card', { 'judge': 1, 'id': id }) },
         findOneByUser(u) { return req.postParam('api/ass/card', { 'judge': 2, 'user_id': u }) },
+        findAndCountAllLikeByName(n) { return req.postParam('api/ass/card', { 'judge': 3, 'name': n }) },
     },
     // 快递信息
     logistic: {
         delete(id) { return req.postParam('api/ent/logistic', { 'judge': 2, 'id': id }) },
+        update(id, c) { return req.postParam('api/ent/logistic', { 'judge': 3, 'id': id, 'condition': c }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/logistic', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/logistic', { 'judge': 1, 'id': id }) },
         findOneByUser(u, o, l) { return req.postParam('api/ass/logistic', { 'judge': 2, 'user_id': u, 'offset': o, 'limit': l }) },
+        findAndCountAllLikeByName(n) { return req.postParam('api/ass/logistic', { 'judge': 3, 'name': n }) },
     },
     // 快递订单信息
     order: {
         delete(id) { return req.postParam('api/ent/order', { 'judge': 2, 'id': id }) },
+        update(id, o, c) { return req.postParam('api/ent/order', { 'judge': 3, 'id': id, 'other': o, 'condition': c }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/order', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/order', { 'judge': 1, 'id': id }) },
@@ -75,9 +81,12 @@ module.exports = {
     // 考试一级菜单
     exam: {
         delete(id) { return req.postParam('api/ent/exam', { 'judge': 2, 'id': id }) },
+        creat(t, c) { return req.postParam('api/ent/exam', { 'judge': 1, 'title': t, 'condition': c }) },
+        update(id, t, c) { return req.postParam('api/ent/exam', { 'judge': 3, 'id': id, 'title': t, 'condition': c }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/exam', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/exam', { 'judge': 1, 'id': id }) },
+        findAndCountAllLikeByName(n) { return req.postParam('api/ass/exam', { 'judge': 2, 'name': n }) },
     },
     // 考试二级菜单
     eitem: {

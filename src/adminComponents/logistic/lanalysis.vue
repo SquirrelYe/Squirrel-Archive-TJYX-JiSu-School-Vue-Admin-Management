@@ -2,7 +2,7 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-        <h4 class="pull-left page-title">校园大使管理</h4>
+        <h4 class="pull-left page-title">管理员管理</h4>
       </div>
     </div>
 
@@ -10,20 +10,20 @@
       <div class="col-md-12">
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">极速校园后台管理系统-校园大使管理</h3>
+            <h3 class="panel-title">极速校园后台管理系统-用户管理</h3>
           </div>
           <div class="panel-body">
             <div class="row">              
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <input type="text" class="form-control search-bar" placeholder="输入搜索校园大使名称" v-model="searchkey" v-on:keyup.enter="search()">
+                <input type="text" class="form-control search-bar" placeholder="输入搜索管理员名称" v-model="searchkey" v-on:keyup.enter="search()">
                 <div class="table-responsive">
                   <table class="table table-bordered table-striped table-hover" style id="datatable-editable">
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>校园大使编号</th>
+                        <th>用户编号</th>
                         <th>openid</th>
-                        <th>校园大使名</th>
+                        <th>用户名</th>
                         <th>密码</th>
                         <th>邮箱</th>
                         <th>电话</th>
@@ -33,8 +33,8 @@
                         <th>执行操作</th>
                       </tr>
                     </thead>
-                    <tbody v-if="showItem">
-                      <tr class="gradeX" v-for="(item,index) in showItem.rows" :key="index"  :class=" item.condition==-1? 'text-danger':'' ">
+                    <tbody v-if="userItem">
+                      <tr class="gradeX" v-for="(item,index) in userItem.rows" :key="index"  :class=" item.condition==-1? 'text-danger':'' ">
                         <td>{{(currentPage-1)*limit+index+1}}</td>
                         <td>{{item.id}}</td>
                         <td>{{item.openid}}</td>
@@ -56,22 +56,22 @@
                             <i class="fa  fa-credit-card" data-toggle="tooltip" data-placement="top" title="资产信息"></i>
                           </a>
                           <a @click="updateCondition(item,-1)" v-if="item.condition == 0">
-                            <i class="fa fa-pause" data-toggle="tooltip" data-placement="top" title="冻结校园大使"></i>
+                            <i class="fa fa-pause" data-toggle="tooltip" data-placement="top" title="冻结用户"></i>
                           </a>
                           <a @click="updateCondition(item,0)" v-if="item.condition == -1">
-                            <i class="fa fa-play" data-toggle="tooltip" data-placement="top" title="解冻校园大使"></i>
+                            <i class="fa fa-play" data-toggle="tooltip" data-placement="top" title="解冻用户"></i>
                           </a>
                           <a @click="DeleteItem(item)">
-                            <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="删除校园大使"></i>
+                            <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="删除用户"></i>
                           </a>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-                <div class="row" v-if="showItem">
+                <div class="row" v-if="userItem">
                   <div class="col-sm-6" >
-                    <div class="dataTables_info float-left" id="datatable-editable_info" role="status" aria-live="polite" >单页展示 {{limit}}项 总共 {{showItem.count}} 项</div>
+                    <div class="dataTables_info float-left" id="datatable-editable_info" role="status" aria-live="polite" >单页展示 {{limit}}项 总共 {{userItem.count}} 项</div>
                   </div>
                   <div class="col-sm-6">
                     <div class="dataTables_paginate paging_simple_numbers" id="datatable-editable_paginate" >
@@ -82,8 +82,11 @@
                         <li class="paginate_button active">
                           <a href="javascript:void(0)">{{currentPage}}</a>
                         </li>
-                        <li class="paginate_button next" :class="{ disabled: currentPage*limit>=showItem.count }">
+                        <li class="paginate_button next" :class="{ disabled: currentPage*limit>=userItem.count }">
                           <a href="javascript:void(0)" @click="nextPage()">下一页</a>
+                        </li>
+                        <li class="paginate_button next">
+                          <a href="javascript:void(0)" @click="test()">测试</a>
                         </li>
                       </ul>
                     </div>
@@ -103,8 +106,8 @@
           <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h4 class="modal-title" id="myModalLabel" v-if="judge == 0">微信授权信息</h4>
-          <h4 class="modal-title" id="myModalLabel" v-if="judge == 1">校园大使认证信息</h4>
-          <h4 class="modal-title" id="myModalLabel" v-if="judge == 2">校园大使资产信息</h4>
+          <h4 class="modal-title" id="myModalLabel" v-if="judge == 1">用户认证信息</h4>
+          <h4 class="modal-title" id="myModalLabel" v-if="judge == 2">用户资产信息</h4>
           </div>
 
           <!-- 微信授权信息 -->
@@ -123,9 +126,9 @@
           </div>
           <div class="modal-body" align='center' v-if="judge == 0 && !wxinfo"><h4>未授权微信信息</h4></div>
 
-          <!-- 校园大使认证信息 -->
+          <!-- 用户认证信息 -->
           <div class="modal-body" align='center' v-if="judge == 1 && authen">
-            <h4>校园大使认证信息</h4>
+            <h4>用户认证信息</h4>
             <address class="ng-scope">
               <strong>名字:</strong>{{authen.name}}<br>
               <strong>学号:</strong>{{authen.xuehao}}<br> 
@@ -136,9 +139,9 @@
           </div>
           <div class="modal-body" align='center' v-if="judge == 1 && !authen"><h4>未提交认证信息</h4></div>
 
-          <!-- 校园大使资产信息 -->
+          <!-- 用户资产信息 -->
           <div class="modal-body" align='center' v-if="judge == 2 && stock">
-            <h4>校园大使资产信息</h4>
+            <h4>用户资产信息</h4>
             <address class="ng-scope">
               <strong>余额:</strong>{{stock.money}}<br>           
             </address> 
@@ -168,10 +171,10 @@ const filter = require("../../filter/filter");
 const page = require("../../interface/page");
 
 export default {
-  name: "user",
+  name: "cardcode",
   data() {
     return {
-      showItem:null,
+      userItem:null,
       searchkey:null,
 
       offsize:0,
@@ -190,15 +193,16 @@ export default {
   methods: {
     ...page,
     init(){ this.getAllUser(this.offsize,this.limit); },
+    test(){ apis.user.findAndCountAll(0,10).then(res => { print.log(res.data); }) },
     // 获取所有参赛者
-    getAllUser(offsize,limit) { apis.user.findAndCountAllByType(2,offsize,limit).then(res => { this.showItem=res.data }) },
+    getAllUser(offsize,limit) { apis.user.findAndCountAllByType(0,offsize,limit).then(res => { this.userItem=res.data }) },
 
     getWX(item){ this.wxinfo = item.info ; this.judge = 0},
     getAuthen(item){ this.authen = item.authen ; this.judge = 1},
     getStock(item){ this.stock = item.stock ; this.judge = 2},
     updateCondition(item,condition){
       apis.user.update(item.id,condition).then(res=>{
-        s_alert.Success("校园大使状态更新成功！", "成功更新一名校园大使状态", "success");
+        s_alert.Success("用户状态更新成功！", "成功更新一名用户状态", "success");
         this.init()
       })
     },
@@ -207,14 +211,14 @@ export default {
       if(confirm(`你确定要删除${item.name}？`)){
         apis.user.delete(item.id)
         .then(res => {
-          s_alert.Success("删除成功!", "成功移除了一名校园大使", "success");
+          s_alert.Success("删除成功!", "成功移除了一名用户", "success");
           this.init()
         })
       }
     },
     // 搜索
     search(){
-      if(this.searchkey != null) apis.user.findAndCountAllByTypeLikeByName(2,this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey.length != 0) apis.user.findAndCountAllLikeByName(this.searchkey).then(res => { this.userItem=res.data });
       else this.init()
     }
 
