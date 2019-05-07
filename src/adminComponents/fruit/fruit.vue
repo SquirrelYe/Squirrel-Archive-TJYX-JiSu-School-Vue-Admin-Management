@@ -2,76 +2,59 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-        <h4 class="pull-left page-title">管理员管理</h4>
+        <h4 class="pull-left page-title">水果一级菜单管理</h4>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-12">
+
+      <div class="col-md-12">                        
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">极速校园后台管理系统-用户管理</h3>
+            <h3 class="panel-title">极速校园后台管理系统-水果管理</h3>
           </div>
           <div class="panel-body">
             <div class="row">              
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <input type="text" class="form-control search-bar" placeholder="输入搜索管理员名称" v-model="searchkey" v-on:keyup.enter="search()">
+                <button  class="btn btn-primary waves-effect waves-light" data-toggle="modal" data-target="#Model" @click="creat()">添加水果一级菜单<i class="fa fa-plus"></i></button>
+                <input type="text" class="form-control search-bar" placeholder="输入搜索水果一级菜单名称" v-model="searchkey" v-on:keyup.enter="search()">
                 <div class="table-responsive">
                   <table class="table table-bordered table-striped table-hover" style id="datatable-editable">
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>用户编号</th>
-                        <th>openid</th>
-                        <th>用户名</th>
-                        <th>密码</th>
-                        <th>邮箱</th>
-                        <th>电话</th>
+                        <th>水果一级菜单ID</th>
+                        <th>名称</th>
                         <th>状态</th>
-                        <th>学校</th>
                         <th>创建时间</th>
                         <th>执行操作</th>
                       </tr>
                     </thead>
-                    <tbody v-if="userItem">
-                      <tr class="gradeX" v-for="(item,index) in userItem.rows" :key="index"  :class=" item.condition==-1? 'text-danger':'' ">
+                    <tbody v-if="showItem">
+                      <tr class="gradeX" v-for="(item,index) in showItem.rows" :key="index"  :class=" item.condition==-1? 'text-danger':'' ">
                         <td>{{(currentPage-1)*limit+index+1}}</td>
-                        <td>{{item.id}}</td>
-                        <td>{{item.openid}}</td>
-                        <td>{{item.name}}</td>
-                        <td>{{item.pass}}</td>
-                        <td>{{item.mail}}</td>
-                        <td>{{item.phone}}</td>
-                        <td>{{item.condition|formatCondition}}</td>
-                        <td v-if="item.school">{{item.school.name}}</td><td v-else></td>
+                        <td>F{{item.id}}</td>
+                        <td>{{item.title}}</td>
+                        <td>{{item.condition|formatExamCondition}}</td>
                         <td>{{item.created_at|formatTime}}</td>
                         <td class="actions">
-                          <a @click="getWX(item)" data-toggle="modal" data-target="#Model" >
-                            <i class="fa fa-weixin" data-toggle="tooltip" data-placement="top" title="微信授权信息"></i>
+                          <a @click="eItem(item)" data-toggle="modal" data-target="#Model">
+                            <i class="fa  fa-navicon" data-toggle="tooltip" data-placement="top" title="查看子类项目"></i>
                           </a>
-                          <a @click="getAuthen(item)" data-toggle="modal" data-target="#Model">
-                            <i class="fa fa-tag " data-toggle="tooltip" data-placement="top" title="认证信息"></i>
-                          </a>
-                          <a @click="getStock(item)" data-toggle="modal" data-target="#Model">
-                            <i class="fa  fa-credit-card" data-toggle="tooltip" data-placement="top" title="资产信息"></i>
-                          </a>
-                          <a @click="updateCondition(item,-1)" v-if="item.condition == 0">
-                            <i class="fa fa-pause" data-toggle="tooltip" data-placement="top" title="冻结用户"></i>
-                          </a>
-                          <a @click="updateCondition(item,0)" v-if="item.condition == -1">
-                            <i class="fa fa-play" data-toggle="tooltip" data-placement="top" title="解冻用户"></i>
+                          <a @click="editItem(item)" data-toggle="modal" data-target="#Model">
+                            <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="编辑一级菜单"></i>
                           </a>
                           <a @click="DeleteItem(item)">
-                            <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="删除用户"></i>
+                            <i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="删除一级菜单"></i>
                           </a>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
-                <div class="row" v-if="userItem">
+                <div class="row" v-if="showItem">
                   <div class="col-sm-6" >
-                    <div class="dataTables_info float-left" id="datatable-editable_info" role="status" aria-live="polite" >单页展示 {{limit}}项 总共 {{userItem.count}} 项</div>
+                    <div class="dataTables_info float-left" id="datatable-editable_info" role="status" aria-live="polite" >单页展示 {{limit}}项 总共 {{showItem.count}} 项</div>
                   </div>
                   <div class="col-sm-6">
                     <div class="dataTables_paginate paging_simple_numbers" id="datatable-editable_paginate" >
@@ -82,11 +65,8 @@
                         <li class="paginate_button active">
                           <a href="javascript:void(0)">{{currentPage}}</a>
                         </li>
-                        <li class="paginate_button next" :class="{ disabled: currentPage*limit>=userItem.count }">
+                        <li class="paginate_button next" :class="{ disabled: currentPage*limit>=showItem.count }">
                           <a href="javascript:void(0)" @click="nextPage()">下一页</a>
-                        </li>
-                        <li class="paginate_button next">
-                          <a href="javascript:void(0)" @click="test()">测试</a>
                         </li>
                       </ul>
                     </div>
@@ -99,62 +79,111 @@
       </div>      
     </div>  
 
-    <!-- 模态信息 -->
-    <div id="Model" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
+    <div id="Model" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true">
+      <div class="modal-dialog" style="width:55%">
+          <div class="modal-content">
           <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h4 class="modal-title" id="myModalLabel" v-if="judge == 0">微信授权信息</h4>
-          <h4 class="modal-title" id="myModalLabel" v-if="judge == 1">用户认证信息</h4>
-          <h4 class="modal-title" id="myModalLabel" v-if="judge == 2">用户资产信息</h4>
+          <h4 class="modal-title" id="myModalLabel" v-if="judge ==0">新建水果一级菜单信息</h4>
+          <h4 class="modal-title" id="myModalLabel" v-if="judge ==1">修改水果一级菜单信息</h4>
+          <h4 class="modal-title" id="myModalLabel" v-if="judge ==2">查看水果二级菜单信息</h4>
           </div>
-
-          <!-- 微信授权信息 -->
-          <div class="modal-body" align='center' v-if="judge == 0 && wxinfo">
-            <h4>微信授权信息</h4>
-            <address class="ng-scope">
-              <strong>昵称:</strong>{{wxinfo.nickName}}<br>
-              <strong>性别:</strong>{{wxinfo.gender | formatGender}}<br> 
-              <strong>省份:</strong>{{wxinfo.province}}<br>
-              <strong>城市:</strong>{{wxinfo.city}}<br>
-              <strong>国家:</strong>{{wxinfo.country}}<br>
-              <strong>头像:</strong><br> 
-              <img :src="wxinfo.avatarUrl" alt="attachment" class="img-thumbnail img-responsive" style="width:200px"><br>
-              <hr>              
-            </address> 
+            <div class="modal-body" align='center'>
+              <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                          <!-- 新建 -->
+                          <form class="form-horizontal" role="form" v-if="judge ==0">
+                              <div class="form-group">
+                                  <label class="col-md-2 control-label">名称</label>
+                                  <div class="col-md-10">
+                                      <input type="text" class="form-control" v-model="name">
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-md-2 control-label" style="font-weight:900"><strong>状态:</strong></div>
+                                <div class="col-md-10">
+                                    <select class="form-control" v-model="condition">
+                                        <option v-for="(item,index) in conditions" :key="index" :value="item.x">{{item.x |formatExamCondition}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                          </form>
+                          <!-- 编辑 -->
+                          <form class="form-horizontal" role="form" v-if="judge ==1 && eitem">
+                              <div class="form-group">
+                                  <label class="col-md-2 control-label">名称</label>
+                                  <div class="col-md-10">
+                                      <input type="text" class="form-control" v-model="eitem.title">
+                                  </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-md-2 control-label" style="font-weight:900"><strong>状态:</strong></div>
+                                <div class="col-md-10">
+                                    <select class="form-control" v-model="eitem.condition">
+                                        <option v-for="(item,index) in conditions" :key="index" :value="item.x">{{item.x |formatExamCondition}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                          </form>
+                          <!-- 子类 -->                          
+                          <div class="table-responsive" v-if="judge ==2">
+                            <table  style="table-layout:fixed" class="table table-bordered table-striped table-hover" id="datatable-editable" v-if="sitem.fitems">
+                              <thead>
+                                <tr>
+                                  <th>#</th>
+                                  <th>ID</th>
+                                  <th>logo</th>
+                                  <th>名称</th>
+                                  <th>标题</th>
+                                  <th>价格</th>
+                                  <th>详细信息</th>
+                                  <th>状态</th>
+                                </tr>
+                              </thead>
+                              <tbody v-if="sitem">
+                                <tr class="gradeX" v-for="(item,index) in sitem.fitems" :key="index">
+                                  <td>{{(currentPage-1)*limit+index+1}}</td>
+                                  <td>FI-{{item.id}}</td>
+                                  <td><img :src="host+item.logo" alt="logo" class="img-thumbnail img-responsive" style="width:100px"><br></td>
+                                  <td>{{item.name}}</td>
+                                  <td class="some" :title="item.title">{{item.title}}</td>
+                                  <td>{{item.price}}</td>
+                                  <td class="some" :title="item.title">{{item.detail}}</td>
+                                  <td>{{item.condition|formatExamItemCondition}}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+                          <div class="panel-heading" v-else><h4>暂无子类信息</h4></div>
+                          </div>                            
+                        </div>
+                    </div>
+                </div>
+            </div>         
           </div>
-          <div class="modal-body" align='center' v-if="judge == 0 && !wxinfo"><h4>未授权微信信息</h4></div>
-
-          <!-- 用户认证信息 -->
-          <div class="modal-body" align='center' v-if="judge == 1 && authen">
-            <h4>用户认证信息</h4>
-            <address class="ng-scope">
-              <strong>名字:</strong>{{authen.name}}<br>
-              <strong>学号:</strong>{{authen.xuehao}}<br> 
-              <strong>认证图片:</strong><br> 
-              <img :src="authen.rz_icon" alt="attachment" class="img-thumbnail img-responsive"><br>
-              <hr>              
-            </address> 
-          </div>
-          <div class="modal-body" align='center' v-if="judge == 1 && !authen"><h4>未提交认证信息</h4></div>
-
-          <!-- 用户资产信息 -->
-          <div class="modal-body" align='center' v-if="judge == 2 && stock">
-            <h4>用户资产信息</h4>
-            <address class="ng-scope">
-              <strong>余额:</strong>{{stock.money}}<br>           
-            </address> 
-          </div>
-          <div class="modal-body" align='center' v-if="judge == 2 && !stock"><h4>暂无资产信息</h4></div>
 
           <div class="modal-footer">
           <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
-          <button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">确认</button>
+          <button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal" v-if="judge == 0" @click="toCreat()">提交新增</button>
+          <button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal" v-if="judge == 1" @click="toEdit()">提交修改</button>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- 模态信息模板中 -->
+    <!-- <div id="Model" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">        
+      </div>
+    </div> -->
+    <!-- 模态信息模板大 -->
+    <!-- <div id="custom-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true">
+      <div class="modal-dialog" style="width:55%">
+      </div>
+    </div> -->
+
+    
     
   </div>
 </template>
@@ -171,10 +200,10 @@ const filter = require("../../filter/filter");
 const page = require("../../interface/page");
 
 export default {
-  name: "cardcode",
+  name: "journey",
   data() {
     return {
-      userItem:null,
+      showItem:null,
       searchkey:null,
 
       offsize:0,
@@ -182,46 +211,65 @@ export default {
       currentPage:1,
       
       judge:0,
-      wxinfo:null,
-      stock:null,
-      authen:null,
+      conditions:[{ x:-1 },{ x:0} ],
+
+      name:null,
+      condition:null,
+
+      eitem:null,
+      sitem:null,
+      host:null
     };
   },
   filters:{ ...filter },
-  mounted() { this.init() },
+  mounted() { this.init() ;this.host= this.$host},
   updated() {  $(function () { $("[data-toggle='tooltip']").tooltip(); }); },
   methods: {
     ...page,
-    init(){ this.getAllUser(this.offsize,this.limit); },
-    test(){ apis.user.findAndCountAll(0,10).then(res => { print.log(res.data); }) },
-    // 获取所有参赛者
-    getAllUser(offsize,limit) { apis.user.findAndCountAllByType(0,offsize,limit).then(res => { this.userItem=res.data }) },
-
-    getWX(item){ this.wxinfo = item.info ; this.judge = 0},
-    getAuthen(item){ this.authen = item.authen ; this.judge = 1},
-    getStock(item){ this.stock = item.stock ; this.judge = 2},
-    updateCondition(item,condition){
-      apis.user.update(item.id,condition).then(res=>{
-        s_alert.Success("用户状态更新成功！", "成功更新一名用户状态", "success");
-        this.init()
-      })
+    init(){ this.findAndCountAll(this.offsize,this.limit); },
+    // 获取所有水果一级菜单
+    findAndCountAll(offsize,limit) { apis.fruit.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data }) },
+    creat(){ this.judge =0; this.name =null ; this.condition = null },
+    // 新增一级菜单
+    toCreat(){
+      print.log(this.name , this.condition)
+      if(this.name !=null && this.condition != null){
+        apis.fruit.creat(this.name , this.condition)
+        .then(res=>{
+          s_alert.Success("新建一级菜单成功!", "成功新建一个菜单水果一级菜单", "success");
+          this.init()
+        })
+      }else s_alert.Warning('新建一级菜单失败','输入非法')
     },
-    // 删除参赛者
+    editItem(item){ this.judge=1; this.eitem = JSON.parse(JSON.stringify(item)) ;},
+    toEdit(){
+      print.log(this.eitem)
+      if(this.eitem != null){
+        apis.fruit.update(this.eitem.id ,this.eitem.title , this.eitem.condition)
+        .then(res=>{
+          if(res.data[0]){
+            s_alert.Success("编辑一级菜单成功!", "成功编辑一个菜单水果一级菜单", "success");
+            this.init()
+          }else s_alert.Warning('编辑失败','请联系技术人员')
+        })
+      }else s_alert.Warning('新建一级菜单失败','输入非法')
+    },
+    eItem(item){ this.judge =2; this.sitem = item ; },
+    // 删除水果一级菜单
     DeleteItem(item){
-      if(confirm(`你确定要删除${item.name}？`)){
-        apis.user.delete(item.id)
+      if(confirm(`你确定要删除${item.title}？`)){
+        apis.fruit.delete(item.id)
         .then(res => {
-          s_alert.Success("删除成功!", "成功移除了一名用户", "success");
+          s_alert.Success("删除成功!", "成功移除了一个水果一级菜单", "success");
           this.init()
         })
       }
     },
     // 搜索
     search(){
-      if(this.searchkey.length != 0) apis.user.findAndCountAllLikeByName(this.searchkey).then(res => { this.userItem=res.data });
+      if(this.searchkey) apis.fruit.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
       else this.init()
     }
-
   }
 };
 </script>

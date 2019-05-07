@@ -83,7 +83,7 @@ import app from "../../App.vue";
 var App = app;
 
 export default {
-    name: "logging",
+    name: "login",
     data() {
         return {
             name: null,
@@ -100,17 +100,14 @@ export default {
             if (this.name == null || this.pass == null) {
                 s_alert.basic("用户名或密码不能为空");
             } else {
-                req.post_Param("/api/ent/user", {
-                    judge: 6,
-                    name: this.name,
-                    pass: this.pass
-                }).then(res => {
+               apis.user.login(this.name , this.pass)
+               .then(res => {
                     print.log(res.data);
-                    if (res.data != '') {
+                    if (res.data) {
                         if(res.data.type == 1){
                             ses.setSessionStorage('userinfo',JSON.stringify(res.data))
                             s_alert.Success( "登录成功！", "现在可以对游戏进行设置", "success" );
-                            this.$router.push({ name: "game" });
+                            this.$router.push({ name: "menu" });
                         }else{
                             s_alert.Success( "没有权限进入！", "此系统仅限管理员能操作", "warning" )
                         }

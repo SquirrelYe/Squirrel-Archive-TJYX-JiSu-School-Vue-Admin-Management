@@ -218,7 +218,7 @@ export default {
     },
     // 搜索
     search(){
-      if(this.searchkey != null) apis.user.findAndCountAllByTypeLikeByName(0,this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.user.findAndCountAllByTypeLikeByName(0,this.searchkey).then(res => { this.showItem=res.data });
       else this.init()
     }
 

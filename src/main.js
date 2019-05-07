@@ -3,13 +3,22 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import axios from 'axios'
+import Vuex from 'vuex'
+import store from './vuex/index'
 
 Vue.config.productionTip = false
+Vue.use(Vuex)
+
+Vue.prototype.$axios = axios
+Vue.prototype.$uploadpath = 'http://localhost:11111/upload'
+Vue.prototype.$host = 'http://localhost:11111/'
 
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>'
 })

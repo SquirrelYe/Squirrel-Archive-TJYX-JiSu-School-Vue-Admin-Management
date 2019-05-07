@@ -4,7 +4,7 @@
 
             <div class="row">
                 <div class="col-sm-12">
-                    <h4 class="page-title">管理员端</h4>
+                    <h4 class="page-title">极速校园后台管理系统-管理员端</h4>
                 </div>
             </div>
 
@@ -14,7 +14,7 @@
                         <span class="mini-stat-icon"><i class="ion-ios7-location"></i></span>
                         <div class="mini-stat-info text-right">
                             <span class="counter">521</span>
-                            总共参赛人数数量
+                            总共用户数量
                         </div>
                         <div class="tiles-progress">
                             <div class="m-t-20">
@@ -28,11 +28,11 @@
                         <span class="mini-stat-icon"><i class="md md-aspect-ratio"></i></span>
                         <div class="mini-stat-info text-right">
                             <span class="counter">956</span>
-                            总共参赛人数
+                            总共加盟学校
                         </div>
                         <div class="tiles-progress">
                             <div class="m-t-20">
-                                <h5 class="text-uppercase text-white m-0">上周新增赛事<span class="pull-right">59</span></h5>
+                                <h5 class="text-uppercase text-white m-0">上周新增学校<span class="pull-right">59</span></h5>
                             </div>
                         </div>
                     </div>
@@ -75,7 +75,7 @@
                     <div class="portlet">
                         <div class="portlet-heading">
                             <h3 class="portlet-title text-dark text-uppercase">
-                                赛事数据
+                                交易数据
                             </h3>
                             <div class="clearfix"></div>
                         </div>
@@ -96,7 +96,7 @@
                     <div class="portlet">
                         <div class="portlet-heading">
                             <h3 class="portlet-title text-dark text-uppercase">
-                                赛事统计
+                                交易统计
                             </h3>
                             <div class="clearfix"></div>
                         </div>

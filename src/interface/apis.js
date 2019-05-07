@@ -17,10 +17,12 @@ module.exports = {
     },
     // 学校信息
     school: {
+        findAndCountAll(o,l){ return req.postParam('api/ent/school', { 'judge': 0, 'offset': o, 'limit': l }) },
         creat(n, d, p) { return req.postParam('api/ent/school', { 'judge': 1, 'name': n, 'detail': d, 'province': p }) },
         delete(id) { return req.postParam('api/ent/school', { 'judge': 2, 'id': id }) },
         update(id, n, d, p) { return req.postParam('api/ent/school', { 'judge': 3, 'id': id, 'name': n, 'detail': d, 'province': p }) },
-
+ 
+        findAndCountAllLikeByName(n) { return req.postParam('api/ent/school', { 'judge':4, 'name': n }) },
     },
     // 认证信息
     authen: {
@@ -91,44 +93,63 @@ module.exports = {
     // 考试二级菜单
     eitem: {
         delete(id) { return req.postParam('api/ent/eitem', { 'judge': 2, 'id': id }) },
+        creat(l, n, t, p, d, e, c) { return req.postParam('api/ent/eitem', { 'judge': 1, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'exam_id': e, 'condition': c }) },
+        updateCondition(id, c) { return req.postParam('api/ent/eitem', { 'judge': 3, 'id': id, 'condition': c }) },
+        update(id,l, n, t, p, d, e, c) { return req.postParam('api/ent/eitem', { 'judge': 3, 'id': id, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'exam_id': e, 'condition': c }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/eitem', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/eitem', { 'judge': 1, 'id': id }) },
         findOneByExamId(e, o, l) { return req.postParam('api/ass/eitem', { 'judge': 2, 'exam_id': e, 'offset': o, 'limit': l }) },
+        findAndCountAllLikeByName(n) { return req.postParam('api/ass/eitem', { 'judge': 3, 'name': n }) },
     },
     // 旅游一级菜单
     journey: {
+        creat(t, c) { return req.postParam('api/ent/journey', { 'judge': 1, 'title': t, 'condition': c }) },
         delete(id) { return req.postParam('api/ent/journey', { 'judge': 2, 'id': id }) },
+        update(id, t, c) { return req.postParam('api/ent/journey', { 'judge': 3, 'id': id, 'title': t, 'condition': c }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/journey', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/journey', { 'judge': 1, 'id': id }) },
+        findAndCountAllLikeByName(n) { return req.postParam('api/ass/journey', { 'judge': 2, 'name': n }) },
     },
     // 旅游二级菜单
     jitem: {
         delete(id) { return req.postParam('api/ent/jitem', { 'judge': 2, 'id': id }) },
+        creat(l, n, t, p, d, j, c) { return req.postParam('api/ent/jitem', { 'judge': 1, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'journey_id': j, 'condition': c }) },
+        updateCondition(id, c) { return req.postParam('api/ent/jitem', { 'judge': 3, 'id': id, 'condition': c }) },
+        update(id,l, n, t, p, d, j, c) { return req.postParam('api/ent/jitem', { 'judge': 3, 'id': id, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'journey_id': j, 'condition': c }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/jitem', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/jitem', { 'judge': 1, 'id': id }) },
         findByJourneyId(j, o, l) { return req.postParam('api/ass/jitem', { 'judge': 2, 'journey_id': j, 'offset': o, 'limit': l }) },
+        findAndCountAllLikeByName(n) { return req.postParam('api/ass/jitem', { 'judge': 3, 'name': n }) },
     },
     // 水果一级菜单
     fruit: {
+        creat(t, c) { return req.postParam('api/ent/fruit', { 'judge': 1, 'title': t, 'condition': c }) },
         delete(id) { return req.postParam('api/ent/fruit', { 'judge': 2, 'id': id }) },
+        update(id, t, c) { return req.postParam('api/ent/fruit', { 'judge': 3, 'id': id, 'title': t, 'condition': c }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/fruit', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/fruit', { 'judge': 1, 'id': id }) },
+        findAndCountAllLikeByName(n) { return req.postParam('api/ass/fruit', { 'judge': 2, 'name': n }) },
     },
     // 水果二级菜单
     fitem: {
         delete(id) { return req.postParam('api/ent/fitem', { 'judge': 2, 'id': id }) },
+        creat(l, n, t, p, d, j, c) { return req.postParam('api/ent/fitem', { 'judge': 1, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'fruit_id': j, 'condition': c }) },
+        updateCondition(id, c) { return req.postParam('api/ent/fitem', { 'judge': 3, 'id': id, 'condition': c }) },
+        update(id,l, n, t, p, d, j, c) { return req.postParam('api/ent/fitem', { 'judge': 3, 'id': id, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'fruit_id': j, 'condition': c }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/fitem', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/fitem', { 'judge': 1, 'id': id }) },
         findByFruitId(f, o, l) { return req.postParam('api/ass/fitem', { 'judge': 2, 'fruit_id': f, 'offset': o, 'limit': l }) },
+        findAndCountAllLikeByName(n) { return req.postParam('api/ass/fitem', { 'judge': 3, 'name': n }) },
     },
     // 购物车
     cart: {
         delete(id) { return req.postParam('api/ent/cart', { 'judge': 2, 'id': id }) },
+        updateJudge(id , j) { return req.postParam('api/ent/cart', { 'judge': 3, 'id': id,'judgec':j }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/cart', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/cart', { 'judge': 1, 'id': id }) },

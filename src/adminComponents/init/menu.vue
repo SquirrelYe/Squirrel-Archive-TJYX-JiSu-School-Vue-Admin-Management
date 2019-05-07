@@ -67,9 +67,9 @@
               <img :src="icon_src" alt class="thumb-md img-circle">
             </div>
             <div class="user-info">
-              <div class="dropdown" v-if="userinfo">
+              <div class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                  {{userinfo.cname}}
+                  极速校园
                   <span class="caret"></span>
                 </a>                
               </div>
@@ -118,11 +118,11 @@
                 </a>
                 <ul class="list-unstyled">
                   <li>
-                    <a href="javascript:void(0)" @click="cardlist()">开卡列表</a>
+                    <a href="javascript:void(0)" @click="cardlist()">开卡订单列表</a>
                   </li>
-                  <li>
+                  <!-- <li>
                     <a href="javascript:void(0)" @click="cardcode()">二维码管理</a>
-                  </li>
+                  </li> -->
                 </ul>
               </li>
 
@@ -135,12 +135,8 @@
                   </span>
                 </a>
                 <ul class="list-unstyled">
-                  <li>
-                    <a href="javascript:void(0)" @click="ltran()">订单列表</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)" @click="lanalysis()">流水统计</a>
-                  </li>
+                  <li> <a href="javascript:void(0)" @click="ltran()">订单列表</a> </li>
+                  <li> <a href="javascript:void(0)" @click="lanalysis()">流水统计</a> </li>
                 </ul>
               </li>
 
@@ -153,15 +149,10 @@
                   </span>
                 </a>
                 <ul class="list-unstyled">
-                  <li>
-                    <a href="javascript:void(0)" @click="exam()">一级菜单</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)" @click="eitem()">考试项目</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)" @click="eanalysis()">流水统计</a>
-                  </li>
+                  <li> <a href="javascript:void(0)" @click="exam()">一级菜单</a> </li>
+                  <li> <a href="javascript:void(0)" @click="eitem()">考试项目</a> </li>
+                  <li> <a href="javascript:void(0)" @click="etran()">订单列表</a> </li>
+                  <li> <a href="javascript:void(0)" @click="eanalysis()">流水统计</a> </li>
                 </ul>
               </li>
 
@@ -174,15 +165,10 @@
                   </span>
                 </a>
                 <ul class="list-unstyled">
-                  <li>
-                    <a href="javascript:void(0)" @click="journey()">一级菜单</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)" @click="jitem()">旅游项目</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)" @click="janalysis()">流水统计</a>
-                  </li>
+                  <li> <a href="javascript:void(0)" @click="journey()">一级菜单</a> </li>
+                  <li> <a href="javascript:void(0)" @click="jitem()">旅游项目</a> </li>
+                  <li> <a href="javascript:void(0)" @click="jtran()">订单列表</a> </li>
+                  <li> <a href="javascript:void(0)" @click="janalysis()">流水统计</a>  </li>
                 </ul>
               </li>
 
@@ -195,15 +181,10 @@
                   </span>
                 </a>
                 <ul class="list-unstyled">
-                  <li>
-                    <a href="javascript:void(0)" @click="fruit()">一级菜单</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)" @click="fitem()">水果项目</a>
-                  </li>
-                  <li>
-                    <a href="javascript:void(0)" @click="fanalysis()">流水统计</a>
-                  </li>
+                  <li> <a href="javascript:void(0)" @click="fruit()">一级菜单</a> </li>
+                  <li> <a href="javascript:void(0)" @click="fitem()">水果项目</a>  </li>
+                  <li> <a href="javascript:void(0)" @click="ftran()">订单列表</a> </li>
+                  <li> <a href="javascript:void(0)" @click="fanalysis()">流水统计</a> </li>
                 </ul>
               </li>
 
@@ -279,18 +260,13 @@ export default {
   data() {
     return {
       icon_src:"static/images/users/avatar-6.jpg",
-      userinfo:{cname :'风继续吹'},
-      gameinfo:null
     };
   },
   beforeMount() {
     
   },
   mounted() {
-    if(ses.getSessionStorage('userinfo') && ses.getSessionStorage('gameinfo')){
-      this.userinfo = JSON.parse(ses.getSessionStorage('userinfo'));
-      this.gameinfo = JSON.parse(ses.getSessionStorage('gameinfo'));
-    }
+    this.$router.push({name:'index'})
   },
   methods: {
     
@@ -307,14 +283,17 @@ export default {
 
     exam(){this.$router.push({name:'exam'})},
     eitem(){this.$router.push({name:'eitem'})},
+    etran(){this.$router.push({name:'etran'})},
     eanalysis(){this.$router.push({name:'eanalysis'})},
 
     journey(){this.$router.push({name:'journey'})},
     jitem(){this.$router.push({name:'jitem'})},
+    jtran(){this.$router.push({name:'jtran'})},
     janalysis(){this.$router.push({name:'janalysis'})},
 
     fruit(){this.$router.push({name:'fruit'})},
     fitem(){this.$router.push({name:'fitem'})},
+    ftran(){this.$router.push({name:'ftran'})},
     fanalysis(){this.$router.push({name:'fanalysis'})},
     
     schooldic(){this.$router.push({name:'schooldic'})},

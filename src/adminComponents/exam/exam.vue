@@ -79,10 +79,9 @@
       </div>      
     </div>  
 
-    <!-- 模态信息 -->
-    <div id="Model" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
+    <div id="Model" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true">
+      <div class="modal-dialog" style="width:55%">
+          <div class="modal-content">
           <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
           <h4 class="modal-title" id="myModalLabel" v-if="judge ==0">新建考试一级菜单信息</h4>
@@ -112,25 +111,25 @@
                             </div>
                           </form>
                           <!-- 编辑 -->
-                          <form class="form-horizontal" role="form" v-if="judge ==1">
+                          <form class="form-horizontal" role="form" v-if="judge ==1 && eitem">
                               <div class="form-group">
                                   <label class="col-md-2 control-label">名称</label>
                                   <div class="col-md-10">
-                                      <input type="text" class="form-control" v-model="name">
+                                      <input type="text" class="form-control" v-model="eitem.title">
                                   </div>
                               </div>
                               <div class="form-group">
                                 <div class="col-md-2 control-label" style="font-weight:900"><strong>状态:</strong></div>
                                 <div class="col-md-10">
-                                    <select class="form-control" v-model="condition">
+                                    <select class="form-control" v-model="eitem.condition">
                                         <option v-for="(item,index) in conditions" :key="index" :value="item.x">{{item.x |formatExamCondition}}</option>
                                     </select>
                                 </div>
                             </div>
                           </form>
                           <!-- 子类 -->                          
-                          <div class="table-responsive">
-                            <table class="table table-bordered table-striped table-hover" style id="datatable-editable">
+                          <div class="table-responsive" v-if="judge ==2">
+                            <table style="table-layout:fixed" class="table table-bordered table-striped table-hover" id="datatable-editable" v-if="sitem.eitems">
                               <thead>
                                 <tr>
                                   <th>#</th>
@@ -146,16 +145,17 @@
                               <tbody v-if="sitem">
                                 <tr class="gradeX" v-for="(item,index) in sitem.eitems" :key="index">
                                   <td>{{(currentPage-1)*limit+index+1}}</td>
-                                  <td>E{{item.id}}</td>
-                                  <td>{{item.logo}}</td>
+                                  <td>EI-{{item.id}}</td>
+                                  <td><img :src="host+item.logo" alt="logo" class="img-thumbnail img-responsive" style="width:100px"><br></td>
                                   <td>{{item.name}}</td>
-                                  <td>{{item.title}}</td>
+                                  <td class="some" :title="item.title">{{item.title}}</td>
                                   <td>{{item.price}}</td>
-                                  <td>{{item.detail}}</td>
+                                  <td class="some" :title="item.title">{{item.detail}}</td>
                                   <td>{{item.condition|formatExamItemCondition}}</td>
                                 </tr>
                               </tbody>
                             </table>
+                            <div class="panel-heading" v-else><h4>暂无子类信息</h4></div>
                           </div>                            
                         </div>
                     </div>
@@ -171,6 +171,19 @@
         </div>
       </div>
     </div>
+
+    <!-- 模态信息模板中 -->
+    <!-- <div id="Model" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+      <div class="modal-dialog">        
+      </div>
+    </div> -->
+    <!-- 模态信息模板大 -->
+    <!-- <div id="custom-width-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true">
+      <div class="modal-dialog" style="width:55%">
+      </div>
+    </div> -->
+
+    
     
   </div>
 </template>
@@ -202,25 +215,20 @@ export default {
 
       name:null,
       condition:null,
+
       eitem:null,
-      sitem:null
+      sitem:null,
+      host:null
     };
   },
   filters:{ ...filter },
-  mounted() { this.init() },
+  mounted() { this.init() ;this.host=this.$host},
   updated() {  $(function () { $("[data-toggle='tooltip']").tooltip(); }); },
   methods: {
     ...page,
     init(){ this.findAndCountAll(this.offsize,this.limit); },
     // 获取所有考试一级菜单
     findAndCountAll(offsize,limit) { apis.exam.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data }) },
-
-    updateCondition(item,condition){
-      apis.user.update(item.id,condition).then(res=>{
-        s_alert.Success("用户状态更新成功！", "成功更新一个考试一级菜单状态", "success");
-        this.init()
-      })
-    },
     creat(){ this.judge =0; this.name =null ; this.condition = null },
     // 新增一级菜单
     toCreat(){
@@ -233,16 +241,18 @@ export default {
         })
       }else s_alert.Warning('新建一级菜单失败','输入非法')
     },
-    editItem(item){ this.judge=1; this.eitem = item ; this.name =null ; this.condition = null},
+    editItem(item){ this.judge=1; this.eitem = JSON.parse(JSON.stringify(item)) ;},
     toEdit(){
-      print.log(this.eitem, this.name , this.condition)
-      apis.exam.update(this.eitem.id ,this.name , this.condition)
-      .then(res=>{
-        if(res.data[0]){
-          s_alert.Success("编辑一级菜单成功!", "成功编辑一个菜单考试一级菜单", "success");
-          this.init()
-        }else s_alert.Warning('编辑失败','请联系技术人员')
-      })
+      print.log(this.eitem)
+      if(this.eitem != null){
+        apis.exam.update(this.eitem.id ,this.eitem.title , this.eitem.condition)
+        .then(res=>{
+          if(res.data[0]){
+            s_alert.Success("编辑一级菜单成功!", "成功编辑一个菜单考试一级菜单", "success");
+            this.init()
+          }else s_alert.Warning('编辑失败','请联系技术人员')
+        })
+      }else s_alert.Warning('新建一级菜单失败','输入非法')
     },
     eItem(item){ this.judge =2; this.sitem = item ; },
     // 删除考试一级菜单
@@ -257,22 +267,9 @@ export default {
     },
     // 搜索
     search(){
-      if(this.searchkey != null) apis.exam.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.exam.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
       else this.init()
-    },
-    // 新建考试一级菜单
-    creatAdmin(){
-      apis.user.creatAdmin(this.name, this.pass, this.mail, this.phone, this.school)
-      .then(res=>{
-        if(res.data[1]){
-          s_alert.Success('创建成功','','success')
-          this.init()
-        }else{
-          s_alert.Warning('创建失败','用户名或邮箱被占用')
-        }
-      })
     }
-
   }
 };
 </script>

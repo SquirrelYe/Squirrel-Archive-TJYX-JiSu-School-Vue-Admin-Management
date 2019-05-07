@@ -215,7 +215,7 @@ export default {
      },
     // 搜索
     search(){
-      if(this.searchkey!=null ) apis.logistic.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.logistic.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
       else this.init()
     }
 

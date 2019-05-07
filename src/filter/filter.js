@@ -34,7 +34,18 @@ function formatExamItemCondition(x){
     if(x==-1) return '暂停销售';
     if(x==0) return '正常';
 }
-
+function formatTranCondition(x){
+    if(x==-1) return '取消';
+    if(x==0) return '加入购物车';
+    if(x==1) return '已付款';
+}
+function formatTranJudge(x){
+    if(x==-1) return '订单取消';
+    if(x==0) return '未发货';
+    if(x==1) return '已发货';
+    if(x==2) return '已完成';
+    if(x==3) return '已评价';
+}
 module.exports={
     formatTime,
     formatCondition,
@@ -43,4 +54,6 @@ module.exports={
     formatLogisticCondition,
     formatExamCondition,
     formatExamItemCondition,
+    formatTranCondition,
+    formatTranJudge,
 }

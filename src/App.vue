@@ -24,4 +24,14 @@ export default {
 
 <style>
 
+table td{
+  vertical-align: middle !important;
+}
+
+.some{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap
+}
+
 </style>

@@ -2,96 +2,58 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-12">
-        <h4 class="pull-left page-title">管理员管理</h4>
+        <h4 class="pull-left page-title">开卡二维码管理</h4>
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-12">
+
+      <div class="col-md-12">                        
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h3 class="panel-title">极速校园后台管理系统-用户管理</h3>
+            <h3 class="panel-title">极速校园后台管理系统-开卡二维码管理</h3>
           </div>
           <div class="panel-body">
             <div class="row">              
-              <div class="col-md-12 col-sm-12 col-xs-12">
-                <input type="text" class="form-control search-bar" placeholder="输入搜索管理员名称" v-model="searchkey" v-on:keyup.enter="search()">
+              <div class="col-md-12 col-sm-12 col-xs-12">                
                 <div class="table-responsive">
-                  <table class="table table-bordered table-striped table-hover" style id="datatable-editable">
+                  <table  style="table-layout:fixed" class="table table-bordered table-striped table-hover" id="datatable-editable">
                     <thead>
                       <tr>
                         <th>#</th>
-                        <th>用户编号</th>
-                        <th>openid</th>
-                        <th>用户名</th>
-                        <th>密码</th>
-                        <th>邮箱</th>
-                        <th>电话</th>
+                        <th>项目ID</th>
+                        <th>一级分类</th>
+                        <th>logo</th>
+                        <th>名称</th>
+                        <th>标题</th>
+                        <th>价格</th>
+                        <th>详细信息</th>
                         <th>状态</th>
-                        <th>学校</th>
                         <th>创建时间</th>
-                        <th>执行操作</th>
+                        <th>操作</th>                        
                       </tr>
                     </thead>
-                    <tbody v-if="userItem">
-                      <tr class="gradeX" v-for="(item,index) in userItem.rows" :key="index"  :class=" item.condition==-1? 'text-danger':'' ">
+                    <tbody v-if="showItem">
+                      <tr class="gradeX" v-for="(item,index) in showItem.rows" :key="index" :class=" item.condition==-1? 'text-danger':'' ">
                         <td>{{(currentPage-1)*limit+index+1}}</td>
-                        <td>{{item.id}}</td>
-                        <td>{{item.openid}}</td>
+                        <td>EI-{{item.id}}</td>
+                         <td v-if="item.exam">{{item.exam.title}}</td><td v-else></td>
+                        <td><img :src="host+item.logo" alt="logo" class="img-thumbnail img-responsive" style="width:100px"><br></td>
                         <td>{{item.name}}</td>
-                        <td>{{item.pass}}</td>
-                        <td>{{item.mail}}</td>
-                        <td>{{item.phone}}</td>
-                        <td>{{item.condition|formatCondition}}</td>
-                        <td v-if="item.school">{{item.school.name}}</td><td v-else></td>
+                        <td :title="item.detail" class="some">{{item.title}}</td>
+                        <td>{{item.price}}</td>
+                        <td :title="item.detail" class="some"> {{item.detail}} </td>
+                        <td>{{item.condition|formatExamItemCondition}}</td>
                         <td>{{item.created_at|formatTime}}</td>
                         <td class="actions">
-                          <a @click="getWX(item)" data-toggle="modal" data-target="#Model" >
-                            <i class="fa fa-weixin" data-toggle="tooltip" data-placement="top" title="微信授权信息"></i>
-                          </a>
-                          <a @click="getAuthen(item)" data-toggle="modal" data-target="#Model">
-                            <i class="fa fa-tag " data-toggle="tooltip" data-placement="top" title="认证信息"></i>
-                          </a>
-                          <a @click="getStock(item)" data-toggle="modal" data-target="#Model">
-                            <i class="fa  fa-credit-card" data-toggle="tooltip" data-placement="top" title="资产信息"></i>
-                          </a>
-                          <a @click="updateCondition(item,-1)" v-if="item.condition == 0">
-                            <i class="fa fa-pause" data-toggle="tooltip" data-placement="top" title="冻结用户"></i>
-                          </a>
-                          <a @click="updateCondition(item,0)" v-if="item.condition == -1">
-                            <i class="fa fa-play" data-toggle="tooltip" data-placement="top" title="解冻用户"></i>
-                          </a>
-                          <a @click="DeleteItem(item)">
-                            <i class="fa fa-trash" data-toggle="tooltip" data-placement="top" title="删除用户"></i>
+                          <a @click="editItem(item)" data-toggle="modal" data-target="#Model">
+                            <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="编辑项目"></i>
                           </a>
                         </td>
                       </tr>
                     </tbody>
                   </table>
-                </div>
-                <div class="row" v-if="userItem">
-                  <div class="col-sm-6" >
-                    <div class="dataTables_info float-left" id="datatable-editable_info" role="status" aria-live="polite" >单页展示 {{limit}}项 总共 {{userItem.count}} 项</div>
-                  </div>
-                  <div class="col-sm-6">
-                    <div class="dataTables_paginate paging_simple_numbers" id="datatable-editable_paginate" >
-                      <ul class="pagination" style="float:right">
-                        <li class="paginate_button previous" :class="{ disabled: currentPage==1 }">
-                          <a href="javascript:void(0)" @click="previousPage()">上一页</a>
-                        </li>
-                        <li class="paginate_button active">
-                          <a href="javascript:void(0)">{{currentPage}}</a>
-                        </li>
-                        <li class="paginate_button next" :class="{ disabled: currentPage*limit>=userItem.count }">
-                          <a href="javascript:void(0)" @click="nextPage()">下一页</a>
-                        </li>
-                        <li class="paginate_button next">
-                          <a href="javascript:void(0)" @click="test()">测试</a>
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>                
+                </div>             
               </div>
             </div>
           </div>
@@ -99,63 +61,66 @@
       </div>      
     </div>  
 
-    <!-- 模态信息 -->
-    <div id="Model" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-      <div class="modal-dialog">
-        <div class="modal-content">
+    <div id="Model" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="custom-width-modalLabel" aria-hidden="true">
+      <div class="modal-dialog" style="width:55%">
+          <div class="modal-content">
           <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-          <h4 class="modal-title" id="myModalLabel" v-if="judge == 0">微信授权信息</h4>
-          <h4 class="modal-title" id="myModalLabel" v-if="judge == 1">用户认证信息</h4>
-          <h4 class="modal-title" id="myModalLabel" v-if="judge == 2">用户资产信息</h4>
+          <h4 class="modal-title" id="myModalLabel">修改开卡二维码信息</h4>
           </div>
-
-          <!-- 微信授权信息 -->
-          <div class="modal-body" align='center' v-if="judge == 0 && wxinfo">
-            <h4>微信授权信息</h4>
-            <address class="ng-scope">
-              <strong>昵称:</strong>{{wxinfo.nickName}}<br>
-              <strong>性别:</strong>{{wxinfo.gender | formatGender}}<br> 
-              <strong>省份:</strong>{{wxinfo.province}}<br>
-              <strong>城市:</strong>{{wxinfo.city}}<br>
-              <strong>国家:</strong>{{wxinfo.country}}<br>
-              <strong>头像:</strong><br> 
-              <img :src="wxinfo.avatarUrl" alt="attachment" class="img-thumbnail img-responsive" style="width:200px"><br>
-              <hr>              
-            </address> 
+            <div class="modal-body" align='center'>
+              <div class="row">
+                <div class="col-sm-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                          <!-- 编辑 -->
+                          <form class="form-horizontal" role="form" v-if="judge ==1 && currentItem">
+                              <div class="form-group">
+                                <div class="col-md-2 control-label"><strong>分类：</strong></div>
+                                <div class="col-md-10">
+                                    <select class="form-control" v-model="currentItem.exam_id">
+                                        <option v-for="(item,index) in exam.rows" :key="index" :value="item.id">{{item.title}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                              <div class="form-group">
+                                  <label class="col-md-2 control-label">名称：</label>
+                                  <div class="col-md-10"> <input type="text" class="form-control" v-model="currentItem.name"> </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-md-2 control-label">标题：</label>
+                                  <div class="col-md-10"> <textarea type="text" class="form-control" v-model="currentItem.title"></textarea> </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-md-2 control-label">价格：</label>
+                                  <div class="col-md-10"> <input type="number" class="form-control" v-model="currentItem.price"> </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-md-2 control-label">介绍：</label>
+                                  <div class="col-md-10"> <textarea type="text" class="form-control" v-model="currentItem.detail"></textarea> </div>
+                              </div>
+                              <div class="form-group">
+                                <div class="col-md-2 control-label"><strong>状态：</strong></div>
+                                <div class="col-md-10">
+                                    <select class="form-control" v-model="currentItem.condition">
+                                        <option v-for="(item,index) in conditions" :key="index" :value="item.x">{{item.x |formatExamItemCondition}}</option>
+                                    </select>
+                                </div>
+                            </div>
+                          </form>                     
+                        </div>
+                    </div>
+                </div>
+            </div>         
           </div>
-          <div class="modal-body" align='center' v-if="judge == 0 && !wxinfo"><h4>未授权微信信息</h4></div>
-
-          <!-- 用户认证信息 -->
-          <div class="modal-body" align='center' v-if="judge == 1 && authen">
-            <h4>用户认证信息</h4>
-            <address class="ng-scope">
-              <strong>名字:</strong>{{authen.name}}<br>
-              <strong>学号:</strong>{{authen.xuehao}}<br> 
-              <strong>认证图片:</strong><br> 
-              <img :src="authen.rz_icon" alt="attachment" class="img-thumbnail img-responsive"><br>
-              <hr>              
-            </address> 
-          </div>
-          <div class="modal-body" align='center' v-if="judge == 1 && !authen"><h4>未提交认证信息</h4></div>
-
-          <!-- 用户资产信息 -->
-          <div class="modal-body" align='center' v-if="judge == 2 && stock">
-            <h4>用户资产信息</h4>
-            <address class="ng-scope">
-              <strong>余额:</strong>{{stock.money}}<br>           
-            </address> 
-          </div>
-          <div class="modal-body" align='center' v-if="judge == 2 && !stock"><h4>暂无资产信息</h4></div>
 
           <div class="modal-footer">
           <button type="button" class="btn btn-default waves-effect" data-dismiss="modal">关闭</button>
-          <button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal">确认</button>
+          <button type="button" class="btn btn-primary waves-effect waves-light" data-dismiss="modal" @click="toEdit()">提交修改</button>
           </div>
         </div>
       </div>
     </div>
-    
   </div>
 </template>
 
@@ -171,57 +136,69 @@ const filter = require("../../filter/filter");
 const page = require("../../interface/page");
 
 export default {
-  name: "cardcode",
+  name: "user",
   data() {
     return {
-      userItem:null,
+      showItem:null,
       searchkey:null,
 
       offsize:0,
       limit:10,
       currentPage:1,
-      
-      judge:0,
-      wxinfo:null,
-      stock:null,
-      authen:null,
+     
+      currentItem:null,
+      host:null,
     };
   },
   filters:{ ...filter },
-  mounted() { this.init() },
+  mounted() { this.init(); this.findAllExam(); this.host=this.$host },
   updated() {  $(function () { $("[data-toggle='tooltip']").tooltip(); }); },
   methods: {
     ...page,
-    init(){ this.getAllUser(this.offsize,this.limit); },
-    test(){ apis.user.findAndCountAll(0,10).then(res => { print.log(res.data); }) },
-    // 获取所有参赛者
-    getAllUser(offsize,limit) { apis.user.findAndCountAllByType(0,offsize,limit).then(res => { this.userItem=res.data }) },
-
-    getWX(item){ this.wxinfo = item.info ; this.judge = 0},
-    getAuthen(item){ this.authen = item.authen ; this.judge = 1},
-    getStock(item){ this.stock = item.stock ; this.judge = 2},
-    updateCondition(item,condition){
-      apis.user.update(item.id,condition).then(res=>{
-        s_alert.Success("用户状态更新成功！", "成功更新一名用户状态", "success");
-        this.init()
+    init(){ this.findAndCountAll(this.offsize,this.limit); },
+    initdata(){ 
+      this.logo=null;
+      this.name=null;
+      this.title=null;
+      this.price=null;
+      this.detail=null;
+      this.exam_id=null;
+      this.condition=null;
+    },
+    // 获取所有开卡二维码
+    findAndCountAll(offsize,limit) { apis.eitem.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data }) },
+    editItem(item){ this.judge=1; this.currentItem = JSON.parse(JSON.stringify(item)) ; },
+    toEdit(){
+      print.log(this.currentItem.name , this.currentItem.title , this.currentItem.price, this.currentItem.detail ,this.currentItem.exam_id , this.currentItem.condition , this.currentItem.logo)
+      if(this.currentItem != null){
+        let item = this.currentItem
+        apis.eitem.update(item.id ,item.logo , item.name , item.title , item.price , item.detail , item.exam_id , item.condition)
+        .then(res=>{
+          if(res.data[0]){
+            s_alert.Success("编辑项目成功!", "成功编辑一个菜单开卡二维码", "success");
+            this.init()
+          }else s_alert.Warning('编辑失败','请联系技术人员')
+        })
+      }else s_alert.Warning('新建项目失败','输入非法')
+    },
+    selectImg(){
+      var _this = this
+      s_alert.basic('图片上传中……')
+      let file=document.getElementById('file').files[0];
+      let formData=new FormData();
+      formData.append('file',file);   // 通过formdata上传
+      this.$axios.post(this.$uploadpath,formData,{
+        method: 'post',
+        headers: {'Content-Type': 'multipart/form-data'}
+      }).then(function (res) {
+        print.log(res.data.info);
+        s_alert.Success('图片上传成功','','success')
+        _this.logo = res.data.info
+      }).catch(function(error){
+        console.log(error);
+        s_alert.Warning('图片上传失败','请检查网络状况，必要情况联系技术人员')
       })
     },
-    // 删除参赛者
-    DeleteItem(item){
-      if(confirm(`你确定要删除${item.name}？`)){
-        apis.user.delete(item.id)
-        .then(res => {
-          s_alert.Success("删除成功!", "成功移除了一名用户", "success");
-          this.init()
-        })
-      }
-    },
-    // 搜索
-    search(){
-      if(this.searchkey != null) apis.user.findAndCountAllLikeByName(this.searchkey).then(res => { this.userItem=res.data });
-      else this.init()
-    }
-
   }
 };
 </script>
