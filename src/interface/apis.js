@@ -1,5 +1,8 @@
 const req = require('../utils/axios')
 module.exports = {
+    test:{
+        login(n, p) { return req.postParam('api/encrp', { 'judge': 5, 'name': n, 'pass': p }) },
+    },
 
     // 参赛者信息
     user: {

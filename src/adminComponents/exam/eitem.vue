@@ -322,14 +322,14 @@ export default {
       let file=document.getElementById('file').files[0];
       let formData=new FormData();
       formData.append('file',file);   // 通过formdata上传
-      this.$axios.post(this.$uploadpath,formData,{
+      req.post('api/upload',formData,{
         method: 'post',
         headers: {'Content-Type': 'multipart/form-data'}
-      }).then(function (res) {
+      }).then( (res)=> {
         print.log(res.data.info);
         s_alert.Success('图片上传成功','','success')
         _this.logo = res.data.info
-      }).catch(function(error){
+      }).catch( (error)=> {
         console.log(error);
         s_alert.Warning('图片上传失败','请检查网络状况，必要情况联系技术人员')
       })

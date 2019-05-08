@@ -323,7 +323,7 @@ export default {
       let file=document.getElementById('file').files[0];
       let formData=new FormData();
       formData.append('file',file);   // 通过formdata上传
-      this.$axios.post(this.$uploadpath,formData,{
+      req.post('api/upload',formData,{
         method: 'post',
         headers: {'Content-Type': 'multipart/form-data'}
       }).then(function (res) {

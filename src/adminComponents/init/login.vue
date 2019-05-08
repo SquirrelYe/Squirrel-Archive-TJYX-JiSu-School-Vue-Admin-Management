@@ -48,10 +48,7 @@
 
                         <div class="form-group text-center m-t-40">
                             <div class="col-xs-12">
-                                <button
-                                    class="btn btn-primary btn-lg w-lg waves-effect waves-light"
-                                    @click="login()"
-                                >登录</button>
+                                <button class="btn btn-primary btn-lg w-lg waves-effect waves-light" @click="login()" >登录</button>
                             </div>
                         </div>
 
@@ -80,6 +77,7 @@ const print = require("../../utils/print");
 const apis = require("../../interface/apis");
 
 import app from "../../App.vue";
+import {mapMutations} from 'vuex'
 var App = app;
 
 export default {
@@ -96,17 +94,23 @@ export default {
         next();
     },
     methods: {
+        ...mapMutations(['LOGIN']),
         login() {
             if (this.name == null || this.pass == null) {
                 s_alert.basic("用户名或密码不能为空");
             } else {
                apis.user.login(this.name , this.pass)
                .then(res => {
-                    print.log(res.data);
-                    if (res.data) {
+                    if (res) {
+                        print.log(res.data)
                         if(res.data.type == 1){
-                            ses.setSessionStorage('userinfo',JSON.stringify(res.data))
-                            s_alert.Success( "登录成功！", "现在可以对游戏进行设置", "success" );
+                            localStorage.setItem('token', res.data.token) //存储token
+                            localStorage.setItem('user', res.data.id) //存储用户
+                            this.LOGIN({
+                                token: res.data.token,
+                                user: res.data.id
+                            });
+                            s_alert.Success( "登录成功！", "现在可以对系统进行设置", "success" );
                             this.$router.push({ name: "menu" });
                         }else{
                             s_alert.Success( "没有权限进入！", "此系统仅限管理员能操作", "warning" )
@@ -115,11 +119,14 @@ export default {
                         s_alert.Success( "用户名或密码错误！", "请检查后重试", "warning" )
                     }
                     
-                });
+                })
             }
         },
-        confirmadmin() {
-            s_alert.Success( "重要", "请联系管理员进行注册、找回密码", "warning" );
+        confirmadmin() { s_alert.Success( "重要", "请联系管理员进行注册、找回密码", "warning" ); },
+        test(){
+            for (let i = 0; i < 50; i++) {
+                apis.user.findAndCountAll(0,10).then(res=> { print.log(res.data)})
+            }
         }
     }
 };
