@@ -94,15 +94,27 @@ module.exports = {
         findAndCountAllLikeByName(n) { return req.postParam('api/ass/exam', { 'judge': 2, 'name': n }) },
     },
     // 考试二级菜单
+    mexam: {
+        delete(id) { return req.postParam('api/ent/mexam', { 'judge': 2, 'id': id }) },
+        creat(e,t,c) { return req.postParam('api/ent/mexam', { 'judge': 1, 'exam_id': e, 'title': t, 'condition': c }) },
+        updateCondition(id, c) { return req.postParam('api/ent/mexam', { 'judge': 3, 'id': id, 'condition': c }) },
+        update(id, e, t, c) { return req.postParam('api/ent/mexam', { 'judge': 3, 'id': id, 'title': t, 'exam_id': e, 'condition': c }) },
+
+        findAndCountAll(o, l) { return req.postParam('api/ass/mexam', { 'judge': 0, 'offset': o, 'limit': l }) },
+        findOneById(id) { return req.postParam('api/ass/mexam', { 'judge': 1, 'id': id }) },
+        findOneByExamId(e, o, l) { return req.postParam('api/ass/mexam', { 'judge': 2, 'exam_id': e, 'offset': o, 'limit': l }) },
+        findAndCountAllLikeByName(t) { return req.postParam('api/ass/mexam', { 'judge': 3, 'title': t }) },
+    },
+    // 考试项目
     eitem: {
         delete(id) { return req.postParam('api/ent/eitem', { 'judge': 2, 'id': id }) },
-        creat(l, n, t, p, d, e, c) { return req.postParam('api/ent/eitem', { 'judge': 1, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'exam_id': e, 'condition': c }) },
+        creat(l, n, t, p, d, e, c) { return req.postParam('api/ent/eitem', { 'judge': 1, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'mexam_id': e, 'condition': c }) },
         updateCondition(id, c) { return req.postParam('api/ent/eitem', { 'judge': 3, 'id': id, 'condition': c }) },
-        update(id,l, n, t, p, d, e, c) { return req.postParam('api/ent/eitem', { 'judge': 3, 'id': id, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'exam_id': e, 'condition': c }) },
+        update(id,l, n, t, p, d, e, c) { return req.postParam('api/ent/eitem', { 'judge': 3, 'id': id, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'mexam_id': e, 'condition': c }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/eitem', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/eitem', { 'judge': 1, 'id': id }) },
-        findOneByExamId(e, o, l) { return req.postParam('api/ass/eitem', { 'judge': 2, 'exam_id': e, 'offset': o, 'limit': l }) },
+        findOneByMexamId(e, o, l) { return req.postParam('api/ass/eitem', { 'judge': 2, 'mexam_id': e, 'offset': o, 'limit': l }) },
         findAndCountAllLikeByName(n) { return req.postParam('api/ass/eitem', { 'judge': 3, 'name': n }) },
     },
     // 旅游一级菜单
@@ -116,15 +128,27 @@ module.exports = {
         findAndCountAllLikeByName(n) { return req.postParam('api/ass/journey', { 'judge': 2, 'name': n }) },
     },
     // 旅游二级菜单
+    mjourney: {
+        delete(id) { return req.postParam('api/ent/mjourney', { 'judge': 2, 'id': id }) },
+        creat(e,t,c) { return req.postParam('api/ent/mjourney', { 'judge': 1, 'journey_id': e, 'title': t, 'condition': c }) },
+        updateCondition(id, c) { return req.postParam('api/ent/mjourney', { 'judge': 3, 'id': id, 'condition': c }) },
+        update(id, e, t, c) { return req.postParam('api/ent/mjourney', { 'judge': 3, 'id': id, 'title': t, 'journey_id': e, 'condition': c }) },
+
+        findAndCountAll(o, l) { return req.postParam('api/ass/mjourney', { 'judge': 0, 'offset': o, 'limit': l }) },
+        findOneById(id) { return req.postParam('api/ass/mjourney', { 'judge': 1, 'id': id }) },
+        findOneByJourneyId(e, o, l) { return req.postParam('api/ass/mjourney', { 'judge': 2, 'journey_id': e, 'offset': o, 'limit': l }) },
+        findAndCountAllLikeByName(t) { return req.postParam('api/ass/mjourney', { 'judge': 3, 'title': t }) },
+    },
+    // 旅游项目
     jitem: {
         delete(id) { return req.postParam('api/ent/jitem', { 'judge': 2, 'id': id }) },
-        creat(l, n, t, p, d, j, c) { return req.postParam('api/ent/jitem', { 'judge': 1, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'journey_id': j, 'condition': c }) },
+        creat(l, n, t, p, d, j, c) { return req.postParam('api/ent/jitem', { 'judge': 1, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'mjourney_id': j, 'condition': c }) },
         updateCondition(id, c) { return req.postParam('api/ent/jitem', { 'judge': 3, 'id': id, 'condition': c }) },
-        update(id,l, n, t, p, d, j, c) { return req.postParam('api/ent/jitem', { 'judge': 3, 'id': id, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'journey_id': j, 'condition': c }) },
+        update(id,l, n, t, p, d, j, c) { return req.postParam('api/ent/jitem', { 'judge': 3, 'id': id, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'mjourney_id': j, 'condition': c }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/jitem', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/jitem', { 'judge': 1, 'id': id }) },
-        findByJourneyId(j, o, l) { return req.postParam('api/ass/jitem', { 'judge': 2, 'journey_id': j, 'offset': o, 'limit': l }) },
+        findByJourneyId(j, o, l) { return req.postParam('api/ass/jitem', { 'judge': 2, 'mjourney_id': j, 'offset': o, 'limit': l }) },
         findAndCountAllLikeByName(n) { return req.postParam('api/ass/jitem', { 'judge': 3, 'name': n }) },
     },
     // 水果一级菜单
@@ -138,15 +162,27 @@ module.exports = {
         findAndCountAllLikeByName(n) { return req.postParam('api/ass/fruit', { 'judge': 2, 'name': n }) },
     },
     // 水果二级菜单
+    mfruit: {
+        delete(id) { return req.postParam('api/ent/mfruit', { 'judge': 2, 'id': id }) },
+        creat(e,t,c) { return req.postParam('api/ent/mfruit', { 'judge': 1, 'fruit_id': e, 'title': t, 'condition': c }) },
+        updateCondition(id, c) { return req.postParam('api/ent/mfruit', { 'judge': 3, 'id': id, 'condition': c }) },
+        update(id, e, t, c) { return req.postParam('api/ent/mfruit', { 'judge': 3, 'id': id, 'title': t, 'fruit_id': e, 'condition': c }) },
+
+        findAndCountAll(o, l) { return req.postParam('api/ass/mfruit', { 'judge': 0, 'offset': o, 'limit': l }) },
+        findOneById(id) { return req.postParam('api/ass/mfruit', { 'judge': 1, 'id': id }) },
+        findOneByJourneyId(e, o, l) { return req.postParam('api/ass/mfruit', { 'judge': 2, 'fruit_id': e, 'offset': o, 'limit': l }) },
+        findAndCountAllLikeByName(t) { return req.postParam('api/ass/mfruit', { 'judge': 3, 'title': t }) },
+    },
+    // 水果项目
     fitem: {
         delete(id) { return req.postParam('api/ent/fitem', { 'judge': 2, 'id': id }) },
-        creat(l, n, t, p, d, j, c) { return req.postParam('api/ent/fitem', { 'judge': 1, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'fruit_id': j, 'condition': c }) },
+        creat(l, n, t, p, d, j, c) { return req.postParam('api/ent/fitem', { 'judge': 1, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'mfruit_id': j, 'condition': c }) },
         updateCondition(id, c) { return req.postParam('api/ent/fitem', { 'judge': 3, 'id': id, 'condition': c }) },
-        update(id,l, n, t, p, d, j, c) { return req.postParam('api/ent/fitem', { 'judge': 3, 'id': id, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'fruit_id': j, 'condition': c }) },
+        update(id,l, n, t, p, d, j, c) { return req.postParam('api/ent/fitem', { 'judge': 3, 'id': id, 'logo': l, 'name': n, 'title': t, 'price': p, 'detail': d, 'mfruit_id': j, 'condition': c }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/fitem', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/fitem', { 'judge': 1, 'id': id }) },
-        findByFruitId(f, o, l) { return req.postParam('api/ass/fitem', { 'judge': 2, 'fruit_id': f, 'offset': o, 'limit': l }) },
+        findByFruitId(f, o, l) { return req.postParam('api/ass/fitem', { 'judge': 2, 'mfruit_id': f, 'offset': o, 'limit': l }) },
         findAndCountAllLikeByName(n) { return req.postParam('api/ass/fitem', { 'judge': 3, 'name': n }) },
     },
     // 购物车

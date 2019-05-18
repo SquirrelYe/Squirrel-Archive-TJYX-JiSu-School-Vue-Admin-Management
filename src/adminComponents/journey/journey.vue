@@ -129,28 +129,20 @@
                           </form>
                           <!-- 子类 -->                          
                           <div class="table-responsive" v-if="judge ==2">
-                            <table  style="table-layout:fixed" class="table table-bordered table-striped table-hover" id="datatable-editable" v-if="sitem.jitems">
+                            <table  style="table-layout:fixed" class="table table-bordered table-striped table-hover" id="datatable-editable" v-if="sitem.mjourneys">
                               <thead>
                                 <tr>
                                   <th>#</th>
                                   <th>ID</th>
-                                  <th>logo</th>
                                   <th>名称</th>
-                                  <th>标题</th>
-                                  <th>价格</th>
-                                  <th>详细信息</th>
                                   <th>状态</th>
                                 </tr>
                               </thead>
                               <tbody v-if="sitem">
-                                <tr class="gradeX" v-for="(item,index) in sitem.jitems" :key="index">
+                                <tr class="gradeX" v-for="(item,index) in sitem.mjourneys" :key="index">
                                   <td>{{(currentPage-1)*limit+index+1}}</td>
-                                  <td>JI-{{item.id}}</td>
-                                  <td><img :src="host+item.logo" alt="logo" class="img-thumbnail img-responsive" style="width:100px"><br></td>
-                                  <td>{{item.name}}</td>
-                                  <td class="some" :title="item.title">{{item.title}}</td>
-                                  <td>{{item.price}}</td>
-                                  <td class="some" :title="item.title">{{item.detail}}</td>
+                                  <td>JM-{{item.id}}</td>
+                                  <td>{{item.title}}</td>
                                   <td>{{item.condition|formatExamItemCondition}}</td>
                                 </tr>
                               </tbody>
@@ -252,7 +244,7 @@ export default {
             this.init()
           }else s_alert.Warning('编辑失败','请联系技术人员')
         })
-      }else s_alert.Warning('新建一级菜单失败','输入非法')
+      }else s_alert.Warning('编辑一级菜单失败','输入非法')
     },
     eItem(item){ this.judge =2; this.sitem = item ; print.log(item)},
     // 删除旅游一级菜单

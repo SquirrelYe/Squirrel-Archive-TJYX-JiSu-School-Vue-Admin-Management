@@ -17,16 +17,19 @@ import ltran from '@/adminComponents/logistic/ltran'
 import lanalysis from '@/adminComponents/logistic/lanalysis'
 // 考试
 import exam from '@/adminComponents/exam/exam'
+import mexam from '@/adminComponents/exam/mexam'
 import eitem from '@/adminComponents/exam/eitem'
 import etran from '@/adminComponents/exam/etran'
 import eanalysis from '@/adminComponents/exam/eanalysis'
 // 旅游
 import journey from '@/adminComponents/journey/journey'
+import mjourney from '@/adminComponents/journey/mjourney'
 import jitem from '@/adminComponents/journey/jitem'
 import jtran from '@/adminComponents/journey/jtran'
 import janalysis from '@/adminComponents/journey/janalysis'
 // 水果
 import fruit from '@/adminComponents/fruit/fruit'
+import mfruit from '@/adminComponents/fruit/mfruit'
 import fitem from '@/adminComponents/fruit/fitem'
 import ftran from '@/adminComponents/fruit/ftran'
 import fanalysis from '@/adminComponents/fruit/fanalysis'
@@ -53,16 +56,19 @@ const router = new Router({
         { path: 'lanalysis', name: 'lanalysis', component: lanalysis },   //快递流水
 
         { path: 'exam', name: 'exam', component: exam },   //考试一级菜单
+        { path: 'mexam', name: 'mexam', component: mexam },   //考试二级菜单
         { path: 'etran', name: 'etran', component: etran },   //考试订单
         { path: 'eitem', name: 'eitem', component: eitem },   //考试项目
         { path: 'eanalysis', name: 'eanalysis', component: eanalysis },   //考试流水
 
         { path: 'journey', name: 'journey', component: journey },   //旅游一级菜单
+        { path: 'mjourney', name: 'mjourney', component: mjourney },   //旅游二级菜单
         { path: 'jtran', name: 'jtran', component: jtran },   //旅游订单
         { path: 'jitem', name: 'jitem', component: jitem },   //旅游项目
         { path: 'janalysis', name: 'janalysis', component: janalysis },   //旅游流水
 
         { path: 'fruit', name: 'fruit', component: fruit },   //水果一级菜单
+        { path: 'mfruit', name: 'mfruit', component: mfruit },   //水果二级菜单
         { path: 'ftran', name: 'ftran', component: ftran },   //旅游订单
         { path: 'fitem', name: 'fitem', component: fitem },   //水果项目
         { path: 'fanalysis', name: 'fanalysis', component: fanalysis },   //水果流水

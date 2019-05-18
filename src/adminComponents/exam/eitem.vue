@@ -24,7 +24,7 @@
                       <tr>
                         <th>#</th>
                         <th>项目ID</th>
-                        <th>一级分类</th>
+                        <th>二级分类</th>
                         <th>logo</th>
                         <th>名称</th>
                         <th>标题</th>
@@ -39,7 +39,7 @@
                       <tr class="gradeX" v-for="(item,index) in showItem.rows" :key="index" :class=" item.condition==-1? 'text-danger':'' ">
                         <td>{{(currentPage-1)*limit+index+1}}</td>
                         <td>EI-{{item.id}}</td>
-                         <td v-if="item.exam">{{item.exam.title}}</td><td v-else></td>
+                         <td v-if="item.mexam">{{item.mexam.title}}</td><td v-else></td>
                         <td><img :src="host+item.logo" alt="logo" class="img-thumbnail img-responsive" style="width:100px"><br></td>
                         <td>{{item.name}}</td>
                         <td :title="item.detail" class="some">{{item.title}}</td>
@@ -106,12 +106,12 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                           <!-- 新建 -->
-                          <form class="form-horizontal" role="form" v-if="judge ==0 && exam">
+                          <form class="form-horizontal" role="form" v-if="judge ==0 && secondItems">
                               <div class="form-group">
-                                <div class="col-md-2 control-label"><strong>分类：</strong></div>
+                                <div class="col-md-2 control-label"><strong>二级分类：</strong></div>
                                 <div class="col-md-10">
-                                    <select class="form-control" v-model="exam_id">
-                                        <option v-for="(item,index) in exam.rows" :key="index" :value="item.id">{{item.title}}</option>
+                                    <select class="form-control" v-model="mexam_id">
+                                        <option v-for="(item,index) in secondItems" :key="index" :value="item.id">{{item.title}}</option>
                                     </select>
                                 </div>
                               </div>
@@ -149,8 +149,8 @@
                               <div class="form-group">
                                 <div class="col-md-2 control-label"><strong>分类：</strong></div>
                                 <div class="col-md-10">
-                                    <select class="form-control" v-model="currentItem.exam_id">
-                                        <option v-for="(item,index) in exam.rows" :key="index" :value="item.id">{{item.title}}</option>
+                                    <select class="form-control" v-model="currentItem.mexam_id">
+                                        <option v-for="(item,index) in secondItems" :key="index" :value="item.id">{{item.title}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -233,7 +233,7 @@ export default {
 
       judge:0,
       conditions:[{ x:-1 },{ x:0} ],
-      exam:null,
+      secondItems:null,
 
       // 项目数据
       logo:null,
@@ -241,7 +241,7 @@ export default {
       title:null,
       price:null,
       detail:null,
-      exam_id:null,
+      mexam_id:null,
       condition:null,
       
       currentItem:null,
@@ -260,13 +260,13 @@ export default {
       this.title=null;
       this.price=null;
       this.detail=null;
-      this.exam_id=null;
+      this.mexam_id=null;
       this.condition=null;
     },
     // 获取所有考试项目
-    findAndCountAll(offsize,limit) { apis.eitem.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data }) },
-    // 获取考试一级分类
-    findAllExam() { apis.exam.findAndCountAll(0,100).then(res => { this.exam=res.data ; })},
+    findAndCountAll(offsize,limit) { apis.eitem.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data; console.log('考试项目',res.data) }) },
+    // 获取考试二级分类
+    findAllExam() { apis.mexam.findAndCountAll(0,100).then(res => { this.secondItems=res.data.rows ; console.log('考试二级分类',res.data) })},
 
     updateCondition(item,condition){
       apis.eitem.updateCondition(item.id,condition).then(res=>{
@@ -277,9 +277,9 @@ export default {
     creat(){ this.judge =0; this.initdata() },
     // 新增项目
     toCreat(){
-      print.log(this.name , this.title , this.price, this.detail ,this.exam_id , this.condition , this.logo)
-      if(this.name!=null && this.title!=null && this.price!=null && this.detail!=null && this.exam_id!=null && this.condition!=null && this.logo!=null){
-        apis.eitem.creat(this.logo , this.name , this.title , this.price , this.detail , this.exam_id , this.condition)
+      print.log(this.name , this.title , this.price, this.detail ,this.mexam_id , this.condition , this.logo)
+      if(this.name!=null && this.title!=null && this.price!=null && this.detail!=null && this.mexam_id!=null && this.condition!=null && this.logo!=null){
+        apis.eitem.creat(this.logo , this.name , this.title , this.price , this.detail , this.mexam_id , this.condition)
         .then(res=>{
           s_alert.Success("新建考试项目成功!", "成功新建一个项目", "success");
           this.init()
@@ -288,10 +288,10 @@ export default {
     },
     editItem(item){ this.judge=1; this.currentItem = JSON.parse(JSON.stringify(item)) ; },
     toEdit(){
-      print.log(this.currentItem.name , this.currentItem.title , this.currentItem.price, this.currentItem.detail ,this.currentItem.exam_id , this.currentItem.condition , this.currentItem.logo)
+      print.log(this.currentItem.name , this.currentItem.title , this.currentItem.price, this.currentItem.detail ,this.currentItem.mexam_id , this.currentItem.condition , this.currentItem.logo)
       if(this.currentItem != null){
         let item = this.currentItem
-        apis.eitem.update(item.id ,item.logo , item.name , item.title , item.price , item.detail , item.exam_id , item.condition)
+        apis.eitem.update(item.id ,item.logo , item.name , item.title , item.price , item.detail , item.mexam_id , item.condition)
         .then(res=>{
           if(res.data[0]){
             s_alert.Success("编辑项目成功!", "成功编辑一个菜单考试项目", "success");

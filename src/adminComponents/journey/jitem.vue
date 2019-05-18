@@ -24,7 +24,7 @@
                       <tr>
                         <th>#</th>
                         <th>项目ID</th>
-                        <th>一级分类</th>
+                        <th>二级分类</th>
                         <th>logo</th>
                         <th>名称</th>
                         <th>标题</th>
@@ -39,7 +39,7 @@
                       <tr class="gradeX" v-for="(item,index) in showItem.rows" :key="index" :class=" item.condition==-1? 'text-danger':'' ">
                         <td>{{(currentPage-1)*limit+index+1}}</td>
                         <td>JI-{{item.id}}</td>
-                         <td v-if="item.journey">{{item.journey.title}}</td><td v-else></td>
+                         <td v-if="item.mjourney">{{item.mjourney.title}}</td><td v-else></td>
                         <td><img :src="host+item.logo" alt="logo" class="img-thumbnail img-responsive" style="width:100px"><br></td>
                         <td>{{item.name}}</td>
                         <td :title="item.detail" class="some">{{item.title}}</td>
@@ -106,12 +106,12 @@
                     <div class="panel panel-default">
                         <div class="panel-body">
                           <!-- 新建 -->
-                          <form class="form-horizontal" role="form" v-if="judge ==0 && journey">
+                          <form class="form-horizontal" role="form" v-if="judge ==0 && secondItems">
                               <div class="form-group">
-                                <div class="col-md-2 control-label"><strong>分类：</strong></div>
+                                <div class="col-md-2 control-label"><strong>二级分类：</strong></div>
                                 <div class="col-md-10">
-                                    <select class="form-control" v-model="journey_id">
-                                        <option v-for="(item,index) in journey.rows" :key="index" :value="item.id">{{item.title}}</option>
+                                    <select class="form-control" v-model="mjourney_id">
+                                        <option v-for="(item,index) in secondItems" :key="index" :value="item.id">{{item.title}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -149,8 +149,8 @@
                               <div class="form-group">
                                 <div class="col-md-2 control-label"><strong>分类：</strong></div>
                                 <div class="col-md-10">
-                                    <select class="form-control" v-model="currentItem.journey_id">
-                                        <option v-for="(item,index) in journey.rows" :key="index" :value="item.id">{{item.title}}</option>
+                                    <select class="form-control" v-model="currentItem.mjourney_id">
+                                        <option v-for="(item,index) in secondItems" :key="index" :value="item.id">{{item.title}}</option>
                                     </select>
                                 </div>
                             </div>
@@ -234,7 +234,7 @@ export default {
 
       judge:0,
       conditions:[{ x:-1 },{ x:0} ],
-      journey:null,
+      secondItems:null,
 
       // 项目数据
       logo:null,
@@ -242,7 +242,7 @@ export default {
       title:null,
       price:null,
       detail:null,
-      journey_id:null,
+      mjourney_id:null,
       condition:null,
       
       currentItem:null,
@@ -261,13 +261,13 @@ export default {
       this.title=null;
       this.price=null;
       this.detail=null;
-      this.journey_id=null;
+      this.mjourney_id=null;
       this.condition=null;
     },
     // 获取所有旅游项目
-    findAndCountAll(offsize,limit) { apis.jitem.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data }) },
-    // 获取旅游一级分类
-    findAllJourney() { apis.journey.findAndCountAll(0,100).then(res => { this.journey=res.data ; })},
+    findAndCountAll(offsize,limit) { apis.jitem.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data ;console.log('旅游项目',res.data) }) },
+    // 获取旅游二级分类
+    findAllJourney() { apis.mjourney.findAndCountAll(0,100).then(res => { this.secondItems=res.data.rows ; })},
     // 更新旅游状态
     updateCondition(item,condition){
       apis.jitem.updateCondition(item.id,condition).then(res=>{
@@ -278,9 +278,9 @@ export default {
     creat(){ this.judge =0; this.initdata() },
     // 新增项目
     toCreat(){
-      print.log(this.name , this.title , this.price, this.detail ,this.journey_id , this.condition , this.logo)
-      if(this.name!=null && this.title!=null && this.price!=null && this.detail!=null && this.journey_id!=null && this.condition!=null && this.logo!=null){
-        apis.jitem.creat(this.logo , this.name , this.title , this.price , this.detail , this.journey_id , this.condition)
+      print.log(this.name , this.title , this.price, this.detail ,this.mjourney_id , this.condition , this.logo)
+      if(this.name!=null && this.title!=null && this.price!=null && this.detail!=null && this.mjourney_id!=null && this.condition!=null && this.logo!=null){
+        apis.jitem.creat(this.logo , this.name , this.title , this.price , this.detail , this.mjourney_id , this.condition)
         .then(res=>{
           s_alert.Success("新建旅游项目成功!", "成功新建一个项目", "success");
           this.init()
@@ -289,10 +289,10 @@ export default {
     },
     editItem(item){ this.judge=1; this.currentItem = JSON.parse(JSON.stringify(item)) ; },
     toEdit(){
-      print.log(this.currentItem.name , this.currentItem.title , this.currentItem.price, this.currentItem.detail ,this.currentItem.journey_id , this.currentItem.condition , this.currentItem.logo)
+      print.log(this.currentItem.name , this.currentItem.title , this.currentItem.price, this.currentItem.detail ,this.currentItem.mjourney_id , this.currentItem.condition , this.currentItem.logo)
       if(this.currentItem != null){
         let item = this.currentItem
-        apis.jitem.update(item.id ,item.logo , item.name , item.title , item.price , item.detail , item.journey_id , item.condition)
+        apis.jitem.update(item.id ,item.logo , item.name , item.title , item.price , item.detail , item.mjourney_id , item.condition)
         .then(res=>{
           if(res.data[0]){
             s_alert.Success("编辑项目成功!", "成功编辑一个菜单旅游项目", "success");
