@@ -41,10 +41,10 @@
                         <td>{{item.created_at|formatTime}}</td>
                         <td class="actions">
                           <a @click="editItem(item)" data-toggle="modal" data-target="#Model">
-                            <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="编辑一级菜单"></i>
+                            <i class="fa fa-pencil" data-toggle="tooltip" data-placement="top" title="编辑学校信息"></i>
                           </a>
                           <a @click="DeleteItem(item)">
-                            <i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="删除一级菜单"></i>
+                            <i class="fa fa-times" data-toggle="tooltip" data-placement="top" title="删除学校"></i>
                           </a>
                         </td>
                       </tr>

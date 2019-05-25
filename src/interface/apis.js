@@ -55,8 +55,10 @@ module.exports = {
     },
     // 开卡信息
     card: {
+        create(u,c,n,m,p,s,d,de) { return req.postParam('api/ent/card', { 'judge': 1, 'user_id': u, 'condition':c, 'name':n,'price':m, 'phone':p , 'school':s ,'dom':d,'detail':de}) },
         delete(id) { return req.postParam('api/ent/card', { 'judge': 2, 'id': id }) },
         update(id, c) { return req.postParam('api/ent/card', { 'judge': 3, 'id': id, 'condition': c }) },
+        setTaken(id, u) { return req.postParam('api/ent/card', { 'judge': 3, 'id': id, 'user_id': u }) },
 
         findAndCountAll(o, l) { return req.postParam('api/ass/card', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/card', { 'judge': 1, 'id': id }) },

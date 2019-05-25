@@ -202,6 +202,7 @@ export default {
       //  更改order状态
       apis.order.update(this.item.order.id, this.take ,1).then(res=>{
         if(res.data[0] == 1){
+          //  更改logistic状态
           apis.logistic.update(this.item.id , 1)
           .then(res=>{
             if(res.data[0] == 1){
@@ -211,7 +212,6 @@ export default {
           })
         }else s_alert.Warning('派发失败！','请联系技术人员')
       })
-      //  更改logistic状态
      },
     // 搜索
     search(){
