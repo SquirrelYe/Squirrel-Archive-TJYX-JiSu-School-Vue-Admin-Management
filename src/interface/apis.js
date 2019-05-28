@@ -15,6 +15,7 @@ module.exports = {
         findOneById(id) { return req.postParam('api/ass/user', { 'judge': 1, 'id': id }) },
         findOneByOpenid(o) { return req.postParam('api/ass/user', { 'judge': 2, 'openid': o }) },
         findAndCountAllByType(t, o, l) { return req.postParam('api/ass/user', { 'judge': 3, 'type': t, 'offset': o, 'limit': l }) },
+        findAndCountAllXYDS(t, o, l) { return req.postParam('api/ass/user', { 'judge': 6, 'type': t, 'offset': o, 'limit': l }) },
         findAndCountAllBySchool(s, o, l) { return req.postParam('api/ass/user', { 'judge': 4, 'school_id': s, 'offset': o, 'limit': l }) },
         findAndCountAllByTypeLikeByName(t, n) { return req.postParam('api/ass/user', { 'judge': 5, 'name': n, 'type': t }) },
     },
@@ -35,7 +36,8 @@ module.exports = {
         findAndCountAll(o, l) { return req.postParam('api/ass/authen', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/authen', { 'judge': 1, 'id': id }) },
         findOneByUser(u) { return req.postParam('api/ass/authen', { 'judge': 2, 'user_id': u }) },
-        findAndCountAllBySchool(s, o, l) { return req.postParam('api/ass/authen', { 'judge': 3, 'school_id': s, 'offset': o, 'limit': l }) }
+        findAndCountAllBySchool(s, o, l) { return req.postParam('api/ass/authen', { 'judge': 3, 'school_id': s, 'offset': o, 'limit': l }) },
+        findAndCountAllLikeByName(n) { return req.postParam('api/ass/authen', { 'judge':4, 'name': n }) },
     },
     // 用户详细信息
     info: {

@@ -46,6 +46,11 @@ function formatTranJudge(x){
     if(x==2) return '已完成';
     if(x==3) return '已评价';
 }
+function formatAuthenCondition(x){
+    if(x==-1) return '未通过';
+    if(x==0) return '审核中';
+    if(x==1) return '审核通过';
+}
 module.exports={
     formatTime,
     formatCondition,
@@ -56,4 +61,5 @@ module.exports={
     formatExamItemCondition,
     formatTranCondition,
     formatTranJudge,
+    formatAuthenCondition
 }

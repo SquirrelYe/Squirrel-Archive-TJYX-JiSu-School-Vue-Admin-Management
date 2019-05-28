@@ -191,7 +191,7 @@ export default {
     ...page,
     init(){ this.getAllUser(this.offsize,this.limit); },
     // 获取所有参赛者
-    getAllUser(offsize,limit) { apis.user.findAndCountAllByType(2,offsize,limit).then(res => { this.showItem=res.data }) },
+    getAllUser(offsize,limit) { apis.user.findAndCountAllXYDS(0,offsize,limit).then(res => { this.showItem=res.data }) },
 
     getWX(item){ this.wxinfo = item.info ; this.judge = 0},
     getAuthen(item){ this.authen = item.authen ; this.judge = 1},

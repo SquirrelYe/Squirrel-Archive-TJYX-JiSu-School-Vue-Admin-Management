@@ -29,7 +29,7 @@
                         <th>名称</th>
                         <th>标题</th>
                         <th>价格</th>
-                        <th>详细信息</th>
+                        <th>图文详情</th>
                         <th>状态</th>
                         <th>创建时间</th>
                         <th>操作</th>                        
@@ -44,7 +44,7 @@
                         <td>{{item.name}}</td>
                         <td :title="item.detail" class="some">{{item.title}}</td>
                         <td>{{item.price}}</td>
-                        <td :title="item.detail" class="some"> {{item.detail}} </td>
+                        <td> <a :href="host+item.detail">点击查看</a> </td>
                         <td>{{item.condition|formatExamItemCondition}}</td>
                         <td>{{item.created_at|formatTime}}</td>
                         <td class="actions">
@@ -128,10 +128,6 @@
                                   <div class="col-md-10"> <input type="number" class="form-control" v-model="price"> </div>
                               </div>
                               <div class="form-group">
-                                  <label class="col-md-2 control-label">介绍：</label>
-                                  <div class="col-md-10"> <textarea type="text" class="form-control" v-model="detail"></textarea> </div>
-                              </div>
-                              <div class="form-group">
                                 <div class="col-md-2 control-label"><strong>状态：</strong></div>
                                 <div class="col-md-10">
                                     <select class="form-control" v-model="condition">
@@ -140,8 +136,12 @@
                                 </div>
                               </div>
                               <div class="form-group">
-                                  <label class="col-md-2 control-label">图片：</label>
+                                  <label class="col-md-2 control-label">大图：</label>
                                   <div class="col-md-10"> <input type="file" id="file" class="form-control" value="上传图片"  @change="selectImg" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"/> </div>
+                              </div>
+                              <div class="form-group">
+                                  <label class="col-md-2 control-label">详情：</label>
+                                  <div class="col-md-10"> <input type="file" id="file1" class="form-control" value="上传图片"  @change="selectDetail" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg"/> </div>
                               </div>
                           </form>
                           <!-- 编辑 -->
@@ -165,10 +165,6 @@
                               <div class="form-group">
                                   <label class="col-md-2 control-label">价格：</label>
                                   <div class="col-md-10"> <input type="number" class="form-control" v-model="currentItem.price"> </div>
-                              </div>
-                              <div class="form-group">
-                                  <label class="col-md-2 control-label">介绍：</label>
-                                  <div class="col-md-10"> <textarea type="text" class="form-control" v-model="currentItem.detail"></textarea> </div>
                               </div>
                               <div class="form-group">
                                 <div class="col-md-2 control-label"><strong>状态：</strong></div>
@@ -316,19 +312,31 @@ export default {
       if(this.searchkey) apis.eitem.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
       else this.init()
     },
+    // 上传大图
     selectImg(){
-      var _this = this
-      s_alert.basic('图片上传中……')
-      let file=document.getElementById('file').files[0];
+      var _this = this; s_alert.basic('图片上传中……')
       let formData=new FormData();
-      formData.append('file',file);   // 通过formdata上传
-      req.post('api/upload',formData,{
-        method: 'post',
-        headers: {'Content-Type': 'multipart/form-data'}
-      }).then( (res)=> {
+      formData.append('file', document.getElementById('file').files[0] );   // 通过formdata上传
+      req.post('api/upload',formData,{ method: 'post', headers: {'Content-Type': 'multipart/form-data'} })
+      .then( (res)=> {
         print.log(res.data.info);
         s_alert.Success('图片上传成功','','success')
         _this.logo = res.data.info
+      }).catch( (error)=> {
+        console.log(error);
+        s_alert.Warning('图片上传失败','请检查网络状况，必要情况联系技术人员')
+      })
+    },
+    // 上传详情
+    selectDetail(){
+      var _this = this; s_alert.basic('图片上传中……')
+      let formData=new FormData();
+      formData.append('file', document.getElementById('file1').files[0] );   // 通过formdata上传
+      req.post('api/upload',formData,{ method: 'post', headers: {'Content-Type': 'multipart/form-data'} })
+      .then( (res)=> {
+        print.log(res.data.info);
+        s_alert.Success('图片上传成功','','success')
+        _this.detail = res.data.info
       }).catch( (error)=> {
         console.log(error);
         s_alert.Warning('图片上传失败','请检查网络状况，必要情况联系技术人员')

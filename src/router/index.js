@@ -9,10 +9,14 @@ import school from '@/adminComponents/init/school'
 import user from '@/adminComponents/users/user'
 import admin from '@/adminComponents/users/admin'
 import coordinator from '@/adminComponents/users/coordinator'
+import coordinatorapply from '@/adminComponents/users/coordinatorApply'
+// 通知
+import tixian from '@/adminComponents/notation/tixian'
 // 开卡
 import cardlist from '@/adminComponents/card/cardlist'
 import cardcode from '@/adminComponents/card/cardcode'
 // 快递
+import lsend from '@/adminComponents/logistic/lsend'
 import ltran from '@/adminComponents/logistic/ltran'
 import lanalysis from '@/adminComponents/logistic/lanalysis'
 // 考试
@@ -48,11 +52,16 @@ const router = new Router({
         { path: 'user', name: 'user', component: user },   //参赛者管理
         { path: 'admin', name: 'admin', component: admin },   //管理员管理
         { path: 'coordinator', name: 'coordinator', component: coordinator },   //校园大使管理
+        { path: 'coordinatorapply', name: 'coordinatorapply', component: coordinatorapply },   //校园大使申请
+
+
+        { path: 'tixian', name: 'tixian', component: tixian },
 
         { path: 'cardlist', name: 'cardlist', component: cardlist },   //开卡信息
         { path: 'cardcode', name: 'cardcode', component: cardcode },   //开卡二维码
         
-        { path: 'ltran', name: 'ltran', component: ltran },   //快递订单
+        { path: 'lsend', name: 'lsend', component: lsend },   //快递代发订单
+        { path: 'ltran', name: 'ltran', component: ltran },   //快递代取订单
         { path: 'lanalysis', name: 'lanalysis', component: lanalysis },   //快递流水
 
         { path: 'exam', name: 'exam', component: exam },   //考试一级菜单

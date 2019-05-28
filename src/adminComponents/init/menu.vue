@@ -105,6 +105,27 @@
                   <li>
                     <a href="javascript:void(0)" @click="coordinator()">校园大使管理</a>
                   </li>
+                  <li>
+                    <a href="javascript:void(0)" @click="coordinatorApply()">校园大使申请</a>
+                  </li>
+                </ul>
+              </li>
+
+              <li class="has_sub">
+                <a href="javascript:void(0)" class="waves-effect waves-light">
+                  <i class="md md-credit-card"></i>
+                  <span>资产管理</span>
+                  <span class="pull-right">
+                    <i class="md md-add"></i>
+                  </span>
+                </a>
+                <ul class="list-unstyled">
+                  <li>
+                    <a href="javascript:void(0)" @click="tixian()">提现申请</a>
+                  </li>
+                  <!-- <li>
+                    <a href="javascript:void(0)" @click="cardcode()">二维码管理</a>
+                  </li> -->
                 </ul>
               </li>
 
@@ -135,7 +156,8 @@
                   </span>
                 </a>
                 <ul class="list-unstyled">
-                  <li> <a href="javascript:void(0)" @click="ltran()">订单列表</a> </li>
+                  <li> <a href="javascript:void(0)" @click="lsend()">快递代发</a> </li>
+                  <li> <a href="javascript:void(0)" @click="ltran()">快递代取</a> </li>
                   <li> <a href="javascript:void(0)" @click="lanalysis()">流水统计</a> </li>
                 </ul>
               </li>
@@ -277,10 +299,14 @@ export default {
     user(){this.$router.push({name:'user'})},
     admin(){this.$router.push({name:'admin'})},
     coordinator(){this.$router.push({name:'coordinator'})},
+    coordinatorApply(){this.$router.push({name:'coordinatorapply'})},
+
+    tixian(){this.$router.push({name:'tixian'})},
 
     cardlist(){this.$router.push({name:'cardlist'})},
     cardcode(){this.$router.push({name:'cardcode'})},
 
+    lsend(){this.$router.push({name:'lsend'})},
     ltran(){this.$router.push({name:'ltran'})},
     lanalysis(){this.$router.push({name:'lanalysis'})},
 
