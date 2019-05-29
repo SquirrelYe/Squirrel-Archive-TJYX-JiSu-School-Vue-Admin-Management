@@ -39,18 +39,21 @@
                       <tr class="gradeX" v-for="(item,index) in showItem.rows" :key="index">
                         <td>{{(currentPage-1)*limit+index+1}}</td>
                         <td>TX-{{item.id}}</td>
-                        <td>{{item.name}}</td>
+                        <td v-if="item.authen">{{item.authen.name}}</td><td v-else></td>
                         <td v-if="item.school">{{item.school.name}}</td><td v-else></td>
-                        <td>{{item.xuehao}}</td>
-                        <td>{{item.phone}}</td>
-                        <td>{{item.mail}}</td>
+                        <td v-if="item.authen">{{item.authen.xuehao}}</td><td v-else></td>
+                        <td v-if="item.authen">{{item.authen.phone}}</td><td v-else></td>
+                        <td v-if="item.authen">{{item.authen.mail}}</td><td v-else></td>
                         <td>102</td>
                         <td>100</td>
-                        <td>{{item.condition|formatAuthenCondition}}</td>
+                        <td>{{item.condition|formatTixianCondition}}</td>
                         <td>{{item.created_at|formatTime}}</td>
                         <td class="actions">
-                            <a @click="tixan(item)">
-                                <i class="fa fa-mail-forward " data-toggle="tooltip" data-placement="top" title="允许通过"></i>
+                            <a @click="tixan(item,1)">
+                                <i class="fa fa-mail-forward " data-toggle="tooltip" data-placement="top" title="允许提现"></i>
+                            </a>
+                            <a @click="tixan(item,-1)">
+                                <i class="fa fa-times " data-toggle="tooltip" data-placement="top" title="拒绝提现"></i>
                             </a>
                         </td>
                       </tr>
@@ -99,6 +102,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex' // 注册 state
+
 const s_alert = require("../../utils/alert");
 const ses = require("../../utils/ses");
 const req = require("../../utils/axios");
@@ -123,24 +128,28 @@ export default {
       host:null,
     };
   },
+  computed: { ...mapState(['school_id']) },
   filters:{ ...filter },
   mounted() { this.init(); this.host=this.$host },
   updated() {  $(function () { $("[data-toggle='tooltip']").tooltip(); }); },
   methods: {
     ...page,
     init(){ this.findAndCountAll(this.offsize,this.limit); },
-    // 获取所有校园大使申请
-    findAndCountAll(offsize,limit) { apis.authen.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data; console.log('校园大使申请',res.data) }) },
+    // 获取所有提现申请
+    findAndCountAll(offsize,limit) { apis.tixian.findAllBySchool(this.school_id,offsize,limit).then(res => { this.showItem=res.data; print.log('现金提现申请',res.data) }) },
     // 资产提现申请
-    tixan(item){
-      apis.authen.update(item.id,condition).then(res=>{
-        s_alert.Success("项目状态更新成功！", "成功更新一个校园大使状态", "success");
+    tixan(item,condition){
+      // 更新提现申请状态
+      apis.tixian.update(item.id,condition).then(res=>{
+        s_alert.Success("提现状态更新成功！", "成功更新一个提现申请状态", "success");
         this.init()
       })
+      // 发送提现短信
+
     },
     // 搜索
     search(){
-        if(this.searchkey) apis.authen.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
+        if(this.searchkey) apis.tixian.findAndCountAllLikeByUserName(this.searchkey,0,10).then(res => { this.showItem=res.data ; print.log('搜索',res.data) });
         else this.init()
     }
   }

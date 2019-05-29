@@ -67,7 +67,7 @@ module.exports = {
         findOneByUser(u) { return req.postParam('api/ass/card', { 'judge': 2, 'user_id': u }) },
         findAndCountAllLikeByName(n) { return req.postParam('api/ass/card', { 'judge': 3, 'name': n }) },
     },
-    // 快递信息
+    // 快递代取
     logistic: {
         delete(id) { return req.postParam('api/ent/logistic', { 'judge': 2, 'id': id }) },
         update(id, c) { return req.postParam('api/ent/logistic', { 'judge': 3, 'id': id, 'condition': c }) },
@@ -76,6 +76,20 @@ module.exports = {
         findOneById(id) { return req.postParam('api/ass/logistic', { 'judge': 1, 'id': id }) },
         findOneByUser(u, o, l) { return req.postParam('api/ass/logistic', { 'judge': 2, 'user_id': u, 'offset': o, 'limit': l }) },
         findAndCountAllLikeByName(n) { return req.postParam('api/ass/logistic', { 'judge': 3, 'name': n }) },
+    },
+    // 快递代发
+    lsend: {
+        delete(id) { return req.postParam('api/ent/lsend', { 'judge': 2, 'id': id }) },
+        update(id, c) { return req.postParam('api/ent/lsend', { 'judge': 3, 'id': id, 'condition': c }) },
+        updateTake(id,t) { return req.postParam('api/ent/lsend', { 'judge': 3, 'id': id, 'take': t }) },
+        updateCode(id,code,c) { return req.postParam('api/ent/lsend', { 'judge': 3, 'id': id, 'code': code, 'condition': c }) },
+
+        findAndCountAll(o, l) { return req.postParam('api/ass/lsend', { 'judge': 0, 'offset': o, 'limit': l }) },
+        findOneById(id) { return req.postParam('api/ass/lsend', { 'judge': 1, 'id': id }) },
+        findAllByUser(u, o, l) { return req.postParam('api/ass/lsend', { 'judge': 2, 'user_id': u, 'offset': o, 'limit': l }) },
+        findAllBySchool(s, o, l) { return req.postParam('api/ass/lsend', { 'judge': 3, 'school_id': s, 'offset': o, 'limit': l }) },
+        findAndCountAllLikeByCusName(n,s,o,l) { return req.postParam('api/ass/lsend', { 'judge': 4, 'name': n, 'school_id': s, 'offset': o, 'limit': l }) },
+        findAndCountAllLikeByTakName(n,s,o,l) { return req.postParam('api/ass/lsend', { 'judge': 5, 'name': n , 'school_id': s, 'offset': o, 'limit': l}) },
     },
     // 快递订单信息
     order: {
@@ -219,5 +233,17 @@ module.exports = {
         findAndCountAll(o, l) { return req.postParam('api/ass/stock', { 'judge': 0, 'offset': o, 'limit': l }) },
         findOneById(id) { return req.postParam('api/ass/stock', { 'judge': 1, 'id': id }) },
         findByUserId(u) { return req.postParam('api/ass/stock', { 'judge': 2, 'user_id': u }) },
-    }
+    },
+    // 提现
+    tixian: {
+        delete(id) { return req.postParam('api/ent/tixian', { 'judge': 2, 'id': id }) },
+        update(id, c) { return req.postParam('api/ent/tixian', { 'judge': 3, 'id': id, 'condition': c }) },
+
+        findAndCountAll(o, l) { return req.postParam('api/ass/tixian', { 'judge': 0, 'offset': o, 'limit': l }) },
+        findOneById(id) { return req.postParam('api/ass/tixian', { 'judge': 1, 'id': id }) },
+        findAllByUser(u, o, l) { return req.postParam('api/ass/tixian', { 'judge': 2, 'user_id': u, 'offset': o, 'limit': l }) },
+        findAllBySchool(s, o, l) { return req.postParam('api/ass/tixian', { 'judge': 3, 'school_id': s, 'offset': o, 'limit': l }) },
+        findAndCountAllLikeByUserName(n, o, l) { return req.postParam('api/ass/tixian', { 'judge': 4, 'name': n, 'offset': o, 'limit': l }) },
+    },
+
 }

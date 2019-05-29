@@ -28,7 +28,7 @@
                             <div class="col-xs-12">
                                 <input
                                     class="form-control input-lg"
-                                    type="pass"
+                                    type="password"
                                     required
                                     placeholder="密码"
                                     v-model="pass"
@@ -106,9 +106,11 @@ export default {
                         if(res.data.type == 1){
                             localStorage.setItem('token', res.data.token) //存储token
                             localStorage.setItem('user', res.data.id) //存储用户
+                            localStorage.setItem('school_id', res.data.school_id) //存储管理学校
                             this.LOGIN({
                                 token: res.data.token,
-                                user: res.data.id
+                                user: res.data.id,
+                                school_id: res.data.school_id
                             });
                             s_alert.Success( "登录成功！", "现在可以对系统进行设置", "success" );
                             this.$router.push({ name: "menu" });

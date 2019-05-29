@@ -4,13 +4,15 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
+        token: localStorage.getItem('token') || 'null',
         user: localStorage.getItem('user') || '',
-        token: localStorage.getItem('token') || 'null'
+        school_id: localStorage.getItem('school_id') || ''
     },
     mutations: {
         LOGIN: (state, data) => {
-            state.user = data.user;
             state.token = data.token;
+            state.user = data.user;
+            state.school_id = data.school_id;
         }
     }
 });

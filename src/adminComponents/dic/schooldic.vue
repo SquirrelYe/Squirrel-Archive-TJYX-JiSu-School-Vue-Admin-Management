@@ -153,6 +153,8 @@
 </template>
 
 <script>
+import { mapState } from 'vuex' // 注册 state
+
 const s_alert = require("../../utils/alert");
 const ses = require("../../utils/ses");
 const req = require("../../utils/axios");
@@ -184,6 +186,7 @@ export default {
       sitem:null
     };
   },
+  computed: { ...mapState(['school_id']) },
   filters:{ ...filter },
   mounted() { this.init() },
   updated() {  $(function () { $("[data-toggle='tooltip']").tooltip(); }); },
