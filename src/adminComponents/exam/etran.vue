@@ -171,7 +171,7 @@ export default {
     ...page,
     init(){ this.getAllEitem() },
     // 获取所有考试
-    getAllEitem(){ apis.eitem.findAndCountAll(0,1000).then(res=>{ this.eitem = res.data.rows ;print.log(res.data) }) },
+    getAllEitem(){ apis.eitem.findAllBySchool(this.school_id,0,1000).then(res=>{ this.eitem = res.data.rows ;print.log(res.data) }) },
     getTranByExam(){ this.getAllEtranByKind(this.eitem_id); this.offsize =0 },
     // 查询订单
     getAllEtranByKind(eitem_id){ apis.cart.findByExam(eitem_id ,this.offsize, this.limit) .then(res=>{ this.showItem = res.data })  },

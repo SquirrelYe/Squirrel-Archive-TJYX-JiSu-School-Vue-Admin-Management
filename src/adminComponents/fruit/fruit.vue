@@ -220,13 +220,13 @@ export default {
     ...page,
     init(){ this.findAndCountAll(this.offsize,this.limit); },
     // 获取所有水果一级菜单
-    findAndCountAll(offsize,limit) { apis.fruit.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data }) },
+    findAndCountAll(offsize,limit) { apis.fruit.findAllBySchool(this.school_id,offsize,limit).then(res => { this.showItem=res.data }) },
     creat(){ this.judge =0; this.name =null ; this.condition = null },
     // 新增一级菜单
     toCreat(){
       print.log(this.name , this.condition)
       if(this.name !=null && this.condition != null){
-        apis.fruit.creat(this.name , this.condition)
+        apis.fruit.creat(this.name , this.condition, this.school_id)
         .then(res=>{
           s_alert.Success("新建一级菜单成功!", "成功新建一个菜单水果一级菜单", "success");
           this.init()
@@ -259,7 +259,7 @@ export default {
     },
     // 搜索
     search(){
-      if(this.searchkey) apis.fruit.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.fruit.findAndCountAllLikeByNameSchool(this.searchkey,this.school_id).then(res => { this.showItem=res.data });
       else this.init()
     }
   }

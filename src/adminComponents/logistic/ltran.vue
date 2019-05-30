@@ -25,26 +25,26 @@
                         <th>用户名</th>
                         <th>数量</th>
                         <th>佣金</th>
-                        <th>接收时间</th>
                         <th>取货地址</th>
-                        <th>送货地址</th>
+                        <th>送货联系</th>
                         <th>状态</th>
-                        <th>创建时间</th>
+                        <th>校园大使</th>
+                        <th>最近时间</th>
                         <th>执行操作</th>
                       </tr>
                     </thead>
                     <tbody v-if="showItem">
-                      <tr class="gradeX" v-for="(item,index) in showItem.rows" :key="index"  :class=" item.condition>=3? 'text-success':'' " v-if="item.location">
+                      <tr class="gradeX" v-for="(item,index) in showItem.rows" :key="index"  :class=" item.condition>=3? 'text-success':'' ">
                         <td>{{(currentPage-1)*limit+index+1}}</td>
                         <td>L{{item.id}}</td>
-                        <td>{{item.user.name}}</td>
+                        <td v-if="item.cus">{{item.cus.name}}</td><td v-else></td>
                         <td>{{item.total}}</td>
                         <td>{{item.money}}</td>
-                        <td>{{item.time}}</td>
-                        <td>{{item.log_from}}</td>
-                        <td>{{item.log_to}}</td>
+                        <td>{{item.from}}</td>
+                        <td>{{item.location.name}}:{{item.location.phone}}</td>
                         <td>{{item.condition|formatLogisticCondition}}</td>
-                        <td>{{item.created_at|formatTime}}</td>
+                        <td v-if="item.tak">{{item.tak.name}}</td><td v-else></td>
+                        <td>{{item.updated_at|formatTime}}</td>
                         <td class="actions">
                           <a @click="getMsg(item)" data-toggle="modal" data-target="#Model">
                             <i class="fa fa-book" data-toggle="tooltip" data-placement="top" title="查看快递短信"></i>
@@ -103,29 +103,24 @@
             <h4>查看快递短信</h4>
             {{item.key}}
           </div>
-          <div class="modal-body" align='center' v-if="judge == 0 && !item"><h4>未填写短信信息</h4></div>
 
           <!-- 查看订单信息 -->
           <div class="modal-body" align='center' v-if="judge == 1 && item">
             <h4>查看订单信息</h4>
-            <address class="ng-scope" v-if="item.cus && item.tak">
+            <address class="ng-scope" v-if="item.cus && item.tak && item.location">
               <strong>发单用户:{{item.cus.name}}</strong><br>
               <strong>发单电话:{{item.cus.phone}}</strong><br> 
               <strong>校园大使:{{item.tak.name}}</strong><br>
               <strong>大使电话:{{item.tak.phone}}</strong><br><br>
 
-              <strong>创建时间:{{item.created_at | formatTime}}</strong><br>
-              <strong>接单时间:{{item.get_at | formatTime}}</strong><br>
-              <strong>取货时间:{{item.post_at | formatTime}}</strong><br>
-              <strong>送达时间:{{item.accept_at | formatTime}}</strong><br>
-              <strong>评价时间:{{item.callback_at | formatTime}}</strong><br>
-              <strong>用户评价:{{item.me_callback}}</strong><br>
-              <strong>大使评价:{{item.other_callback}}</strong><br>
+              <strong>所在学校:{{item.location.school}}</strong><br>
+              <strong>宿舍编号:{{item.location.dom}}</strong><br>
+              <strong>补充说明:{{item.location.detail}}</strong><br>
+              <strong>更新时间:{{item.updated_at | formatTime}}</strong><br>
               
               <hr>              
             </address> 
           </div>
-          <div class="modal-body" align='center' v-if="judge == 1 && !item"><h4>暂无订单信息</h4></div>
 
           <!-- 派发大使订单 -->
           <div class="modal-body" align='center' v-if="judge == 2 && takes">
@@ -193,32 +188,27 @@ export default {
     ...page,
     init(){ this.findAndCountAll(this.offsize,this.limit); },
     // 获取所有快递订单
-    findAndCountAll(offsize,limit) { apis.logistic.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data }) },
+    findAndCountAll(offsize,limit) { apis.logistic.findAllBySchool(this.school_id,offsize,limit).then(res => { this.showItem=res.data ;print.log('获取所有快递订单',res.data) }) },
     getMsg(item){ this.item = item ; this.judge = 0 },
-    getOrder(item){ apis.order.findOneById(item.order.id) .then(res=>{ this.judge = 1 ;this.item = res.data ; }) },
+    getOrder(item){ this.item = item ; this.judge = 1 ;print.log('快递代取',this.item)},
     setOrder(item){ 
       this.item = item ; 
-      apis.user.findAndCountAllByType(2,0,1000).then(res=>{ this.takes = res.data.rows ; this.judge = 2 })
+      apis.user.findAndCountAllXYDS(0,this.school_id,0,1000).then(res=>{ this.takes = res.data.rows ; this.judge = 2 })
      },
      toTake(){
        print.log(this.take , this.item)
-      //  更改order状态
-      apis.order.update(this.item.order.id, this.take ,1).then(res=>{
+      //  更改logistic状态
+      apis.logistic.addTake(this.item.id ,this.take, 1)
+      .then(res=>{
         if(res.data[0] == 1){
-          //  更改logistic状态
-          apis.logistic.update(this.item.id , 1)
-          .then(res=>{
-            if(res.data[0] == 1){
-               s_alert.Success('派发成功','','success');
-               this.init()
-            }else s_alert.Warning('派发失败！','请联系技术人员')
-          })
+            s_alert.Success('派发成功','','success');
+            this.init()
         }else s_alert.Warning('派发失败！','请联系技术人员')
       })
      },
     // 搜索
     search(){
-      if(this.searchkey) apis.logistic.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.logistic.findAndCountAllLikeByNameSchool(this.searchkey,this.school_id).then(res => { this.showItem=res.data });
       else this.init()
     }
 

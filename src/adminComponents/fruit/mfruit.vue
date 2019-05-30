@@ -34,7 +34,7 @@
                     <tbody v-if="showItem">
                       <tr class="gradeX" v-for="(item,index) in showItem.rows" :key="index"  :class=" item.condition==-1? 'text-danger':'' ">
                         <td>{{(currentPage-1)*limit+index+1}}</td>
-                        <td>JM{{item.id}}</td>
+                        <td>FM-{{item.id}}</td>
                         <td>{{item.title}}</td>
                         <td>{{item.condition|formatExamCondition}}</td>
                         <td>{{item.fruit.title}}</td>
@@ -249,17 +249,15 @@ export default {
     ...page,
     init(){ this.findAndCountAll(this.offsize,this.limit); },
     // 获取一级菜单
-    findFirstMenu(){
-        apis.fruit.findAndCountAll(0,100).then(res => { this.firstItems=res.data.rows ; console.log('水果一级菜单',res.data) })
-    },
+    findFirstMenu(){ apis.fruit.findAllBySchool(this.school_id,0,100).then(res => { this.firstItems=res.data.rows ; console.log('水果一级菜单',res.data) }) },
     // 获取所有水果二级菜单
-    findAndCountAll(offsize,limit) { apis.mfruit.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data ; console.log('水果二级菜单',res.data) }) },
+    findAndCountAll(offsize,limit) { apis.mfruit.findAllBySchool(this.school_id,offsize,limit).then(res => { this.showItem=res.data ; console.log('水果二级菜单',res.data) }) },
     creat(){ this.judge =0; this.first = null,this.name =null ; this.condition = null },
     // 新增二级菜单
     toCreat(){
       print.log(this.name , this.condition)
       if(this.first !=null && this.name !=null && this.condition != null){
-        apis.mfruit.creat(this.first ,this.name , this.condition)
+        apis.mfruit.creat(this.first ,this.name , this.condition, this.school_id)
         .then(res=>{
           s_alert.Success("新建二级菜单成功!", "成功新建一个菜单水果二级菜单", "success");
           this.init()
@@ -292,7 +290,7 @@ export default {
     },
     // 搜索
     search(){
-      if(this.searchkey) apis.mfruit.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.mfruit.findAndCountAllLikeByNameSchool(this.searchkey,this.school_id).then(res => { this.showItem=res.data });
       else this.init()
     }
   }

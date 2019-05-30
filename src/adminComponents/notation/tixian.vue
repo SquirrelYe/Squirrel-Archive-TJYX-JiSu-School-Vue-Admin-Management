@@ -149,7 +149,7 @@ export default {
     },
     // 搜索
     search(){
-        if(this.searchkey) apis.tixian.findAndCountAllLikeByUserName(this.searchkey,0,10).then(res => { this.showItem=res.data ; print.log('搜索',res.data) });
+        if(this.searchkey) apis.tixian.findAndCountAllLikeByUserNameSchool(this.searchkey,this.school_id,0,10).then(res => { this.showItem=res.data ; print.log('搜索',res.data) });
         else this.init()
     }
   }

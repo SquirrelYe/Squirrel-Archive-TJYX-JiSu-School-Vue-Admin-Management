@@ -105,11 +105,11 @@ export default {
                         print.log(res.data)
                         if(res.data.type == 1){
                             localStorage.setItem('token', res.data.token) //存储token
-                            localStorage.setItem('user', res.data.id) //存储用户
+                            localStorage.setItem('userinfo', JSON.stringify(res.data)) //存储 userinfo
                             localStorage.setItem('school_id', res.data.school_id) //存储管理学校
                             this.LOGIN({
                                 token: res.data.token,
-                                user: res.data.id,
+                                userinfo: res.data,
                                 school_id: res.data.school_id
                             });
                             s_alert.Success( "登录成功！", "现在可以对系统进行设置", "success" );

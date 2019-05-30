@@ -198,7 +198,7 @@ export default {
     init(){ this.getAllUser(this.offsize,this.limit); },
     test(){ apis.user.findAndCountAll(0,10).then(res => { print.log(res.data); }) },
     // 获取所有参赛者
-    getAllUser(offsize,limit) { apis.user.findAndCountAllByType(0,offsize,limit).then(res => { this.showItem=res.data }) },
+    getAllUser(offsize,limit) { apis.user.findAndCountAllByTypeSchool(0, this.school_id, offsize,limit).then(res => { this.showItem=res.data }) },
 
     getWX(item){ this.wxinfo = item.info ; this.judge = 0},
     getAuthen(item){ this.authen = item.authen ; this.judge = 1},
@@ -221,7 +221,7 @@ export default {
     },
     // 搜索
     search(){
-      if(this.searchkey) apis.user.findAndCountAllByTypeLikeByName(0,this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.user.findAndCountAllByTypeLikeByNameSchool(0,this.searchkey,this.school_id).then(res => { this.showItem=res.data });
       else this.init()
     }
 

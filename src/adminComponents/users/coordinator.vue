@@ -15,7 +15,7 @@
           <div class="panel-body">
             <div class="row">              
               <div class="col-md-12 col-sm-12 col-xs-12">
-                <input type="text" class="form-control search-bar" placeholder="输入搜索校园大使名称" v-model="searchkey" v-on:keyup.enter="search()">
+                <input type="text" class="form-control search-bar" placeholder="输入搜索校园大使账号" v-model="searchkey" v-on:keyup.enter="search()">
                 <div class="table-responsive">
                   <table class="table table-bordered table-striped table-hover" style id="datatable-editable">
                     <thead>
@@ -23,7 +23,7 @@
                         <th>#</th>
                         <th>校园大使编号</th>
                         <th>openid</th>
-                        <th>校园大使名</th>
+                        <th>校园大使账号</th>
                         <th>密码</th>
                         <th>邮箱</th>
                         <th>电话</th>
@@ -194,7 +194,7 @@ export default {
     ...page,
     init(){ this.getAllUser(this.offsize,this.limit); },
     // 获取所有参赛者
-    getAllUser(offsize,limit) { apis.user.findAndCountAllXYDS(0,offsize,limit).then(res => { this.showItem=res.data }) },
+    getAllUser(offsize,limit) { apis.user.findAndCountAllXYDS(0,this.school_id,offsize,limit).then(res => { this.showItem=res.data }) },
 
     getWX(item){ this.wxinfo = item.info ; this.judge = 0},
     getAuthen(item){ this.authen = item.authen ; this.judge = 1},
@@ -217,7 +217,7 @@ export default {
     },
     // 搜索
     search(){
-      if(this.searchkey) apis.user.findAndCountAllByTypeLikeByName(2,this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.user.findAndCountAllXYDSByNameSchool(0,this.school_id,this.searchkey).then(res => { this.showItem=res.data });
       else this.init()
     }
 

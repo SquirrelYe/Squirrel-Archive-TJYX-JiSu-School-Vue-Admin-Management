@@ -129,7 +129,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">学校</label>
                                     <div class="col-md-10">
-                                        <input type="number" disabled class="form-control" placeholder="天津城建大学">
+                                        <input type="number" disabled class="form-control" :placeholder="school_id | formatSchool">
                                     </div>
                                 </div>
                             </form>
@@ -178,7 +178,6 @@ export default {
       pass:null,
       mail:null,
       phone:null,
-      school:4
     };
   },
   computed: { ...mapState(['school_id']) },
@@ -188,8 +187,8 @@ export default {
   methods: {
     ...page,
     init(){ this.getAllUser(this.offsize,this.limit); },
-    // 获取所有参赛者
-    getAllUser(offsize,limit) { apis.user.findAndCountAllByType(1,offsize,limit).then(res => { this.showItem=res.data }) },
+    // 获取所有管理员
+    getAllUser(offsize,limit) { apis.user.findAndCountAllByTypeSchool(1,this.school_id,offsize,limit).then(res => { this.showItem=res.data }) },
 
     updateCondition(item,condition){
       apis.user.update(item.id,condition).then(res=>{
@@ -197,7 +196,7 @@ export default {
         this.init()
       })
     },
-    // 删除参赛者
+    // 删除管理员
     DeleteItem(item){
       if(confirm(`你确定要删除${item.name}？`)){
         apis.user.delete(item.id)
@@ -209,12 +208,12 @@ export default {
     },
     // 搜索
     search(){
-      if(this.searchkey) apis.user.findAndCountAllByTypeLikeByName(1,this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.user.findAndCountAllByTypeLikeByNameSchool(1,this.searchkey,this.school_id).then(res => { this.showItem=res.data });
       else this.init()
     },
     // 新建管理员
     creatAdmin(){
-      apis.user.creatAdmin(this.name, this.pass, this.mail, this.phone, this.school)
+      apis.user.creatAdmin(this.name, this.pass, this.mail, this.phone, this.school_id)
       .then(res=>{
         if(res.data[1]){
           s_alert.Success('创建成功','','success')

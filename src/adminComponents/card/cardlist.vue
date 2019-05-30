@@ -33,7 +33,7 @@
                         <th>校园大使</th>
                         <th>最近时间</th>
                         <th>执行操作</th>
-                      </tr>
+                      </tr> 
                     </thead>
                     <tbody v-if="showItem">
                       <tr class="gradeX" v-for="(item,index) in showItem.rows" :key="index"  :class=" item.condition==2? 'text-success':'' ">
@@ -42,7 +42,7 @@
                         <td>{{item.name}}</td>
                         <td>{{item.price}}</td>
                         <td>{{item.phone}}</td>
-                        <td>{{item.school}}</td>
+                        <td>{{item.school | formatSchool}}</td>
                         <td>{{item.dom}}</td>
                         <td>{{item.condition|formatCardCondition}}</td>
                         <td>{{item.detail}}</td>
@@ -110,7 +110,7 @@
                         <div class="panel-body">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <label class="col-md-2 control-label">名称</label>
+                                    <label class="col-md-2 control-label">姓名</label>
                                     <div class="col-md-10">
                                         <input type="text" class="form-control" v-model="card.name">
                                     </div>
@@ -130,7 +130,7 @@
                                 <div class="form-group">
                                     <label class="col-md-2 control-label">学校</label>
                                     <div class="col-md-10">
-                                        <input disabled class="form-control"  v-model="card.school">
+                                        <input disabled class="form-control"  :placeholder="school_id | formatSchool">
                                     </div>
                                 </div>
                                 <div class="form-group">
@@ -216,7 +216,7 @@ export default {
       limit:10,
       currentPage:1,
       
-      card:{ name:null, price:null, phone:null, school:'天津城建大学', dom:null, detail:null },
+      card:{ name:null, price:null, phone:null, dom:null, detail:null },
       // 派发
       item:null,
       takes:null,
@@ -231,7 +231,7 @@ export default {
     ...page,
     init(){ this.findAndCountAll(this.offsize,this.limit); },
     // 获取所有开卡订单
-    findAndCountAll(offsize,limit) { apis.card.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data; print.log('开卡列表',res.data) })},
+    findAndCountAll(offsize,limit) { apis.card.findAndCountAllBySchool(this.school_id,offsize,limit).then(res => { this.showItem=res.data; print.log('开卡列表',res.data) })},
 
     updateCondition(item,condition){
       apis.card.update(item.id,condition).then(res=>{
@@ -252,13 +252,13 @@ export default {
     // 派发大使
     setOrder(item){ 
       this.item = item ; 
-      apis.user.findAndCountAllByType(2,0,1000).then(res=>{ this.takes = res.data.rows })
+      apis.user.findAndCountAllXYDS(0,this.school_id,0,1000).then(res=>{ this.takes = res.data.rows })
      },
     // 派发
      send(){
        print.log(this.take , this.item)
       //  发送到校园大使
-      apis.card.setTaken(this.item.id, this.take)
+      apis.card.setTaken(this.item.id, this.take ,1)
       .then(res=>{
         if(res.data[0] == 1){
           s_alert.Success("派发成功!", "成功派发开卡订单", "success");
@@ -268,14 +268,14 @@ export default {
      },
     // 搜索
     search(){
-      if(this.searchkey) apis.card.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.card.findAndCountAllLikeByNameSchool(this.searchkey,this.school_id).then(res => { this.showItem=res.data });
       else this.init()
     },
     // 创建开卡
     creatCard(){
       print.log(this.card)
       let c= this.card
-      apis.card.create(null, 0 ,c.name,c.price, c.phone ,c.school, c.dom ,c.detail )
+      apis.card.create(null, 0 ,c.name,c.price, c.phone ,this.school_id, c.dom ,c.detail )
       .then(res=>{
         print.log(res.data)
         s_alert.Success("发布成功!", "成功发布开卡订单", "success");

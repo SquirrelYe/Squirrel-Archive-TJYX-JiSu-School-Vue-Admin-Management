@@ -13,7 +13,7 @@ function formatGender(x){
     if(x==2) return '女';
 }
 function formatCardCondition(x){
-    if(x==0) return '未处理';
+    if(x==0) return '未接单';
     if(x==1) return '处理中';
     if(x==2) return '已完成';
     if(x==-1) return '已撤销';
@@ -64,6 +64,27 @@ function formatTixianCondition(x){
     if(x==0) return '未处理';
     if(x==1) return '允许提现';
 }
+function formatSchool(x){
+    if(x==1) return '南开大学';
+    if(x==2) return '天津大学';
+    if(x==3) return '中国民航大学';
+    if(x==4) return '天津城建大学';
+    if(x==5) return '天津职业技术师范大学';
+    if(x==6) return '天津工业大学';
+    if(x==7) return '天津科技大学';
+    if(x==8) return '天津理工大学';
+    if(x==9) return '天津医药大学';
+    if(x==10) return '天津中医药大学';
+    if(x==11) return '天津师范大学';
+    if(x==12) return '天津财经大学';
+    if(x==13) return '天津商业大学';
+    if(x==14) return '天津宝德学院';
+    if(x==15) return '天津农学院';
+    if(x==16) return '天津外国语大学';
+    if(x==17) return '天津体育学院';
+    if(x==18) return '天津音乐学院';
+    if(x==19) return '天津美术学院';
+}
 module.exports={
     formatTime,
     formatCondition,
@@ -76,5 +97,6 @@ module.exports={
     formatTranCondition,
     formatTranJudge,
     formatAuthenCondition,
-    formatTixianCondition
+    formatTixianCondition,
+    formatSchool,
 }

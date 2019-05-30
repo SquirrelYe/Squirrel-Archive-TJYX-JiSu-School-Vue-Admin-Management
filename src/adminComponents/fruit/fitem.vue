@@ -262,9 +262,9 @@ export default {
       this.condition=null;
     },
     // 获取所有水果项目
-    findAndCountAll(offsize,limit) { apis.fitem.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data }) },
+    findAndCountAll(offsize,limit) { apis.fitem.findAllBySchool(this.school_id,offsize,limit).then(res => { this.showItem=res.data }) },
     // 获取水果二级分类
-    findAllFruit() { apis.mfruit.findAndCountAll(0,100).then(res => { this.secondItems=res.data.rows ; console.log('水果二级分类',res.data) })},
+    findAllFruit() { apis.mfruit.findAllBySchool(this.school_id,0,100).then(res => { this.secondItems=res.data.rows ; console.log('水果二级分类',res.data) })},
     // 更新水果状态
     updateCondition(item,condition){
       apis.fitem.updateCondition(item.id,condition).then(res=>{
@@ -277,14 +277,14 @@ export default {
     toCreat(){
       print.log(this.name , this.title , this.price, this.detail ,this.mfruit_id , this.condition , this.logo)
       if(this.name!=null && this.title!=null && this.price!=null && this.detail!=null && this.mfruit_id!=null && this.condition!=null && this.logo!=null){
-        apis.fitem.creat(this.logo , this.name , this.title , this.price , this.detail , this.mfruit_id , this.condition)
+        apis.fitem.creat(this.logo , this.name , this.title , this.price , this.detail , this.mfruit_id , this.condition, this.school_id)
         .then(res=>{
           s_alert.Success("新建水果项目成功!", "成功新建一个项目", "success");
           this.init()
         })
       }else s_alert.Warning('新建项目失败','输入非法')
     },
-    editItem(item){ this.judge=1; this.currentItem = JSON.parse(JSON.stringify(item)) ; },
+    editItem(item){ this.judge=1; print.log('编辑',item); this.currentItem = JSON.parse(JSON.stringify(item)) ; },
     toEdit(){
       print.log(this.currentItem.name , this.currentItem.title , this.currentItem.price, this.currentItem.detail ,this.currentItem.mfruit_id , this.currentItem.condition , this.currentItem.logo)
       if(this.currentItem != null){
@@ -311,7 +311,7 @@ export default {
     },
     // 搜索
     search(){
-      if(this.searchkey) apis.fitem.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.fitem.findAndCountAllLikeByNameSchool(this.searchkey,this.school_id).then(res => { this.showItem=res.data });
       else this.init()
     },
     // 上传大图

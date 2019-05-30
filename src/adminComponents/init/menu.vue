@@ -74,7 +74,7 @@
                 </a>                
               </div>
 
-              <p class="text-muted m-0">管理员</p>
+              <p class="text-muted m-0">{{school_id | formatSchool}}</p>
             </div>
           </div>
           <!--- Divider -->
@@ -271,11 +271,14 @@
 </template>
 
 <script>
+import { mapState } from 'vuex' // 注册 state
+
 const s_alert = require("../../utils/alert");
 const ses = require("../../utils/ses");
 const req = require("../../utils/axios");
 const print = require("../../utils/print");
 const apis = require("../../interface/apis");
+const filter = require("../../filter/filter");
 
 import app from "../../App.vue";
 var App = app;
@@ -287,15 +290,13 @@ export default {
       icon_src:"static/images/users/avatar-6.jpg",
     };
   },
-  beforeMount() {
-    
-  },
-  mounted() {
-    this.$router.push({name:'index'})
-  },
+  filters:{ ...filter },
+  computed: { ...mapState(['userinfo','token','school_id']) },
+  beforeMount() { },
+  mounted() { this.$router.push({name:'index'}) },
   methods: {
     
-    index(){this.$router.push({name:'index'})},
+    index(){this.$router.push({name:'index'}); print.log(this.userinfo,this.token,this.school_id )},
     user(){this.$router.push({name:'user'})},
     admin(){this.$router.push({name:'admin'})},
     coordinator(){this.$router.push({name:'coordinator'})},

@@ -249,17 +249,15 @@ export default {
     ...page,
     init(){ this.findAndCountAll(this.offsize,this.limit); },
     // 获取一级菜单
-    findFirstMenu(){
-        apis.exam.findAndCountAll(0,100).then(res => { this.firstItems=res.data.rows ; console.log('考试一级菜单',res.data) })
-    },
+    findFirstMenu(){ apis.exam.findAllBySchool(this.school_id,0,100).then(res => { this.firstItems=res.data.rows ; print.log('考试一级菜单',res.data) })},
     // 获取所有考试二级菜单
-    findAndCountAll(offsize,limit) { apis.mexam.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data ; console.log('考试二级菜单',res.data) }) },
+    findAndCountAll(offsize,limit) { apis.mexam.findAllBySchool(this.school_id,offsize,limit).then(res => { this.showItem=res.data ; print.log('考试二级菜单',res.data) }) },
     creat(){ this.judge =0; this.first = null,this.name =null ; this.condition = null },
     // 新增二级菜单
     toCreat(){
       print.log(this.name , this.condition)
       if(this.first !=null && this.name !=null && this.condition != null){
-        apis.mexam.creat(this.first ,this.name , this.condition)
+        apis.mexam.creat(this.first ,this.name , this.condition ,this.school_id)
         .then(res=>{
           s_alert.Success("新建二级菜单成功!", "成功新建一个菜单考试二级菜单", "success");
           this.init()
@@ -292,7 +290,7 @@ export default {
     },
     // 搜索
     search(){
-      if(this.searchkey) apis.mexam.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.mexam.findAndCountAllLikeByNameSchool(this.searchkey,this.school_id).then(res => { this.showItem=res.data });
       else this.init()
     }
   }

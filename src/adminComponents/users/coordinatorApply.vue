@@ -136,7 +136,7 @@ export default {
     ...page,
     init(){ this.findAndCountAll(this.offsize,this.limit); },
     // 获取所有校园大使申请
-    findAndCountAll(offsize,limit) { apis.authen.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data; console.log('校园大使申请',res.data) }) },
+    findAndCountAll(offsize,limit) { apis.authen.findAndCountAllBySchool(this.school_id,offsize,limit).then(res => { this.showItem=res.data; console.log('校园大使申请',res.data) }) },
     // 校园大使状态更新
     updateCondition(item,condition){
       apis.authen.update(item.id,condition).then(res=>{
@@ -146,7 +146,7 @@ export default {
     },
     // 搜索
     search(){
-        if(this.searchkey) apis.authen.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
+        if(this.searchkey) apis.authen.findAndCountAllLikeByNameSchool(this.searchkey).then(res => { this.showItem=res.data });
         else this.init()
     }
   }

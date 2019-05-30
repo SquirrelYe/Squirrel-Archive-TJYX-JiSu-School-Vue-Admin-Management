@@ -171,10 +171,10 @@ export default {
     ...page,
     init(){ this.getAllfitem() },
     // 获取所有水果
-    getAllfitem(){ apis.fitem.findAndCountAll(0,1000).then(res=>{ this.fitem = res.data.rows ;print.log(res.data) }) },
+    getAllfitem(){ apis.fitem.findAllBySchool(this.school_id,0,1000).then(res=>{ this.fitem = res.data.rows ;print.log('所有水果',res.data) }) },
     getTranByFruit(){ this.getAllFtranByKind(this.fitem_id); this.offsize =0 },
     // 查询订单
-    getAllFtranByKind(fitem_id){ apis.cart.findByFruit(fitem_id ,this.offsize, this.limit) .then(res=>{ this.showItem = res.data })  },
+    getAllFtranByKind(fitem_id){ apis.cart.findByFruit(fitem_id ,this.offsize, this.limit) .then(res=>{ this.showItem = res.data; print.log('订单',res.data) })  },
     // 更改订单物流状态
     editItem(item){ this.currentItem = JSON.parse(JSON.stringify(item)) },
     toEdit(){

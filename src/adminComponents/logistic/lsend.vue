@@ -29,7 +29,7 @@
                         <th>快递单号</th>
                         <th>学校</th>
                         <th>状态</th>
-                        <th>创建时间</th>
+                        <th>更新时间</th>
                         <th>执行操作</th>
                       </tr>
                     </thead>
@@ -44,8 +44,11 @@
                         <td>{{item.code}}</td>
                         <td v-if="item.school">{{item.school.name}}</td><td v-else></td>
                         <td>{{item.condition|formatLsendCondition}}</td>
-                        <td>{{item.created_at|formatTime}}</td>
+                        <td>{{item.updated_at|formatTime}}</td>
                         <td class="actions">
+                          <a @click="editCode(item)" data-toggle="modal" data-target="#Model">
+                            <i class="fa  fa-pencil" data-toggle="tooltip" data-placement="top" title="填写快递编号"></i>
+                          </a>
                           <a @click="getFrom(item)" data-toggle="modal" data-target="#Model">
                             <i class="fa fa-book" data-toggle="tooltip" data-placement="top" title="查看取件地址"></i>
                           </a>
@@ -54,9 +57,6 @@
                           </a>
                           <a @click="setOrder(item)" data-toggle="modal" data-target="#Model">
                             <i class="fa  fa-arrow-right" data-toggle="tooltip" data-placement="top" title="派发大使订单"></i>
-                          </a>
-                          <a @click="editCode(item)" data-toggle="modal" data-target="#Model">
-                            <i class="fa  fa-pencil" data-toggle="tooltip" data-placement="top" title="填写快递编号"></i>
                           </a>
                         </td>
                       </tr>
@@ -203,7 +203,7 @@ export default {
     getTo(item){ this.item = item ; this.judge = 1 },
     setOrder(item){ 
       this.item = item ; 
-      apis.user.findAndCountAllXYDS(0,0,1000).then(res=>{ this.takes = res.data.rows ; this.judge = 2 })
+      apis.user.findAndCountAllXYDS(0,this.school_id,0,1000).then(res=>{ this.takes = res.data.rows ; this.judge = 2 })
      },
     editCode(item){ this.item = item ; this.judge = 3 },
     // 派发订单

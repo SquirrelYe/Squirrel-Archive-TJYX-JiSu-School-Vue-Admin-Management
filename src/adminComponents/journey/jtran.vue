@@ -171,7 +171,7 @@ export default {
     ...page,
     init(){ this.getAllJitem() },
     // 获取所有旅游
-    getAllJitem(){ apis.jitem.findAndCountAll(0,1000).then(res=>{ this.jitem = res.data.rows ;print.log(res.data) }) },
+    getAllJitem(){ apis.jitem.findAllBySchool(this.school_id,0,1000).then(res=>{ this.jitem = res.data.rows ;print.log(res.data) }) },
     getTranByJourney(){ this.getAllJtranByKind(this.jitem_id); this.offsize =0 },
     // 查询订单
     getAllJtranByKind(jitem_id){ apis.cart.findByJourney(jitem_id ,this.offsize, this.limit) .then(res=>{ this.showItem = res.data })  },

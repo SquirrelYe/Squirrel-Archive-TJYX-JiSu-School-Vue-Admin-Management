@@ -264,9 +264,9 @@ export default {
       this.condition=null;
     },
     // 获取所有旅游项目
-    findAndCountAll(offsize,limit) { apis.jitem.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data ;console.log('旅游项目',res.data) }) },
+    findAndCountAll(offsize,limit) { apis.jitem.findAllBySchool(this.school_id,offsize,limit).then(res => { this.showItem=res.data ;console.log('旅游项目',res.data) }) },
     // 获取旅游二级分类
-    findAllJourney() { apis.mjourney.findAndCountAll(0,100).then(res => { this.secondItems=res.data.rows ; })},
+    findAllJourney() { apis.mjourney.findAllBySchool(this.school_id,0,100).then(res => { this.secondItems=res.data.rows ; })},
     // 更新旅游状态
     updateCondition(item,condition){
       apis.jitem.updateCondition(item.id,condition).then(res=>{
@@ -279,7 +279,7 @@ export default {
     toCreat(){
       print.log(this.name , this.title , this.price, this.detail ,this.mjourney_id , this.condition , this.logo)
       if(this.name!=null && this.title!=null && this.price!=null && this.detail!=null && this.mjourney_id!=null && this.condition!=null && this.logo!=null){
-        apis.jitem.creat(this.logo , this.name , this.title , this.price , this.detail , this.mjourney_id , this.condition)
+        apis.jitem.creat(this.logo , this.name , this.title , this.price , this.detail , this.mjourney_id , this.condition, this.school_id)
         .then(res=>{
           s_alert.Success("新建旅游项目成功!", "成功新建一个项目", "success");
           this.init()
@@ -313,7 +313,7 @@ export default {
     },
     // 搜索
     search(){
-      if(this.searchkey) apis.jitem.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.jitem.findAndCountAllLikeByNameSchool(this.searchkey,this.school_id).then(res => { this.showItem=res.data });
       else this.init()
     },
     // 上传大图

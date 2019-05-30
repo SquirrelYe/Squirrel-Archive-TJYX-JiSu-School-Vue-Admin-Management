@@ -263,10 +263,10 @@ export default {
       this.condition=null;
     },
     // 获取所有考试项目
-    findAndCountAll(offsize,limit) { apis.eitem.findAndCountAll(offsize,limit).then(res => { this.showItem=res.data; console.log('考试项目',res.data) }) },
+    findAndCountAll(offsize,limit) { apis.eitem.findAllBySchool(this.school_id,offsize,limit).then(res => { this.showItem=res.data; print.log('考试项目',res.data) }) },
     // 获取考试二级分类
-    findAllExam() { apis.mexam.findAndCountAll(0,100).then(res => { this.secondItems=res.data.rows ; console.log('考试二级分类',res.data) })},
-
+    findAllExam() { apis.mexam.findAllBySchool(this.school_id,0,100).then(res => { this.secondItems=res.data.rows ; print.log('考试二级分类',res.data) })},
+    // 更新状态 
     updateCondition(item,condition){
       apis.eitem.updateCondition(item.id,condition).then(res=>{
         s_alert.Success("项目状态更新成功！", "成功更新一个考试项目状态", "success");
@@ -278,7 +278,7 @@ export default {
     toCreat(){
       print.log(this.name , this.title , this.price, this.detail ,this.mexam_id , this.condition , this.logo)
       if(this.name!=null && this.title!=null && this.price!=null && this.detail!=null && this.mexam_id!=null && this.condition!=null && this.logo!=null){
-        apis.eitem.creat(this.logo , this.name , this.title , this.price , this.detail , this.mexam_id , this.condition)
+        apis.eitem.creat(this.logo , this.name , this.title , this.price , this.detail , this.mexam_id , this.condition ,this.school_id)
         .then(res=>{
           s_alert.Success("新建考试项目成功!", "成功新建一个项目", "success");
           this.init()
@@ -312,7 +312,7 @@ export default {
     },
     // 搜索
     search(){
-      if(this.searchkey) apis.eitem.findAndCountAllLikeByName(this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.eitem.findAndCountAllLikeByNameSchool(this.searchkey,this.school_id).then(res => { this.showItem=res.data });
       else this.init()
     },
     // 上传大图
