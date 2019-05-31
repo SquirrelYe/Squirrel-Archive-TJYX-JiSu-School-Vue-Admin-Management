@@ -12,6 +12,7 @@ import coordinator from '@/adminComponents/users/coordinator'
 import coordinatorapply from '@/adminComponents/users/coordinatorApply'
 // 通知
 import tixian from '@/adminComponents/notation/tixian'
+import activity from '@/adminComponents/notation/activity'
 // 开卡
 import cardlist from '@/adminComponents/card/cardlist'
 import cardcode from '@/adminComponents/card/cardcode'
@@ -56,6 +57,7 @@ const router = new Router({
 
 
         { path: 'tixian', name: 'tixian', component: tixian },
+        { path: 'activity', name: 'activity', component: activity },
 
         { path: 'cardlist', name: 'cardlist', component: cardlist },   //开卡信息
         { path: 'cardcode', name: 'cardcode', component: cardcode },   //开卡二维码

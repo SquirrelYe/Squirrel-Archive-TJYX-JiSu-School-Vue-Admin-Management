@@ -36,7 +36,7 @@
                       </tr>
                     </thead>
                     <tbody v-if="showItem">
-                      <tr class="gradeX" v-for="(item,index) in showItem.rows" :key="index">
+                      <tr class="gradeX" v-for="(item,index) in showItem.rows" :key="index" :class=" item.condition==-1? 'text-danger':'' ">
                         <td>{{(currentPage-1)*limit+index+1}}</td>
                         <td>TX-{{item.id}}</td>
                         <td v-if="item.authen">{{item.authen.name}}</td><td v-else></td>

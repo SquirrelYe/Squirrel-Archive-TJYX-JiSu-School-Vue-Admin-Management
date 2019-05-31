@@ -64,6 +64,14 @@ function formatTixianCondition(x){
     if(x==0) return '未处理';
     if(x==1) return '允许提现';
 }
+function formatActivityType(x){
+    if(x==0) return '用户';
+    if(x==1) return '校园大使';
+}
+function formatActivityCondition(x){
+    if(x==0) return '进行中';
+    if(x==-1) return '已结束';
+}
 function formatSchool(x){
     if(x==1) return '南开大学';
     if(x==2) return '天津大学';
@@ -99,4 +107,6 @@ module.exports={
     formatAuthenCondition,
     formatTixianCondition,
     formatSchool,
+    formatActivityType,
+    formatActivityCondition
 }

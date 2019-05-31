@@ -114,7 +114,7 @@
               <li class="has_sub">
                 <a href="javascript:void(0)" class="waves-effect waves-light">
                   <i class="md md-credit-card"></i>
-                  <span>资产管理</span>
+                  <span>通知管理</span>
                   <span class="pull-right">
                     <i class="md md-add"></i>
                   </span>
@@ -123,9 +123,9 @@
                   <li>
                     <a href="javascript:void(0)" @click="tixian()">提现申请</a>
                   </li>
-                  <!-- <li>
-                    <a href="javascript:void(0)" @click="cardcode()">二维码管理</a>
-                  </li> -->
+                  <li>
+                    <a href="javascript:void(0)" @click="activity()">活动管理</a>
+                  </li>
                 </ul>
               </li>
 
@@ -303,6 +303,7 @@ export default {
     coordinatorApply(){this.$router.push({name:'coordinatorapply'})},
 
     tixian(){this.$router.push({name:'tixian'})},
+    activity(){this.$router.push({name:'activity'})},
 
     cardlist(){this.$router.push({name:'cardlist'})},
     cardcode(){this.$router.push({name:'cardcode'})},

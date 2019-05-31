@@ -257,5 +257,13 @@ module.exports = {
         findAllBySchool(s, o, l) { return req.postParam('api/ass/tixian', { 'judge': 3, 'school_id': s, 'offset': o, 'limit': l }) },
         findAndCountAllLikeByUserNameSchool(n, s, o, l) { return req.postParam('api/ass/tixian', { 'judge': 4, 'name': n, 'school_id': s, 'offset': o, 'limit': l }) },
     },
+    // 活动
+    activity: {
+        findAllBySchool(s, o, l) { return req.postParam('api/ent/activity', { 'judge': 0, 'school_id': s, 'offset': o, 'limit': l }) },
+        create(t,ti,i,d,c,s) { return req.postParam('api/ent/activity', { 'judge': 1, 'type': t, 'title': ti, 'icon': i,'detail': d,'condition': c,'school_id': s }) },
+        delete(id) { return req.postParam('api/ent/activity', { 'judge': 2, 'id': id }) },
+        update(id, c) { return req.postParam('api/ent/activity', { 'judge': 3, 'id': id, 'condition': c }) },
+        findAndCountAllLikeByTitleSchool(t,s) { return req.postParam('api/ent/activity', { 'judge': 4, 'title': t, 'school_id': s }) },
+    },
 
 }

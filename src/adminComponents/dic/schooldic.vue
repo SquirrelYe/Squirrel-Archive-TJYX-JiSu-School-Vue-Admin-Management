@@ -34,7 +34,7 @@
                     <tbody v-if="showItem">
                       <tr class="gradeX" v-for="(item,index) in showItem.rows" :key="index">
                         <td>{{(currentPage-1)*limit+index+1}}</td>
-                        <td>F{{item.id}}</td>
+                        <td>S-{{item.id}}</td>
                         <td>{{item.name}}</td>
                         <td>{{item.detail}}</td>
                         <td>{{item.province}}</td>
