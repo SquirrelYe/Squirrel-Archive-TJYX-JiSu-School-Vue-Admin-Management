@@ -27,7 +27,6 @@
                         <th>学校</th>
                         <th>学号</th>
                         <th>电话</th>
-                        <th>邮箱</th>
                         <th>认证1</th>
                         <th>认证2</th>
                         <th>状态</th>
@@ -43,8 +42,7 @@
                         <td v-if="item.school">{{item.school.name}}</td><td v-else></td>
                         <td>{{item.xuehao}}</td>
                         <td>{{item.phone}}</td>
-                        <td>{{item.mail}}</td>
-                        <td><img :src="host+item.rz_icon" alt="logo" class="img-thumbnail img-responsive" style="width:100px"></td>
+                        <td><img :src="host+item.card" alt="logo" class="img-thumbnail img-responsive" style="width:100px"></td>
                         <td><img :src="host+item.rz_icon" alt="logo" class="img-thumbnail img-responsive" style="width:100px"></td>
                         <td>{{item.condition|formatAuthenCondition}}</td>
                         <td>{{item.created_at|formatTime}}</td>
