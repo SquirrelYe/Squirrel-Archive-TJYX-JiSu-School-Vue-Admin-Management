@@ -11,8 +11,8 @@ Vue.config.productionTip = false
 Vue.use(Vuex)
 
 Vue.prototype.$axios = axios
-Vue.prototype.$uploadpath = 'http://0.0.0.0:11111/upload'
-Vue.prototype.$host = 'http://0.0.0.0:11111/'
+Vue.prototype.$uploadpath = 'http://0.0.0.0:11110/upload'
+Vue.prototype.$host = 'http://0.0.0.0:11110/'
 
 /* eslint-disable no-new */
 new Vue({
