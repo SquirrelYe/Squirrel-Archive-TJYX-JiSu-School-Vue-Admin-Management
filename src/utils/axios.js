@@ -16,9 +16,16 @@ axios.interceptors.request.use(
     config => {
         // 每次发送请求之前判断是否存在token，如果存在，则统一在http请求的header都加上token，不用每次请求都手动添加了
         // 即使本地存在token，也有可能token是过期的，所以在响应拦截器中要对返回状态进行判断
-        const token = store.default.state.token;
-        const school_id = store.default.state.school_id;
-        token && (config.headers.Authorization = token) && (config.headers.school_id = school_id);
+        const token = store.default.state.token || '-1';
+        const sid = store.default.state.school_id || '';
+        const uid = store.default.state.userinfo.id || '-1';
+
+        console.log('--->',token,sid,uid)
+        config.headers={
+            token,
+            sid,
+            uid
+        }
         return config;
     },
     error => {
@@ -27,12 +34,21 @@ axios.interceptors.request.use(
     })
 // 响应拦截器
 axios.interceptors.response.use(
-    response => { return Promise.resolve(response); },
+    response => { 
+        if(response.status === 200) return Promise.resolve(response); 
+        else{
+            switch (response.status) {
+                case 250: alert.Warning('强制下线','用户在另一地登录'); toLogin();break;
+            }
+        }
+    },
     error => {
         if (error.response) {
             switch (error.response.status) {
+                case 250: alert.Warning('强制下线','用户在另一地登录'); toLogin();break;
+
                 case 430: alert.Warning('数据解密失败','请检查密钥');break;
-                case 431: window.location.href='/' ; alert.Timer('token失效，请重新登录','自动回退登录界面'); break;
+                case 431: alert.Timer('token失效，请重新登录','自动回退登录界面'); toLogin(); break;
                 case 432: alert.Warning('登录校验失败','账号或密码错误');break;
             }
             return Promise.reject(error.response.data)   // 返回接口返回的错误信息
@@ -42,6 +58,11 @@ axios.interceptors.response.use(
         }
     });
 
+// 返回登录界面，注销用户
+function toLogin(){
+    localStorage.clear();
+    window.location.href='/' ; 
+} 
 /**
  * get方法，对应get请求
  * @param {String} url [请求的url地址]
@@ -66,7 +87,7 @@ export function get_Param(url,param){
  */
 export function postParam(url,param){
         let encrp = jwt.sign(param , secret ,{ expiresIn:'10s'})
-        let data =qs.stringify( { data:encrp} )
+        let data = { data:encrp}
         return new Promise((resolve, reject) => {
             axios.post(url,data)
             .then(res => {
