@@ -11,14 +11,14 @@ Vue.config.productionTip = false
 Vue.use(Vuex)
 
 Vue.prototype.$axios = axios
-Vue.prototype.$uploadpath = 'http://0.0.0.0:11130/upload'
-Vue.prototype.$host = 'http://0.0.0.0:11130/'
+Vue.prototype.$uploadpath = 'http://127.0.0.1:11130/upload'
+Vue.prototype.$host = 'http://127.0.0.1:11130/'
 
 /* eslint-disable no-new */
 new Vue({
-  el: '#app',
-  router,
-  store,
-  components: { App },
-  template: '<App/>'
+    el: '#app',
+    router,
+    store,
+    components: { App },
+    template: '<App/>'
 })
