@@ -144,7 +144,7 @@ export default {
     },
     // 搜索
     search(){
-        if(this.searchkey) apis.authen.findAndCountAllLikeByNameSchool(this.searchkey).then(res => { this.showItem=res.data });
+        if(this.searchkey) apis.authen.findAndCountAllLikeByNameSchool(this.searchkey,this.school_id).then(res => { this.showItem=res.data });
         else this.init()
     }
   }
