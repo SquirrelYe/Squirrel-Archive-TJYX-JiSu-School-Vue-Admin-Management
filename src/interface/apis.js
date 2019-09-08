@@ -8,6 +8,7 @@ module.exports = {
     user: {
         delete(id) { return req.postParam('api/ent/user', { 'judge': 2, 'id': id }) },
         update(id, c) { return req.postParam('api/ent/user', { 'judge': 3, 'id': id, 'condition': c }) },
+        updateType(id, t) { return req.postParam('api/ent/user', { 'judge': 3, 'id': id, 'type': t }) },
         login(n, p) { return req.postParam('api/ent/user', { 'judge': 5, 'name': n, 'pass': p }) },
         creatAdmin(n, p, m, c, s) { return req.postParam('api/ent/user', { 'judge': 1, 'name': n, 'pass': p, 'mail': m, 'phone': c, 'school_id': s, 'type': 1, 'condition': 0 }) },
 

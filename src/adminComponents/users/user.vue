@@ -85,9 +85,6 @@
                         <li class="paginate_button next" :class="{ disabled: currentPage*limit>=showItem.count }">
                           <a href="javascript:void(0)" @click="nextPage()">下一页</a>
                         </li>
-                        <li class="paginate_button next">
-                          <a href="javascript:void(0)" @click="test()">测试</a>
-                        </li>
                       </ul>
                     </div>
                   </div>
@@ -196,7 +193,6 @@ export default {
   methods: {
     ...page,
     init(){ this.getAllUser(this.offsize,this.limit); },
-    test(){ apis.user.findAndCountAll(0,10).then(res => { print.log(res.data); }) },
     // 获取所有参赛者
     getAllUser(offsize,limit) { apis.user.findAndCountAllByTypeSchool(0, this.school_id, offsize,limit).then(res => { this.showItem=res.data }) },
 

@@ -66,7 +66,7 @@ function formatTixianCondition(x){
 }
 function formatActivityType(x){
     if(x==0) return '用户';
-    if(x==1) return '校园大使';
+    if(x==2) return '校园大使';
 }
 function formatActivityCondition(x){
     if(x==0) return '进行中';

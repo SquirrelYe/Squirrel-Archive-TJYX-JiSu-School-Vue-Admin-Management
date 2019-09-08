@@ -136,11 +136,20 @@ export default {
     // 获取所有校园大使申请
     findAndCountAll(offsize,limit) { apis.authen.findAndCountAllBySchool(this.school_id,offsize,limit).then(res => { this.showItem=res.data; console.log('校园大使申请',res.data) }) },
     // 校园大使状态更新
-    updateCondition(item,condition){
-      apis.authen.update(item.id,condition).then(res=>{
-        s_alert.Success("项目状态更新成功！", "成功更新一个校园大使状态", "success");
-        this.init()
-      })
+    async updateCondition(item,condition){
+        if(condition === 1){
+            await apis.authen.update(item.id,condition);
+            await apis.user.updateType(item.user_id,2).then(res=>{
+                s_alert.Success("项目状态更新成功！", "成功更新一个校园大使状态", "success");
+                this.init()
+            })
+        }else{
+            await apis.authen.update(item.id,condition);
+            await apis.user.updateType(item.user_id,0).then(res=>{
+                s_alert.Success("项目状态更新成功！", "成功更新一个校园大使状态", "success");
+                this.init()
+            })
+        }     
     },
     // 搜索
     search(){

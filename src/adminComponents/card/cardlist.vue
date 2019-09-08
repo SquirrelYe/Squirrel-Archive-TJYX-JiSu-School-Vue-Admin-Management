@@ -252,7 +252,7 @@ export default {
     // 派发大使
     setOrder(item){ 
       this.item = item ; 
-      apis.user.findAndCountAllXYDS(0,this.school_id,0,1000).then(res=>{ this.takes = res.data.rows; print.log('校园大使', res.data.rows) })
+      apis.user.findAndCountAllXYDS(2,this.school_id,0,1000).then(res=>{ this.takes = res.data.rows; print.log('校园大使', res.data.rows) })
      },
     // 派发
      send(){

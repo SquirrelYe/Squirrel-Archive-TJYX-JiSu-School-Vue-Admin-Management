@@ -194,7 +194,7 @@ export default {
     ...page,
     init(){ this.getAllUser(this.offsize,this.limit); },
     // 获取所有参赛者
-    getAllUser(offsize,limit) { apis.user.findAndCountAllXYDS(0,this.school_id,offsize,limit).then(res => { this.showItem=res.data }) },
+    getAllUser(offsize,limit) { apis.user.findAndCountAllXYDS(2,this.school_id,offsize,limit).then(res => { this.showItem=res.data }) },
 
     getWX(item){ this.wxinfo = item.info ; this.judge = 0},
     getAuthen(item){ this.authen = item.authen ; this.judge = 1},
@@ -217,7 +217,7 @@ export default {
     },
     // 搜索
     search(){
-      if(this.searchkey) apis.user.findAndCountAllXYDSByNameSchool(0,this.school_id,this.searchkey).then(res => { this.showItem=res.data });
+      if(this.searchkey) apis.user.findAndCountAllXYDSByNameSchool(2,this.school_id,this.searchkey).then(res => { this.showItem=res.data });
       else this.init()
     }
 

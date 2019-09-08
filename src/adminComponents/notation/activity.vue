@@ -183,7 +183,7 @@ export default {
       judge:0,
 
       conditions:[{ x:-1 },{ x:0} ],
-      types:[{ x:0 },{ x:1 } ],
+      types:[{ x:0 },{ x:2 } ],
       act:{ type :null, title: null ,icon:null ,detail: null, condition:null },
 
       eitem:null,
@@ -208,7 +208,7 @@ export default {
         let c = this.act
         apis.activity.create(c.type ,c.title ,c.icon ,c.detail, c.condition ,this.school_id)
         .then(res=>{
-            s_alert.Success("新建活动信息字典成功!", "成功新建一个活动信息字典", "success");
+            s_alert.Success("新建活动信息字典成功!", "成功新建一个活动信息", "success");
             this.init()
         })
     },
@@ -225,7 +225,7 @@ export default {
       if(confirm(`你确定要删除${item.title}？`)){
         apis.activity.delete(item.id)
         .then(res => {
-          s_alert.Success("删除成功!", "成功移除了一个活动信息字典", "success");
+          s_alert.Success("删除成功!", "成功移除了一个活动信息", "success");
           this.init()
         })
       }
