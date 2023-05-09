@@ -1,37 +1,28 @@
 <template>
-    <div id="app">
-        <router-view/>
-    </div>
+  <div id="app">
+    <router-view />
+  </div>
 </template>
 
 <script>
-
 export default {
-    name: "App",
-    data() {
-        return {
-
-        };
-    },
-    mounted() {
-        
-    },
-    methods: {
-
-    }
+  name: 'App',
+  data() {
+    return {};
+  },
+  mounted() {},
+  methods: {}
 };
 </script>
 
 <style>
-
-table td{
+table td {
   vertical-align: middle !important;
 }
 
-.some{
+.some {
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap
+  white-space: nowrap;
 }
-
 </style>

@@ -6,7 +6,7 @@
       <div class="topbar">
         <!-- LOGO -->
         <div class="topbar-left">
-          <div class="text-center" style="background-color:white">
+          <div class="text-center" style="background-color: white">
             <a href="javascript:void(0)" class="logo">
               <i class="md md-terrain"></i>
               <span>极速校园后台管理系统</span>
@@ -23,8 +23,8 @@
                 </button>
                 <span class="clearfix"></span>
               </div>
-              
-              <ul class="nav navbar-nav navbar-right pull-right">                
+
+              <ul class="nav navbar-nav navbar-right pull-right">
                 <li class="hidden-xs">
                   <a href="#" id="btn-fullscreen" class="waves-effect">
                     <i class="md md-crop-free"></i>
@@ -32,49 +32,43 @@
                 </li>
 
                 <li class="dropdown">
-                  <a href class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true" >
-                    <img :src="icon_src" alt="user-img" class="img-circle">
+                  <a href class="dropdown-toggle profile" data-toggle="dropdown" aria-expanded="true">
+                    <img :src="icon_src" alt="user-img" class="img-circle" />
                   </a>
                   <ul class="dropdown-menu">
                     <li>
-                      <a href="javascript:void(0)">
-                        <i class="md md-face-unlock"></i> 个人简介
-                      </a>
+                      <a href="javascript:void(0)"> <i class="md md-face-unlock"></i> 个人简介 </a>
                     </li>
                     <li>
-                      <a href="javascript:void(0)">
-                        <i class="md md-lock"></i> 锁屏
-                      </a>
+                      <a href="javascript:void(0)"> <i class="md md-lock"></i> 锁屏 </a>
                     </li>
-                    <li  @click="logout">
-                      <a href="javascript:void(0)">
-                        <i class="md md-settings-power"></i> 注销
-                      </a>
+                    <li @click="logout">
+                      <a href="javascript:void(0)"> <i class="md md-settings-power"></i> 注销 </a>
                     </li>
                   </ul>
                 </li>
               </ul>
-            </div>            
+            </div>
           </div>
         </div>
       </div>
-      
+
       <!-- 管理员端 -->
-      <div class="left side-menu leftfixed fixed-left" style="position:fixed">
+      <div class="left side-menu leftfixed fixed-left" style="position: fixed">
         <div class="sidebar-inner slimscrollleft">
           <div class="user-details">
             <div class="pull-left">
-              <img :src="icon_src" alt class="thumb-md img-circle">
+              <img :src="icon_src" alt class="thumb-md img-circle" />
             </div>
             <div class="user-info">
               <div class="dropdown">
                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                   极速校园
                   <span class="caret"></span>
-                </a>                
+                </a>
               </div>
 
-              <p class="text-muted m-0">{{school_id | formatSchool}}</p>
+              <p class="text-muted m-0">{{ school_id | formatSchool }}</p>
             </div>
           </div>
           <!--- Divider -->
@@ -149,16 +143,16 @@
 
               <li class="has_sub">
                 <a href="javascript:void(0)" class="waves-effect waves-light">
-                  <i class="md  md-exit-to-app"></i>
+                  <i class="md md-exit-to-app"></i>
                   <span>快递送取</span>
                   <span class="pull-right">
                     <i class="md md-add"></i>
                   </span>
                 </a>
                 <ul class="list-unstyled">
-                  <li> <a href="javascript:void(0)" @click="lsend()">快递代发</a> </li>
-                  <li> <a href="javascript:void(0)" @click="ltran()">快递代取</a> </li>
-                  <li> <a href="javascript:void(0)" @click="lanalysis()">流水统计</a> </li>
+                  <li><a href="javascript:void(0)" @click="lsend()">快递代发</a></li>
+                  <li><a href="javascript:void(0)" @click="ltran()">快递代取</a></li>
+                  <li><a href="javascript:void(0)" @click="lanalysis()">流水统计</a></li>
                 </ul>
               </li>
 
@@ -171,11 +165,11 @@
                   </span>
                 </a>
                 <ul class="list-unstyled">
-                  <li> <a href="javascript:void(0)" @click="exam()">一级菜单</a> </li>
-                  <li> <a href="javascript:void(0)" @click="mexam()">二级菜单</a> </li>
-                  <li> <a href="javascript:void(0)" @click="eitem()">考试项目</a> </li>
-                  <li> <a href="javascript:void(0)" @click="etran()">订单列表</a> </li>
-                  <li> <a href="javascript:void(0)" @click="eanalysis()">流水统计</a> </li>
+                  <li><a href="javascript:void(0)" @click="exam()">一级菜单</a></li>
+                  <li><a href="javascript:void(0)" @click="mexam()">二级菜单</a></li>
+                  <li><a href="javascript:void(0)" @click="eitem()">考试项目</a></li>
+                  <li><a href="javascript:void(0)" @click="etran()">订单列表</a></li>
+                  <li><a href="javascript:void(0)" @click="eanalysis()">流水统计</a></li>
                 </ul>
               </li>
 
@@ -188,11 +182,11 @@
                   </span>
                 </a>
                 <ul class="list-unstyled">
-                  <li> <a href="javascript:void(0)" @click="journey()">一级菜单</a> </li>
-                  <li> <a href="javascript:void(0)" @click="mjourney()">二级菜单</a> </li>
-                  <li> <a href="javascript:void(0)" @click="jitem()">旅游项目</a> </li>
-                  <li> <a href="javascript:void(0)" @click="jtran()">订单列表</a> </li>
-                  <li> <a href="javascript:void(0)" @click="janalysis()">流水统计</a>  </li>
+                  <li><a href="javascript:void(0)" @click="journey()">一级菜单</a></li>
+                  <li><a href="javascript:void(0)" @click="mjourney()">二级菜单</a></li>
+                  <li><a href="javascript:void(0)" @click="jitem()">旅游项目</a></li>
+                  <li><a href="javascript:void(0)" @click="jtran()">订单列表</a></li>
+                  <li><a href="javascript:void(0)" @click="janalysis()">流水统计</a></li>
                 </ul>
               </li>
 
@@ -205,17 +199,17 @@
                   </span>
                 </a>
                 <ul class="list-unstyled">
-                  <li> <a href="javascript:void(0)" @click="fruit()">一级菜单</a> </li>
-                  <li> <a href="javascript:void(0)" @click="mfruit()">二级菜单</a> </li>
-                  <li> <a href="javascript:void(0)" @click="fitem()">水果项目</a>  </li>
-                  <li> <a href="javascript:void(0)" @click="ftran()">订单列表</a> </li>
-                  <li> <a href="javascript:void(0)" @click="fanalysis()">流水统计</a> </li>
+                  <li><a href="javascript:void(0)" @click="fruit()">一级菜单</a></li>
+                  <li><a href="javascript:void(0)" @click="mfruit()">二级菜单</a></li>
+                  <li><a href="javascript:void(0)" @click="fitem()">水果项目</a></li>
+                  <li><a href="javascript:void(0)" @click="ftran()">订单列表</a></li>
+                  <li><a href="javascript:void(0)" @click="fanalysis()">流水统计</a></li>
                 </ul>
               </li>
 
               <li class="has_sub">
                 <a href="javascript:void(0)" class="waves-effect waves-light">
-                  <i class="md  md-book"></i>
+                  <i class="md md-book"></i>
                   <span>数据字典</span>
                   <span class="pull-right">
                     <i class="md md-add"></i>
@@ -227,14 +221,13 @@
                   </li>
                 </ul>
               </li>
-
             </ul>
             <div class="clearfix"></div>
           </div>
           <div class="clearfix"></div>
         </div>
-      </div>      
-      
+      </div>
+
       <div class="content-page">
         <div class="content">
           <div class="container">
@@ -271,82 +264,142 @@
 </template>
 
 <script>
-import { mapState } from 'vuex' // 注册 state
+import { mapState } from 'vuex'; // 注册 state
 
-const s_alert = require("../../utils/alert");
-const ses = require("../../utils/ses");
-const req = require("../../utils/axios");
-const print = require("../../utils/print");
-const apis = require("../../interface/apis");
-const filter = require("../../filter/filter");
+const s_alert = require('../../utils/alert');
+const ses = require('../../utils/ses');
+const req = require('../../utils/axios');
+const print = require('../../utils/print');
+const apis = require('../../interface/apis');
+const filter = require('../../filter/filter');
 
-import app from "../../App.vue";
+import app from '../../App.vue';
 var App = app;
 
 export default {
-  name: "menus",
+  name: 'menus',
   data() {
     return {
-      icon_src:"static/images/users/avatar-6.jpg",
+      icon_src: 'static/images/users/avatar-6.jpg'
     };
   },
-  filters:{ ...filter },
-  computed: { ...mapState(['userinfo','token','school_id']) },
-  beforeMount() { },
-  mounted() { this.$router.push({name:'index'}) },
+  filters: { ...filter },
+  computed: { ...mapState(['userinfo', 'token', 'school_id']) },
+  beforeMount() {},
+  mounted() {
+    this.$router.push({ name: 'index' });
+  },
   methods: {
-    
-    index(){this.$router.push({name:'index'}); print.log(this.userinfo,this.token,this.school_id )},
-    user(){this.$router.push({name:'user'})},
-    admin(){this.$router.push({name:'admin'})},
-    coordinator(){this.$router.push({name:'coordinator'})},
-    coordinatorApply(){this.$router.push({name:'coordinatorapply'})},
+    index() {
+      this.$router.push({ name: 'index' });
+      print.log(this.userinfo, this.token, this.school_id);
+    },
+    user() {
+      this.$router.push({ name: 'user' });
+    },
+    admin() {
+      this.$router.push({ name: 'admin' });
+    },
+    coordinator() {
+      this.$router.push({ name: 'coordinator' });
+    },
+    coordinatorApply() {
+      this.$router.push({ name: 'coordinatorapply' });
+    },
 
-    tixian(){this.$router.push({name:'tixian'})},
-    activity(){this.$router.push({name:'activity'})},
+    tixian() {
+      this.$router.push({ name: 'tixian' });
+    },
+    activity() {
+      this.$router.push({ name: 'activity' });
+    },
 
-    cardlist(){this.$router.push({name:'cardlist'})},
-    cardcode(){this.$router.push({name:'cardcode'})},
+    cardlist() {
+      this.$router.push({ name: 'cardlist' });
+    },
+    cardcode() {
+      this.$router.push({ name: 'cardcode' });
+    },
 
-    lsend(){this.$router.push({name:'lsend'})},
-    ltran(){this.$router.push({name:'ltran'})},
-    lanalysis(){this.$router.push({name:'lanalysis'})},
+    lsend() {
+      this.$router.push({ name: 'lsend' });
+    },
+    ltran() {
+      this.$router.push({ name: 'ltran' });
+    },
+    lanalysis() {
+      this.$router.push({ name: 'lanalysis' });
+    },
 
-    exam(){this.$router.push({name:'exam'})},
-    mexam(){this.$router.push({name:'mexam'})},
-    eitem(){this.$router.push({name:'eitem'})},
-    etran(){this.$router.push({name:'etran'})},
-    eanalysis(){this.$router.push({name:'eanalysis'})},
+    exam() {
+      this.$router.push({ name: 'exam' });
+    },
+    mexam() {
+      this.$router.push({ name: 'mexam' });
+    },
+    eitem() {
+      this.$router.push({ name: 'eitem' });
+    },
+    etran() {
+      this.$router.push({ name: 'etran' });
+    },
+    eanalysis() {
+      this.$router.push({ name: 'eanalysis' });
+    },
 
-    journey(){this.$router.push({name:'journey'})},
-    mjourney(){this.$router.push({name:'mjourney'})},
-    jitem(){this.$router.push({name:'jitem'})},
-    jtran(){this.$router.push({name:'jtran'})},
-    janalysis(){this.$router.push({name:'janalysis'})},
+    journey() {
+      this.$router.push({ name: 'journey' });
+    },
+    mjourney() {
+      this.$router.push({ name: 'mjourney' });
+    },
+    jitem() {
+      this.$router.push({ name: 'jitem' });
+    },
+    jtran() {
+      this.$router.push({ name: 'jtran' });
+    },
+    janalysis() {
+      this.$router.push({ name: 'janalysis' });
+    },
 
-    fruit(){this.$router.push({name:'fruit'})},
-    mfruit(){this.$router.push({name:'mfruit'})},
-    fitem(){this.$router.push({name:'fitem'})},
-    ftran(){this.$router.push({name:'ftran'})},
-    fanalysis(){this.$router.push({name:'fanalysis'})},
-    
-    schooldic(){this.$router.push({name:'schooldic'})},
+    fruit() {
+      this.$router.push({ name: 'fruit' });
+    },
+    mfruit() {
+      this.$router.push({ name: 'mfruit' });
+    },
+    fitem() {
+      this.$router.push({ name: 'fitem' });
+    },
+    ftran() {
+      this.$router.push({ name: 'ftran' });
+    },
+    fanalysis() {
+      this.$router.push({ name: 'fanalysis' });
+    },
 
-    logout(){ this.$router.push({name:'login'}) },
+    schooldic() {
+      this.$router.push({ name: 'schooldic' });
+    },
 
+    logout() {
+      this.$router.push({ name: 'login' });
+    },
 
-    about(){ } ,
-    help(){ } ,
-    contact(){ } ,
+    about() {},
+    help() {},
+    contact() {}
   },
 
-  components: {   //注入外部 js文件
+  components: {
+    //注入外部 js文件
     remote: {
-      render: function(createElement) {
+      render: function (createElement) {
         var self = this;
-        return createElement("script", {
+        return createElement('script', {
           attrs: {
-            type: "text/javascript",
+            type: 'text/javascript',
             src: this.src
           }
         });
@@ -362,6 +415,4 @@ export default {
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>
